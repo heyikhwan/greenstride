@@ -268,6 +268,11 @@ export const FAQ: FaqItem[] = [
     tags: "hadiah uang jersey medali sertifikat mvp",
   },
   {
+    id: "syarat-mvp", cat: "hadiah", q: "Siapa yang bisa menjadi MVP?",
+    a: ["Peserta yang berhak masuk kategori MVP adalah peserta dari tim yang telah berstatus Finisher. Penentuan MVP didasarkan pada pencapaian jarak individu tertinggi dari tim tersebut."],
+    tags: "syarat mvp individu jarak terjauh finisher",
+  },
+  {
     id: "mvp", cat: "hadiah", q: "Saya MVP, tapi tim saya di luar 50 besar. Tetap diundang?",
     a: ["Ya. Peraih MVP tetap diundang ke offline race di Jakarta."],
     tags: "individu terbaik undangan",
