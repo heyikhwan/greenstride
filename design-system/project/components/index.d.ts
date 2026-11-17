@@ -21,4 +21,4 @@ export interface FaqItemProps { id?: string; question: ReactNode; defaultOpen?: 
 export interface CalloutProps { tone?: "attention" | "info" | "rule"; title?: string; icon?: IconName; children: ReactNode }
 export interface DocumentCardProps { title: string; description: string; href: string; size?: string; type?: string; download?: string | boolean }
 export interface NavLink { href: string; label: string; current?: boolean }
-export interface NavbarProps { logos: { src: string; srcDark?: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }
+export interface NavbarProps { logos: { src: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }

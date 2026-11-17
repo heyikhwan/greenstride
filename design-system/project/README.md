@@ -37,7 +37,7 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 
 - Halaman berdiri di `surface`. Bagian selang-seling memakai `surface-tint`; kartu, panel FAQ dan kolom input memakai `surface-raised` dengan tepi `line`.
 - Teks utama `ink`; teks pendukung `ink-muted`. Keduanya lolos 4,5:1 di ketiga surface pada tema terang dan gelap.
-- Hijau hutan `band` dipakai untuk tiga tempat saja: hero, pita bantuan, footer. Di hero, gradasi `band` ke `band-end` meniru pita tagline biru-hijau di key visual. Teks di atasnya `band-ink` dan `band-muted`; kartu di atasnya `band-raised`.
+- Hijau hutan `band` dipakai untuk empat tempat saja: header, hero, pita bantuan, footer. Header dan hero menyambung jadi satu blok hijau di atas halaman. Di hero, gradasi `band` ke `band-end` meniru pita tagline biru-hijau di key visual. Teks di atasnya `band-ink` dan `band-muted`; kartu di atasnya `band-raised`.
 - Aksi utama di surface: isian `leaf` dengan label `on-leaf`. Aksi utama di atas band: isian `lime` dengan label `on-lime`. Satu tombol utama per layar.
 - `lime` adalah energi daun di key visual: kata sorotan di judul hero, potongan daun pada eyebrow, bar progres. Jangan jadikan teks di atas surface terang.
 - `sun` (kuning dari konten 24 KM) hanya untuk penanda perhatian: status hitung mundur, label "Sekarang" di jadwal, callout `sun-soft`. Maksimal satu titik kuning per layar.
@@ -59,7 +59,7 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 
 - Kontainer `container` 1200 px, 12 kolom, gap `gutter`. Gutter tepi `space-4` di ponsel, `space-5` di tablet ke atas.
 - Jarak antar bagian `space-9` di desktop, `space-8` di ponsel. Judul bagian ke isi `space-7` (desktop) atau `space-6` (ponsel).
-- Header lengket setinggi `header-height` dengan latar `surface-raised`; bayangan `shadow-md` muncul setelah halaman digulir.
+- Header lengket setinggi `header-height` dengan latar `band` dan garis bawah tipis terang; bayangan `shadow-md` muncul setelah halaman digulir.
 - Tombol dan chip `radius-pill`. Kartu, panel FAQ, callout `radius-md`. Kolom input `radius-pill`.
 - **Bentuk daun** adalah tanda tangan sistem: dua sudut berseberangan `radius-leaf`, dua lainnya `radius-sm`. Pakai hanya pada foto hero, kartu hitung mundur, kartu penghargaan utama, dan latar ponsel di AppSteps. Potongan daun kecil miring berwarna `lime` membuka setiap eyebrow.
 - Bayangan: `shadow-sm` untuk kartu diam bila perlu, `shadow-md` untuk kartu yang disorot, panel FAQ terbuka dan header setelah digulir. Tidak ada bayangan di atas `band`. `shadow-glow` hanya untuk satu titik "sedang berlangsung".
@@ -82,8 +82,10 @@ Durasi `dur-fast` untuk hover dan tekan, `dur-base` untuk buka tutup, `dur-slow`
 - Foto pelari asli dari materi acara (`hero-runners.webp`, `photo-langkah-pelari.webp`, `pelari-greenstride.webp`). Foto hero memakai bentuk daun.
 - `key-visual.webp` adalah rujukan gaya. Jangan tampilkan utuh di situs karena memuat tanggal lama.
 - Tangkapan layar aplikasi tampil di dalam bingkai ponsel AppSteps, tidak pernah lepas di halaman.
-- Logo Danantara, PTPN dan Planters Club selalu memakai warna asli. Di atas `band` atau di tema gelap, letakkan di pelat terang `band-ink` (pelat bentuk daun di footer, pelat pill di header). Hanya logotype GreenStride yang putih, dan hanya di atas `band`. Header: Danantara, lalu PTPN dengan garis pemisah. Footer: Danantara, PTPN, Planters Club. Jangan mengubah warna, meregangkan, atau memberi efek pada logo.
-- Favicon: tanda pelari GreenStride putih di kotak `band` bersudut membulat, dengan garis lintasan `lime`.
+- **Planters Club adalah penyelenggara dan logo utama.** PTPN GreenStride 2026 diselenggarakan Planters Club untuk karyawan PTPN Group, yang berada di bawah Danantara Indonesia. Bila tampil bersama, urutannya mengikuti peran itu: Planters Club (versi horizontal) paling depan dan paling besar, lalu garis pemisah, lalu logo induk Danantara dan PTPN yang lebih kecil.
+- Header: hanya Planters Club horizontal versi putih (`logo-planters-club-horizontal-white.png`), 44 px (36 px di ponsel), langsung di atas `band` tanpa pelat, di tema terang maupun gelap. Tautan header `band-ink`, garis bawah dan tombol Help Desk `lime`. Footer dan gambar bagikan: pelat bentuk daun berisi Planters Club di depan, Danantara dan PTPN di belakang garis, tanpa kalimat keterangan.
+- Semua logo memakai warna asli. Di atas `band`, letakkan di pelat terang `band-ink` (pelat bentuk daun di footer). Logo putih hanya dipakai di atas `band`: logo Planters Club di header dan logotype GreenStride; logotype ini nama acara, bukan logo penyelenggara. Jangan mengubah warna, meregangkan, atau memberi efek pada logo.
+- Favicon: tanda Planters Club (`logo-planters-club-mark.png`) berwarna asli tanpa latar (PNG transparan). Ikon layar utama iPhone (`apple-icon.png`) tetap memakai kotak `band-ink` karena iOS mengisi bagian transparan dengan hitam.
 - Badge App Store dan Google Play serta ikon 99 Virtual Race dan Strava dipakai apa adanya dari file resmi.
 
 ## Ikonografi

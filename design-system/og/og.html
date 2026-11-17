@@ -18,9 +18,11 @@
   .sub { margin-top: 18px; font: 500 21px/1.4 Poppins, sans-serif; color: #b8cfb9; }
   .photo { position: absolute; right: 56px; top: 56px; width: 410px; height: 518px; object-fit: cover; object-position: 50% 30%; border-radius: 48px 10px; box-shadow: 0 24px 50px rgba(0,0,0,.35); }
   .logos { position: absolute; left: 64px; bottom: 44px; display: flex; align-items: center; gap: 26px; padding: 12px 22px; background: #f3f7ec; border-radius: 28px 8px; }
-  .logos img { height: 34px; width: auto; display: block; }
-  .logos img + img { height: 44px; }
-  .logos img:last-child { height: 50px; }
+  .logos img { width: auto; display: block; }
+  .logos .brand-pc { height: 52px; }
+  .logos .sep { width: 1px; height: 40px; background: rgba(15, 42, 27, .18); }
+  .logos .dan { height: 28px; }
+  .logos .ptpn { height: 40px; }
 </style></head>
 <body><div class="og">
   <div class="leaf leaf--a"></div><div class="leaf leaf--b"></div>
@@ -31,8 +33,9 @@
   </div>
   <img class="photo" src="../../public/img/hero-runners.webp" alt="">
   <div class="logos">
-    <img src="../../public/img/logo-danantara.png" alt="">
-    <img src="../../public/img/logo-ptpn-holding.png" alt="">
-    <img src="../../public/img/logo-planters-club.png" alt="">
+    <img class="brand-pc" src="../../public/img/logo-planters-club-horizontal.png" alt="">
+    <i class="sep"></i>
+    <img class="dan" src="../../public/img/logo-danantara.png" alt="">
+    <img class="ptpn" src="../../public/img/logo-ptpn-holding.png" alt="">
   </div>
 </div></body></html>

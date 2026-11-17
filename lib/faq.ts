@@ -31,7 +31,7 @@ export const FAQ: FaqItem[] = [
   // Tentang lomba
   {
     id: "apa-itu-greenstride", cat: "umum", q: "Apa itu PTPN GreenStride 2026?",
-    a: ["Lomba lari virtual beregu untuk karyawan PTPN Group, diselenggarakan bersama Planters Club. Kamu lari atau jalan di luar ruangan di mana saja, lalu jaraknya dijumlahkan bersama tim."],
+    a: ["Lomba lari virtual beregu untuk karyawan PTPN Group yang diselenggarakan Planters Club. Kamu lari atau jalan di luar ruangan di mana saja, lalu jaraknya dijumlahkan bersama tim."],
     tags: "virtual run lomba planters club",
   },
   {

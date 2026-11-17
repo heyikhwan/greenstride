@@ -233,34 +233,30 @@
 @media (max-width: 520px) { .gs-split { padding: var(--space-5); } .gs-split__num { font-size: 40px; } }
 
 /* ───────── Navbar */
-.gs-nav { position: sticky; top: 0; z-index: 20; background: var(--surface-raised); border-bottom: 1px solid var(--line); transition: box-shadow var(--dur-base) var(--ease-out); }
+/* Header berdiri di `band` di kedua tema agar logo Planters Club putih selalu terbaca; menyambung ke hero. */
+.gs-nav { position: sticky; top: 0; z-index: 20; background: var(--band); color: var(--band-ink); border-bottom: 1px solid rgba(243, 247, 236, 0.12); transition: box-shadow var(--dur-base) var(--ease-out); }
 .gs-nav--scrolled { box-shadow: var(--shadow-md); }
 .gs-nav__bar { display: flex; align-items: center; gap: var(--space-5); max-width: var(--container); height: 72px; margin: 0 auto; padding: 0 var(--space-5); }
-.gs-nav__logos { display: flex; align-items: center; gap: var(--space-4); text-decoration: none; }
-.gs-nav__logo { display: inline-flex; align-items: center; }
-.gs-nav__logo img { height: 30px; width: auto; }
-.gs-nav__logo + .gs-nav__logo { padding-left: var(--space-4); border-left: 1px solid var(--line); }
-.gs-nav__logo + .gs-nav__logo img { height: 38px; }
-.gs-logo--dark { display: none; }
-[data-theme="dark"] .gs-logo--light { display: none; }
-[data-theme="dark"] .gs-logo--dark { display: block; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .gs-logo--light { display: none; } :root:not([data-theme="light"]) .gs-logo--dark { display: block; } }
+/* Header hanya memuat logo Planters Club horizontal tanpa pelat: berwarna asli di tema terang, versi putih (srcDark) di tema gelap. */
+.gs-nav__logos { display: flex; align-items: center; min-width: 0; text-decoration: none; }
+.gs-nav__logo { display: inline-flex; align-items: center; flex: none; }
+.gs-nav__logo img { height: 44px; width: auto; }
 .gs-nav__links { display: flex; gap: var(--space-1); margin-left: auto; }
-.gs-nav__links a { position: relative; padding: var(--space-2) var(--space-3); font: 500 15px/1 var(--font-text); color: var(--ink); text-decoration: none; border-radius: var(--radius-sm); transition: color var(--dur-fast) var(--ease-out); }
-.gs-nav__links a::after { content: ""; position: absolute; left: var(--space-3); right: var(--space-3); bottom: 2px; height: 2px; background: var(--leaf); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-base) var(--ease-out); }
-.gs-nav__links a:hover { color: var(--leaf); }
+.gs-nav__links a { position: relative; padding: var(--space-2) var(--space-3); font: 500 15px/1 var(--font-text); color: var(--band-ink); text-decoration: none; white-space: nowrap; border-radius: var(--radius-sm); transition: color var(--dur-fast) var(--ease-out); }
+.gs-nav__links a::after { content: ""; position: absolute; left: var(--space-3); right: var(--space-3); bottom: 2px; height: 2px; background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-base) var(--ease-out); }
+.gs-nav__links a:hover { color: var(--lime); }
 .gs-nav__links a:hover::after, .gs-nav__links a[aria-current="true"]::after { transform: scaleX(1); }
-.gs-nav__toggle { display: none; margin-left: auto; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface-raised); color: var(--ink); cursor: pointer; place-items: center; }
+.gs-nav__toggle { display: none; margin-left: auto; width: 44px; height: 44px; border: 1px solid var(--band-muted); border-radius: 50%; background: transparent; color: var(--band-ink); cursor: pointer; place-items: center; transition: background var(--dur-fast) var(--ease-out); }
+.gs-nav__toggle:hover { background: var(--band-raised); }
 .gs-nav__sheet { display: none; }
 @media (max-width: 860px) {
   .gs-nav__bar { height: 64px; padding: 0 var(--space-4); }
+  .gs-nav__logo img { height: 36px; }
   .gs-nav__links, .gs-nav__cta { display: none; }
   .gs-nav__toggle { display: grid; }
-  .gs-nav__logo img { height: 24px; }
-  .gs-nav__logo + .gs-nav__logo img { height: 30px; }
-  .gs-nav__sheet[data-open="true"] { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4) var(--space-5); border-top: 1px solid var(--line); }
-  .gs-nav__sheet a:not(.gs-btn) { display: flex; align-items: center; min-height: 52px; padding: 0 var(--space-3); font: 600 17px/1 var(--font-text); color: var(--ink); text-decoration: none; border-radius: var(--radius-sm); }
-  .gs-nav__sheet a:not(.gs-btn):hover { background: var(--surface-tint); }
+  .gs-nav__sheet[data-open="true"] { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4) var(--space-5); border-top: 1px solid rgba(243, 247, 236, 0.12); }
+  .gs-nav__sheet a:not(.gs-btn) { display: flex; align-items: center; min-height: 52px; padding: 0 var(--space-3); font: 600 17px/1 var(--font-text); color: var(--band-ink); text-decoration: none; border-radius: var(--radius-sm); }
+  .gs-nav__sheet a:not(.gs-btn):hover { background: var(--band-raised); }
   .gs-nav__sheet .gs-btn { margin-top: var(--space-3); }
 }
 

@@ -257,24 +257,22 @@
       return function () { window.removeEventListener("scroll", onScroll); };
     }, []);
     var links = props.links || [];
-    return h("header", { className: cx("gs-nav", scrolled ? "gs-nav--scrolled" : null) },
+    return h("header", { className: cx("gs-nav gs-on-band", scrolled ? "gs-nav--scrolled" : null) },
       h("div", { className: "gs-nav__bar" },
         h("a", { className: "gs-nav__logos", href: props.homeHref || "#top", "aria-label": props.homeLabel || "Beranda" },
           (props.logos || []).map(function (l, i) {
-            return h("span", { key: i, className: "gs-nav__logo" },
-              h("img", { src: l.src, alt: l.alt, className: l.srcDark ? "gs-logo--light" : null }),
-              l.srcDark ? h("img", { src: l.srcDark, alt: "", "aria-hidden": "true", className: "gs-logo--dark" }) : null);
+            return h("span", { key: i, className: "gs-nav__logo" }, h("img", { src: l.src, alt: l.alt }));
           })),
         h("nav", { className: "gs-nav__links", "aria-label": "Utama" }, links.map(function (l) {
           return h("a", { key: l.href, href: l.href, "aria-current": l.current ? "true" : undefined }, l.label);
         })),
-        props.cta ? h(Button, { className: "gs-nav__cta", href: props.cta.href, size: "sm", external: props.cta.external }, props.cta.label) : null,
+        props.cta ? h(Button, { variant: "lime", className: "gs-nav__cta", href: props.cta.href, size: "sm", external: props.cta.external }, props.cta.label) : null,
         h("button", { type: "button", className: "gs-nav__toggle", "aria-expanded": open, "aria-label": open ? "Tutup menu" : "Buka menu", onClick: function () { setOpen(!open); } },
           h(Icon, { name: open ? "close" : "chevron-down", size: 20 }))
       ),
       h("div", { className: "gs-nav__sheet", "data-open": open ? "true" : "false" },
         links.map(function (l) { return h("a", { key: l.href, href: l.href, onClick: function () { setOpen(false); } }, l.label); }),
-        props.cta ? h(Button, { href: props.cta.href, external: props.cta.external }, props.cta.label) : null
+        props.cta ? h(Button, { variant: "lime", href: props.cta.href, external: props.cta.external }, props.cta.label) : null
       )
     );
   }

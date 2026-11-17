@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import CopyTemplate from "@/components/CopyTemplate";
 import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, Callout, DocumentCard, FactTile, Pillar, RewardCard, SectionHeader } from "@/components/ds";
@@ -247,7 +246,6 @@ export default function Home() {
                 <Button variant="lime" size="lg" href={EVENT.helpdeskUrl} external arrow>
                   Buka Help Desk
                 </Button>
-                <CopyTemplate />
               </div>
             </div>
             <img className="help__runner" src="/img/pelari-greenstride.webp" alt="" width={540} height={1339} loading="lazy" />
@@ -263,11 +261,12 @@ export default function Home() {
               <img className="footer__brand" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} loading="lazy" />
               <p className="footer__line">Every step counts. Every stride matters.</p>
               <div className="footer__logos">
-                <img src="/img/logo-danantara.png" alt="Danantara Indonesia" width={137} height={36} loading="lazy" />
-                <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" width={100} height={48} loading="lazy" />
-                <img src="/img/logo-planters-club.png" alt="Planters Club" width={46} height={56} loading="lazy" />
-              </div>
-            </div>
+                <img className="footer__logo-brand" src="/img/logo-planters-club-horizontal.png" alt="Planters Club" width={157} height={56} loading="lazy" />
+                <span className="footer__logo-parents">
+                  <img src="/img/logo-danantara.png" alt="Danantara Indonesia" width={99} height={26} loading="lazy" />
+                  <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" width={75} height={36} loading="lazy" />
+                </span>
+              </div>            </div>
             <nav className="footer__nav" aria-label="Footer">
               <h3>Halaman ini</h3>
               <a href="#ringkasan">Ringkasan aturan</a>
@@ -282,7 +281,7 @@ export default function Home() {
             </nav>
           </div>
           <div className="footer__legal">
-            <span>© 2026 PTPN Group · PTPN GreenStride 2026</span>
+            <span>© 2026 Planters Club · PTPN Group</span>
             <span>{EVENT.tagline}</span>
           </div>
         </div>

@@ -233,14 +233,11 @@ export function Navbar() {
     };
   }, []);
   return (
-    <header className={`gs-nav${scrolled ? " gs-nav--scrolled" : ""}`}>
+    <header className={`gs-nav gs-on-band${scrolled ? " gs-nav--scrolled" : ""}`}>
       <div className="gs-nav__bar">
-        <a className="gs-nav__logos" href="#top" aria-label="PTPN GreenStride 2026, ke atas">
+        <a className="gs-nav__logos" href="#top" aria-label="Planters Club, PTPN GreenStride 2026, ke atas">
           <span className="gs-nav__logo">
-            <img src="/img/logo-danantara.png" alt="Danantara Indonesia" width={114} height={30} />
-          </span>
-          <span className="gs-nav__logo">
-            <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" width={79} height={38} />
+            <img src="/img/logo-planters-club-horizontal-white.png" alt="Planters Club" width={124} height={44} />
           </span>
         </a>
         <nav className="gs-nav__links" aria-label="Utama">
@@ -250,7 +247,7 @@ export function Navbar() {
             </a>
           ))}
         </nav>
-        <a className="gs-btn gs-btn--primary gs-btn--sm gs-nav__cta" href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
+        <a className="gs-btn gs-btn--lime gs-btn--sm gs-nav__cta" href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
           <Icon name="lifebuoy" size={18} />
           <span>Help Desk</span>
         </a>
@@ -264,7 +261,7 @@ export function Navbar() {
             {n.label}
           </a>
         ))}
-        <a className="gs-btn gs-btn--primary" href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
+        <a className="gs-btn gs-btn--lime" href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
           <Icon name="lifebuoy" size={18} />
           <span>Buka Help Desk</span>
         </a>

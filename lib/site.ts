@@ -14,6 +14,8 @@ export const SITE_URL = resolveSiteUrl().replace(/\/+$/, "");
 export const SITE = {
   name: "PTPN GreenStride 2026",
   shortName: "GreenStride 2026",
+  /** Penyelenggara acara: Planters Club di PTPN Group (di bawah Danantara Indonesia). */
+  organizer: "Planters Club",
   title: "PTPN GreenStride 2026 · Run for a Healthier You, A Stronger Nusantara Entreplanters",
   description:
     "Kompetisi lari virtual beregu bagi karyawan PTPN Group. Temukan ketentuan lomba, panduan aplikasi, penghargaan, dan jawaban lengkap untuk peserta GreenStride 2026.",

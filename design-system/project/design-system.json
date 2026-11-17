@@ -28,6 +28,9 @@
       "name": "Logos",
       "tile": "l",
       "order": [
+        "logo-planters-club-horizontal.png",
+        "logo-planters-club-horizontal-white.png",
+        "logo-planters-club-mark.png",
         "logo-danantara.png",
         "logo-danantara-white.png",
         "logo-ptpn-holding.png",
@@ -38,6 +41,24 @@
         "logo-greenstride-white.png"
       ],
       "files": {
+        "logo-planters-club-horizontal.png": {
+          "name": "logo-planters-club-horizontal.png",
+          "blob": "3c64c7dd2d99f20e98648dfac8e87307",
+          "size": 34787,
+          "type": "image/png"
+        },
+        "logo-planters-club-horizontal-white.png": {
+          "name": "logo-planters-club-horizontal-white.png",
+          "blob": "4f14e61395fc0a6573a45dfe749fbc63",
+          "size": 25278,
+          "type": "image/png"
+        },
+        "logo-planters-club-mark.png": {
+          "name": "logo-planters-club-mark.png",
+          "blob": "b768f626c3c22acc1b1408a9b3db2b1f",
+          "size": 14316,
+          "type": "image/png"
+        },
         "logo-danantara.png": {
           "name": "logo-danantara.png",
           "blob": "da7b296bfe5e41124aed2c44d74a08ca",
@@ -378,8 +399,8 @@
   },
   "lastChange": {
     "by": "Claude",
-    "at": "2026-11-17T04:00:06Z",
+    "at": "2026-11-17T06:58:22Z",
     "via": "Claude Code",
-    "note": "Sistem desain awal dari key visual, konten 24 KM, logo dan tangkapan layar aplikasi."
+    "note": "Header berlatar band dengan logo Planters Club putih di kedua tema. Favicon tanpa latar."
   }
 }

@@ -4,13 +4,21 @@ import { SITE, SITE_URL } from "@/lib/site";
 
 /** Data terstruktur schema.org agar Google memahami halaman sebagai acara dan pusat jawaban. */
 export default function StructuredData() {
+  // Penyelenggara: Planters Club, di dalam PTPN Group, yang berada di bawah Danantara Indonesia.
   const org = {
     "@type": "Organization",
     "@id": `${SITE_URL}/#organizer`,
-    name: "PTPN Group",
-    alternateName: "PT Perkebunan Nusantara",
-    url: "https://www.ptpn.com",
-    logo: `${SITE_URL}/img/logo-ptpn-holding.png`,
+    name: "Planters Club",
+    logo: `${SITE_URL}/img/logo-planters-club-horizontal.png`,
+    parentOrganization: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#ptpn`,
+      name: "PTPN Group",
+      alternateName: "PT Perkebunan Nusantara",
+      url: "https://www.ptpn.com",
+      logo: `${SITE_URL}/img/logo-ptpn-holding.png`,
+      parentOrganization: { "@type": "Organization", name: "Danantara Indonesia" },
+    },
   };
   const data = {
     "@context": "https://schema.org",
@@ -40,10 +48,6 @@ export default function StructuredData() {
         isAccessibleForFree: true,
         inLanguage: "id-ID",
         organizer: { "@id": `${SITE_URL}/#organizer` },
-        sponsor: [
-          { "@type": "Organization", name: "Danantara Indonesia" },
-          { "@type": "Organization", name: "Planters Club" },
-        ],
         offers: { "@type": "Offer", price: 0, priceCurrency: "IDR", availability: "https://schema.org/InStock", url: `${SITE_URL}/`, validThrough: "2026-11-18T23:59:59+07:00" },
         subjectOf: DOCUMENTS.map((d) => ({ "@type": "DigitalDocument", name: d.title, url: `${SITE_URL}${d.href}`, encodingFormat: "application/pdf" })),
       },

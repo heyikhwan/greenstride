@@ -35,6 +35,7 @@ BLOBS = {
         "info.svg": ("122a76ac8a02536f2d6bf9e3bee7ff5e", 261), "ban.svg": ("13c78b25514d2253569ab51e2f75c40e", 251),
     },
     "Logos": {
+        "logo-planters-club-horizontal.png": ("3c64c7dd2d99f20e98648dfac8e87307", 34787), "logo-planters-club-horizontal-white.png": ("4f14e61395fc0a6573a45dfe749fbc63", 25278), "logo-planters-club-mark.png": ("b768f626c3c22acc1b1408a9b3db2b1f", 14316),
         "logo-danantara.png": ("da7b296bfe5e41124aed2c44d74a08ca", 87830), "logo-danantara-white.png": ("c45ad310d9490f9ee909f06c6c8ed466", 23708),
         "logo-ptpn-holding.png": ("bb5b7beb50f12c0362cebf15b0bf426a", 35428), "logo-ptpn-white.png": ("6546e4133134d5af0acf355a7e80e37a", 28596),
         "logo-holding-only.png": ("7ce6b1e12e127b6de7ebd4aaa4d65e4d", 19100), "logo-planters-club.png": ("19138a90142bb9256988a6725774c768", 149932),
@@ -88,7 +89,7 @@ export interface FaqItemProps { id?: string; question: ReactNode; defaultOpen?: 
 export interface CalloutProps { tone?: "attention" | "info" | "rule"; title?: string; icon?: IconName; children: ReactNode }
 export interface DocumentCardProps { title: string; description: string; href: string; size?: string; type?: string; download?: string | boolean }
 export interface NavLink { href: string; label: string; current?: boolean }
-export interface NavbarProps { logos: { src: string; srcDark?: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }
+export interface NavbarProps { logos: { src: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }
 """)
 
 # ───────── komponen: README + preview
@@ -298,16 +299,16 @@ h("div", { style: { display: "grid", gap: 12, maxWidth: 640 } },
 """)
 
 comp("Navbar", "Navigasi", 300, """
-Header lengket: logo Danantara dan PTPN (versi warna) di kiri, tautan bagian di kanan dengan garis bawah yang tergambar saat disorot, satu tombol utama. Bayangan muncul setelah halaman digulir. Di bawah 860 px berubah menjadi tombol menu yang membuka lembar tautan.
+Header lengket berlatar `band` (hijau hutan) di kedua tema, menyambung ke hero: hanya logo Planters Club horizontal putih (penyelenggara) di kiri, tanpa pelat; tinggi 44 px, 36 px di ponsel. Danantara dan PTPN tidak tampil di header; tempatnya di footer. Tautan bagian `band-ink` di kanan dengan garis bawah `lime` yang tergambar saat disorot, satu tombol `lime`. Bayangan muncul setelah halaman digulir. Di bawah 860 px berubah menjadi tombol menu yang membuka lembar tautan.
 
-Konsumen memberi `logos` (versi warna di `src`, versi putih di `srcDark` untuk tema gelap), `links` (anchor ke bagian yang benar-benar ada), dan `cta`.
+Konsumen memberi `logos` (satu entri: `logo-planters-club-horizontal-white.png`), `links` (anchor ke bagian yang benar-benar ada), dan `cta`.
 """, """
 h(G.Navbar, {
-  logos: [{ src: "%s", srcDark: "%s", alt: "Danantara Indonesia" }, { src: "%s", srcDark: "%s", alt: "Perkebunan Nusantara" }],
+  logos: [{ src: "%s", alt: "Planters Club" }],
   links: [{ href: "#ringkasan", label: "Ringkasan", current: true }, { href: "#cara-ikut", label: "Cara ikut" }, { href: "#jadwal", label: "Jadwal" }, { href: "#faq", label: "FAQ" }, { href: "#unduhan", label: "Unduhan" }],
   cta: { href: "https://99virtualrace.com/HDPTPN", label: "Help Desk", external: true }
 })
-""" % (blob("Logos", "logo-danantara.png"), blob("Logos", "logo-danantara-white.png"), blob("Logos", "logo-ptpn-holding.png"), blob("Logos", "logo-ptpn-white.png")), extra=" pvnav")
+""" % (blob("Logos", "logo-planters-club-horizontal-white.png"),), extra=" pvnav")
 # Navbar mengisi lebar tanpa padding
 p = os.path.join(P, "components/Navbar/preview.html")
 t = open(p, encoding="utf-8").read().replace(".pv{padding:24px;}", ".pv{padding:24px;} .pvnav{padding:0;}")
@@ -315,7 +316,7 @@ open(p, "w", encoding="utf-8", newline="\n").write(t)
 
 # ───────── README grup aset
 w("assets/Icons/README.md", "Ikon garis 24 px, tebal 2 px, bertinta `band` (#0B3D24) untuk diunduh. Di situs, pakai komponen `Icon` agar warna mengikuti teks. Digambar mengikuti gaya lencana di key visual; ganti bila tersedia file resmi.\n")
-w("assets/Logos/README.md", "Logo resmi. Versi warna (`logo-danantara.png`, `logo-ptpn-holding.png`, `logo-planters-club.png`) di atas `surface`; versi putih (`-white`) di atas `band`. `logo-holding-only.png` untuk favicon dan ruang sempit. `logo-greenstride-white.png` adalah logotype acara, hanya di atas `band`. Jangan mengubah warna atau proporsi.\n")
+w("assets/Logos/README.md", "Logo resmi. Planters Club adalah penyelenggara dan logo utama: `logo-planters-club-horizontal-white.png` untuk header (berlatar `band`, sendirian, tanpa pelat); `logo-planters-club-horizontal.png` untuk footer dan gambar bagikan; `logo-planters-club.png` (tumpuk) bila ruang tinggi; `logo-planters-club-mark.png` (ikon saja) untuk favicon dan ruang sangat sempit. Danantara (`logo-danantara.png`) dan PTPN (`logo-ptpn-holding.png`) adalah logo induk: hanya di footer dan gambar bagikan, selalu sesudah Planters Club, dipisah garis, lebih kecil. Semua logo memakai warna asli; di atas `band`, taruh di pelat terang `band-ink`. Versi `-white` lain tidak dipakai. `logo-greenstride-white.png` adalah logotype acara, hanya di atas `band`. `logo-holding-only.png` untuk ruang sempit. Jangan mengubah warna atau proporsi.\n")
 w("assets/Images/README.md", "Foto acara, tangkapan layar aplikasi 99 Virtual Race dan Strava (tampilkan di dalam bingkai ponsel AppSteps), badge toko resmi, dan ikon aplikasi resmi. `key-visual.webp` hanya rujukan gaya: memuat tanggal lama, jangan ditampilkan utuh.\n")
 
 # ───────── sampul
@@ -369,12 +370,12 @@ for g in groups:
     asset_groups[g] = {"name": g, "tile": tiles[g], "order": names,
                        "files": {n: {"name": n, "blob": BLOBS[g][n][0], "size": BLOBS[g][n][1], "type": MIME[n.rsplit(".", 1)[1]]} for n in names}}
 index = {
-    "v": 3, "layout": "files", "createdOnFiles": {"v": 1, "at": now},
+    "v": 3, "layout": "files", "createdOnFiles": {"v": 1, "at": "2026-11-17T04:00:06Z"},  # penanda: tetap seperti saat dibuat
     "title": "GreenStride 2026", "namespace": "GreenStride",
     "libraries": [{"name": "react", "version": "18"}, {"name": "react-dom", "version": "18"}],
     "sections": {}, "groups": groups, "assetGroups": asset_groups, "blobs": {},
     "docs": {"readme": "project/README.md", "sections": []},
-    "lastChange": {"by": "Claude", "at": now, "via": "Claude Code", "note": "Sistem desain awal dari key visual, konten 24 KM, logo dan tangkapan layar aplikasi."},
+    "lastChange": {"by": "Claude", "at": now, "via": "Claude Code", "note": "Header berlatar band dengan logo Planters Club putih di kedua tema. Favicon tanpa latar."},
 }
 w("design-system.json", json.dumps(index, indent=2, ensure_ascii=False) + "\n")
 

@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   description: SITE.description,
   applicationName: SITE.name,
   keywords: SITE.keywords,
-  authors: [{ name: "PTPN Group" }],
-  creator: "PTPN Group",
-  publisher: "PTPN Group",
+  authors: [{ name: SITE.organizer }],
+  creator: SITE.organizer,
+  publisher: SITE.organizer,
   category: "sports",
   alternates: { canonical: "/" },
   openGraph: {
