@@ -704,6 +704,39 @@ export function Schedule() {
   );
 }
 
+/* Muncul setelah kira-kira satu layar digulir, karena sebelum itu header dan logo #top masih dekat.
+   Tetap tautan biasa ke #top: gulir halus dan scroll-padding sudah diatur di CSS, fokus ikut pindah ke atas. */
+export function BackToTop() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      setShow(window.scrollY > window.innerHeight * 0.9);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+  return (
+    <a className="gs-totop" href="#top" data-show={show ? "true" : "false"} aria-label="Kembali ke atas" title="Kembali ke atas">
+      <svg className="gs-totop__ring" viewBox="0 0 52 52" aria-hidden="true">
+        <circle className="gs-totop__track" cx="26" cy="26" r="24.5" pathLength={100} />
+        <circle className="gs-totop__fill" cx="26" cy="26" r="24.5" pathLength={100} />
+      </svg>
+      <Icon name="arrow-right" size={22} />
+    </a>
+  );
+}
+
 const NAV = [
   { href: "#ringkasan", label: "Ringkasan" },
   { href: "#cara-ikut", label: "Cara ikut" },

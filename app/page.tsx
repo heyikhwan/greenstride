@@ -2,7 +2,7 @@
 import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
-import { ActivityCheck, AppSteps, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
+import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
 import { APPS, DOCUMENTS, EVENT } from "@/lib/event";
 
 export default function Home() {
@@ -391,6 +391,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      <BackToTop />
     </>
   );
 }

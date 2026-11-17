@@ -167,6 +167,8 @@ a { color: var(--leaf); }
 .footer__nav a:hover { background-size: 100% 2px; }
 .footer__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); padding-block: var(--space-5); border-top: 1px solid rgba(243, 247, 236, 0.14); font-size: 14px; color: var(--band-muted); }
 .footer__legal a { color: var(--band-ink); }
+/* Di bawah ~1400 px tombol kembali ke atas menindih ujung kanan baris legal; sisakan ruang selebar tombol. */
+@media (max-width: 1400px) { .footer__legal { padding-right: 64px; } }
 
 /* ───────── Responsif */
 @media (max-width: 1080px) {

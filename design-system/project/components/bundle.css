@@ -303,13 +303,6 @@
 /* ───────── Navbar */
 /* Header berdiri di `band` di kedua tema agar logo Planters Club putih selalu terbaca; menyambung ke hero. */
 .gs-nav { position: sticky; top: 0; z-index: 20; background: var(--band); color: var(--band-ink); border-bottom: 1px solid rgba(243, 247, 236, 0.12); transition: box-shadow var(--dur-base) var(--ease-out); }
-/* Garis lime di tepi bawah header memanjang mengikuti gulir: seberapa jauh halaman panjang ini sudah ditempuh.
-   Hanya di peramban yang mendukung animasi berbasis gulir; di peramban lain garis tidak tampil. */
-@supports (animation-timeline: scroll()) {
-  .gs-nav::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--lime); transform-origin: left; transform: scaleX(0);
-    animation: gs-progress linear both; animation-timeline: scroll(root); }
-}
-@keyframes gs-progress { to { transform: scaleX(1); } }
 .gs-nav--scrolled { box-shadow: var(--shadow-md); }
 .gs-nav__bar { display: flex; align-items: center; gap: var(--space-5); max-width: var(--container); height: 72px; margin: 0 auto; padding: 0 var(--space-5); }
 /* Header hanya memuat logo Planters Club horizontal tanpa pelat: berwarna asli di tema terang, versi putih (srcDark) di tema gelap. */
@@ -340,6 +333,31 @@
   .gs-nav__toggle .gs-icon { animation: gs-turn var(--dur-base) var(--ease-spring); }
 }
 @keyframes gs-turn { from { opacity: 0; transform: rotate(-90deg); } }
+
+/* ───────── Kembali ke atas
+   Bulat berwarna band seperti header, karena tujuannya memang header. Cincin lime menunjukkan
+   seberapa jauh halaman sudah ditempuh; ini satu-satunya penanda progres gulir di halaman. Panah memakai arrow-right yang diputar agar satu bentuk dengan panah CTA. */
+.gs-totop { position: fixed; right: max(var(--space-5), env(safe-area-inset-right, 0px)); bottom: max(var(--space-5), env(safe-area-inset-bottom, 0px)); z-index: 15;
+  display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--band); color: var(--band-ink); box-shadow: var(--shadow-md); text-decoration: none; cursor: pointer;
+  opacity: 0; visibility: hidden; transform: translateY(12px);
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), background-color var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-base); }
+.gs-totop[data-show="true"] { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.gs-totop:hover { background: var(--band-raised); }
+/* Tombol melayang di atas permukaan terang dan footer band: celah outline diisi band, outline lime, agar terlihat di keduanya. */
+.gs-totop:focus-visible { outline-color: var(--lime); box-shadow: 0 0 0 3px var(--band), var(--shadow-md); }
+.gs-totop[data-show="true"]:active { transform: scale(0.94); }
+.gs-totop .gs-icon { position: relative; transform: rotate(-90deg); transition: transform var(--dur-base) var(--ease-spring); }
+.gs-totop:hover .gs-icon { transform: translateY(-3px) rotate(-90deg); }
+.gs-totop__ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); fill: none; stroke-width: 3; pointer-events: none; }
+.gs-totop__track { stroke: rgba(243, 247, 236, 0.18); }
+.gs-totop__fill { stroke: var(--lime); stroke-dasharray: 100; stroke-dashoffset: 100; }
+@supports (animation-timeline: scroll()) {
+  .gs-totop__fill { animation: gs-totop-fill linear both; animation-timeline: scroll(root); }
+}
+@keyframes gs-totop-fill { to { stroke-dashoffset: 0; } }
+@media (max-width: 640px) {
+  .gs-totop { right: max(var(--space-4), env(safe-area-inset-right, 0px)); bottom: max(var(--space-4), env(safe-area-inset-bottom, 0px)); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .gs *, .gs *::before, .gs *::after { animation: none !important; transition: none !important; }
