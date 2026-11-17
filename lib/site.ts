@@ -1,8 +1,15 @@
 /**
- * Data SEO situs. Set NEXT_PUBLIC_SITE_URL ke domain produksi (misalnya https://greenstride.example.id)
- * sebelum `next build`, agar tautan kanonik, sitemap dan gambar bagikan memakai alamat yang benar.
+ * Data SEO situs. Set SITE_URL ke domain produksi (misalnya https://greenstride.example.id) sebelum `next build`,
+ * agar tautan kanonik, sitemap dan gambar bagikan memakai alamat yang benar. Nilai ini hanya dibaca di server
+ * saat build, jadi tidak perlu awalan NEXT_PUBLIC_. Di Vercel, domain produksi dipakai otomatis bila SITE_URL kosong.
  */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/+$/, "");
+function resolveSiteUrl() {
+  if (process.env.SITE_URL) return process.env.SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  return "http://localhost:3000";
+}
+
+export const SITE_URL = resolveSiteUrl().replace(/\/+$/, "");
 
 export const SITE = {
   name: "PTPN GreenStride 2026",
