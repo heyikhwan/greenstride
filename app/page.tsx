@@ -21,11 +21,11 @@ export default function Home() {
             <div>
               <img className="hero__brand enter" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} />
               <h1 id="hero-h" className="enter enter--2">
-                Kumpulkan minimal <Drawn as="em" className="gs-keyline">300 km</Drawn> bersama timmu
+                Kumpulkan minimal <Drawn as="em" className="gs-keyline">300 km</Drawn> bersama tim terbaikmu
               </h1>
               <p className="hero__lead enter enter--3">
-                Lomba lari virtual beregu untuk karyawan PTPN Group. Lari atau jalan di mana saja, perekaman melalui Strava, dan
-                bawa pulang <strong>medali finisher</strong>.
+                Tantangan lari dan jalan kaki virtual beregu untuk karyawan PTPN Group. Lari atau jalan di mana saja, rekam setiap aktivitasmu melalui Strava, dan
+                raih <strong>medali finisher</strong>.
               </p>
               <div className="hero__actions enter enter--4">
                 <Button variant="lime" size="lg" href="#faq" arrow>

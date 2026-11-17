@@ -127,7 +127,7 @@ export function Countdown() {
     <div className="gs-countdown" role="timer" aria-live="off">
       <span className="gs-countdown__status">
         <span className="gs-countdown__dot" aria-hidden="true" />
-        {day === 0 ? "Lomba dimulai dalam" : "Periode lomba"}
+        {day === 0 ? "Menuju Start" : "Periode lomba"}
       </span>
       <div className="gs-countdown__units" aria-hidden={day !== 0}>
         {units.map(([v, cap], i) => (
