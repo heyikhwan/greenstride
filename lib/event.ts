@@ -135,6 +135,5 @@ export const DOCUMENTS: DocumentEntry[] = [
     description: "Panduan bergambar dari membuat akun sampai melihat peringkat.",
     href: "/dokumen/user-journey-99-virtual-race.pdf",
     size: "PDF · 42 MB",
-    note: "Sebaiknya unduh lewat Wi-Fi",
   },
 ];

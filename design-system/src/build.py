@@ -372,12 +372,12 @@ h("div", { style: { display: "grid", gap: 12, maxWidth: 640 } },
 comp("DocumentCard", "Konten", 300, """
 Satu dokumen yang bisa diunduh: ikon berkas dengan jenis, judul, satu kalimat isi, ukuran berkas. Seluruh kartu adalah tautan unduh. Tiga kartu bertumpuk atau berdampingan.
 
-Konsumen memberi `href` ke berkas di situs dan ukuran yang benar. Berkas di atas 10 MB diberi `note` "Sebaiknya unduh lewat Wi-Fi", karena peserta sering membuka situs di kebun dengan sinyal lemah.
+Konsumen memberi `href` ke berkas di situs dan ukuran yang benar.
 """, """
 h("div", { style: { display: "grid", gap: 12, maxWidth: 640 } },
   h(G.DocumentCard, { title: "Guidebook GreenStride 2026", description: "Ketentuan teknis, mekanisme lomba, dan penghargaan.", size: "PDF · 2,2 MB", href: "#" }),
   h(G.DocumentCard, { title: "Virtual Running", description: "Rencana acara, tahapan, dan kriteria penilaian.", size: "PDF · 7,5 MB", href: "#" }),
-  h(G.DocumentCard, { title: "User Journey 99 Virtual Race", description: "Panduan bergambar dari daftar akun sampai peringkat.", size: "PDF · 42 MB", note: "Sebaiknya unduh lewat Wi-Fi", href: "#" }))
+  h(G.DocumentCard, { title: "User Journey 99 Virtual Race", description: "Panduan bergambar dari daftar akun sampai peringkat.", size: "PDF · 42 MB", href: "#" }))
 """)
 
 comp("Navbar", "Navigasi", 300, """
