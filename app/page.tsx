@@ -131,7 +131,7 @@ export default function Home() {
                       <p className="rules__num">
                         23.59<small>WIB</small>
                       </p>
-                      <p className="rules__desc">Batas unggah aktivitas dan foto ke grup Strava “{EVENT.stravaGroup}”.</p>
+                      <p className="rules__desc">Akhir hari lomba. Batas jarak dan submit dihitung per hari WIB.</p>
                     </div>
                   </li>
                 </Drawn>

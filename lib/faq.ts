@@ -210,11 +210,6 @@ export const FAQ: FaqItem[] = [
     tags: "3 kali tiga sesi",
   },
   {
-    id: "grup-strava", cat: "submit", q: "Apakah harus unggah ke grup Strava?",
-    a: [`Ya. Unggah aktivitas beserta foto atau selfie ke grup Strava "${E.stravaGroup}" pada hari yang sama, paling lambat 23.59 WIB.`],
-    tags: "club foto selfie bukti",
-  },
-  {
     id: "everyone", cat: "submit", q: "Kenapa aktivitas harus Everyone?",
     a: ["Agar panitia bisa memverifikasinya. Aktivitas yang disembunyikan dapat dihapus admin verifikasi."],
     note: "Ubah Who can view menjadi Everyone sebelum menekan Save Activity.",

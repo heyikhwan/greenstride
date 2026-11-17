@@ -25,7 +25,6 @@ export const EVENT = {
 
   helpdeskUrl: "https://99virtualrace.com/HDPTPN",
   appName: "99 Virtual Race",
-  stravaGroup: "PTPN Virtual Running 2026",
 } as const;
 
 export const APPS = [
