@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import CopyTemplate from "@/components/CopyTemplate";
 import Faq from "@/components/Faq";
+import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, Callout, DocumentCard, FactTile, Pillar, RewardCard, SectionHeader } from "@/components/ds";
 import { AppSteps, Countdown, KmSplitter, Navbar, Schedule } from "@/components/interactive";
 import { APPS, DOCUMENTS, EVENT } from "@/lib/event";
@@ -8,6 +9,7 @@ import { APPS, DOCUMENTS, EVENT } from "@/lib/event";
 export default function Home() {
   return (
     <>
+      <StructuredData />
       <a className="skip" href="#ringkasan">
         Langsung ke isi
       </a>
@@ -261,9 +263,9 @@ export default function Home() {
               <img className="footer__brand" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} loading="lazy" />
               <p className="footer__line">Every step counts. Every stride matters.</p>
               <div className="footer__logos">
-                <img src="/img/logo-danantara-white.png" alt="Danantara Indonesia" width={160} height={40} loading="lazy" />
-                <img src="/img/logo-ptpn-white.png" alt="Perkebunan Nusantara" width={81} height={40} loading="lazy" />
-                <img src="/img/logo-planters-club-white.png" alt="Planters Club" width={33} height={40} loading="lazy" />
+                <img src="/img/logo-danantara.png" alt="Danantara Indonesia" width={137} height={36} loading="lazy" />
+                <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" width={100} height={48} loading="lazy" />
+                <img src="/img/logo-planters-club.png" alt="Planters Club" width={46} height={56} loading="lazy" />
               </div>
             </div>
             <nav className="footer__nav" aria-label="Footer">

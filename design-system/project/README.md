@@ -82,7 +82,8 @@ Durasi `dur-fast` untuk hover dan tekan, `dur-base` untuk buka tutup, `dur-slow`
 - Foto pelari asli dari materi acara (`hero-runners.webp`, `photo-langkah-pelari.webp`, `pelari-greenstride.webp`). Foto hero memakai bentuk daun.
 - `key-visual.webp` adalah rujukan gaya. Jangan tampilkan utuh di situs karena memuat tanggal lama.
 - Tangkapan layar aplikasi tampil di dalam bingkai ponsel AppSteps, tidak pernah lepas di halaman.
-- Logo: versi warna di atas `surface` tema terang, versi putih di atas `band` dan di tema gelap. Header: Danantara, lalu PTPN dengan garis pemisah. Footer: Danantara, PTPN, Planters Club. Jangan mengubah warna, meregangkan, atau memberi efek pada logo.
+- Logo Danantara, PTPN dan Planters Club selalu memakai warna asli. Di atas `band` atau di tema gelap, letakkan di pelat terang `band-ink` (pelat bentuk daun di footer, pelat pill di header). Hanya logotype GreenStride yang putih, dan hanya di atas `band`. Header: Danantara, lalu PTPN dengan garis pemisah. Footer: Danantara, PTPN, Planters Club. Jangan mengubah warna, meregangkan, atau memberi efek pada logo.
+- Favicon: tanda pelari GreenStride putih di kotak `band` bersudut membulat, dengan garis lintasan `lime`.
 - Badge App Store dan Google Play serta ikon 99 Virtual Race dan Strava dipakai apa adanya dari file resmi.
 
 ## Ikonografi

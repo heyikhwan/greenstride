@@ -237,12 +237,10 @@ export function Navbar() {
       <div className="gs-nav__bar">
         <a className="gs-nav__logos" href="#top" aria-label="PTPN GreenStride 2026, ke atas">
           <span className="gs-nav__logo">
-            <img src="/img/logo-danantara.png" alt="Danantara Indonesia" className="gs-logo--light" width={114} height={30} />
-            <img src="/img/logo-danantara-white.png" alt="" aria-hidden="true" className="gs-logo--dark" width={120} height={30} />
+            <img src="/img/logo-danantara.png" alt="Danantara Indonesia" width={114} height={30} />
           </span>
           <span className="gs-nav__logo">
-            <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" className="gs-logo--light" width={79} height={38} />
-            <img src="/img/logo-ptpn-white.png" alt="" aria-hidden="true" className="gs-logo--dark" width={77} height={38} />
+            <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" width={79} height={38} />
           </span>
         </a>
         <nav className="gs-nav__links" aria-label="Utama">
