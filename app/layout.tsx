@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Poppins } from "next/font/google";
-import { SITE, SITE_URL } from "@/lib/site";
+import { SITE, SITE_URL, THEME_KEY } from "@/lib/site";
 import "./tokens.css";
 import "./ds.css";
 import "./landing.css";
@@ -49,9 +49,16 @@ export const viewport: Viewport = {
   ],
 };
 
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem("${THEME_KEY}");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id" className={`${archivo.variable} ${poppins.variable}`}>
+    // Tema pilihan pengunjung (ThemeToggle di Navbar) dipasang sebelum cat pertama agar tidak berkedip.
+    // Tanpa pilihan, tokens.css mengikuti prefers-color-scheme. suppressHydrationWarning karena skrip mengubah <html>.
+    <html lang="id" className={`${archivo.variable} ${poppins.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="gs">{children}</body>
     </html>
   );

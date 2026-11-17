@@ -1,7 +1,7 @@
 // GreenStride 2026: tipe komponen (dokumentasi).
 import type { ReactNode } from "react";
 
-export type IconName = "alert" | "arrow-right" | "calendar" | "check" | "chevron-down" | "clock" | "close" | "info" | "ban" | "document" | "download" | "flag" | "gps" | "heart-pulse" | "lifebuoy" | "medal" | "phone" | "route" | "run" | "search" | "shield-check" | "team" | "trophy" | "upload";
+export type IconName = "alert" | "arrow-right" | "calendar" | "check" | "chevron-down" | "clock" | "close" | "info" | "ban" | "document" | "download" | "flag" | "gps" | "heart-pulse" | "lifebuoy" | "medal" | "moon" | "phone" | "route" | "run" | "search" | "shield-check" | "sun" | "team" | "trophy" | "upload";
 
 export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string }
 export interface ButtonProps { variant?: "primary" | "secondary" | "ghost" | "lime" | "on-band"; size?: "sm" | "md" | "lg"; icon?: IconName; arrow?: boolean; href?: string; external?: boolean; type?: "button" | "submit"; disabled?: boolean; onClick?: () => void; className?: string; children: ReactNode }
@@ -30,4 +30,4 @@ export interface FaqItemProps { id?: string; question: ReactNode; defaultOpen?: 
 export interface CalloutProps { tone?: "attention" | "info" | "rule"; title?: string; icon?: IconName; children: ReactNode }
 export interface DocumentCardProps { title: string; description: string; href: string; size?: string; note?: string; type?: string; download?: string | boolean }
 export interface NavLink { href: string; label: string; current?: boolean }
-export interface NavbarProps { logos: { src: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }
+export interface NavbarProps { logos: { src: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string; theme?: boolean }

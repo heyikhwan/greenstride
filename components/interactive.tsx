@@ -1,9 +1,10 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { createElement, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { createElement, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { Icon, Illustration } from "./ds";
 import { APP_STEPS, EVENT, SCHEDULE } from "@/lib/event";
+import { THEME_KEY } from "@/lib/site";
 
 /* ───────── jam bersama: satu interval untuk semua komponen yang membaca waktu */
 let subs: (() => void)[] = [];
@@ -737,6 +738,54 @@ export function BackToTop() {
   );
 }
 
+/* ───────── tema terang/gelap
+   Tanpa pilihan, halaman mengikuti tema perangkat (tokens.css). Pilihan disimpan di localStorage dan dipasang
+   skrip di <head> (app/layout.tsx) sebelum cat pertama. Ikon dipilih CSS menurut tema yang berlaku, jadi HTML
+   statis sudah benar sebelum hidrasi; state di sini hanya untuk nama tombol. */
+const DARK_MQ = "(prefers-color-scheme: dark)";
+function subscribeTheme(fn: () => void) {
+  const mq = window.matchMedia(DARK_MQ);
+  mq.addEventListener("change", fn);
+  const mo = new MutationObserver(fn);
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => {
+    mq.removeEventListener("change", fn);
+    mo.disconnect();
+  };
+}
+function isDark() {
+  const t = document.documentElement.getAttribute("data-theme");
+  return t ? t === "dark" : window.matchMedia(DARK_MQ).matches;
+}
+
+export function ThemeToggle() {
+  const dark = useSyncExternalStore(subscribeTheme, isDark, () => null);
+  // Strict Mode di dev memasang ulang <html> tanpa atribut dari skrip; pasang lagi sebelum cat. Di produksi tidak mengubah apa pun.
+  useLayoutEffect(() => {
+    try {
+      const t = localStorage.getItem(THEME_KEY);
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch {}
+  }, []);
+  const toggle = () => {
+    const next = isDark() ? "light" : "dark";
+    try {
+      localStorage.setItem(THEME_KEY, next);
+    } catch {}
+    const apply = () => document.documentElement.setAttribute("data-theme", next);
+    // Seluruh warna halaman berganti sekaligus; pudar silang singkat membuatnya tidak terasa seperti kedipan.
+    if (typeof document.startViewTransition === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.startViewTransition(apply);
+    else apply();
+  };
+  const label = dark === null ? "Ganti tema terang atau gelap" : dark ? "Pakai tema terang" : "Pakai tema gelap";
+  return (
+    <button type="button" className="gs-nav__theme" onClick={toggle} aria-label={label} title={label}>
+      <Icon name="moon" size={20} className="gs-nav__theme-moon" />
+      <Icon name="sun" size={20} className="gs-nav__theme-sun" />
+    </button>
+  );
+}
+
 const NAV = [
   { href: "#ringkasan", label: "Ringkasan" },
   { href: "#cara-ikut", label: "Cara ikut" },
@@ -784,6 +833,7 @@ export function Navbar() {
             </a>
           ))}
         </nav>
+        <ThemeToggle />
         <a className="gs-btn gs-btn--lime gs-btn--sm gs-nav__cta" href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
           <Icon name="lifebuoy" size={18} />
           <span>Help Desk</span>

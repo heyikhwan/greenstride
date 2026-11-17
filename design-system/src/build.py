@@ -69,7 +69,7 @@ w("components/bundle.js", bundle)
 w("components/index.d.ts", """// GreenStride 2026: tipe komponen (dokumentasi).
 import type { ReactNode } from "react";
 
-export type IconName = "alert" | "arrow-right" | "calendar" | "check" | "chevron-down" | "clock" | "close" | "info" | "ban" | "document" | "download" | "flag" | "gps" | "heart-pulse" | "lifebuoy" | "medal" | "phone" | "route" | "run" | "search" | "shield-check" | "team" | "trophy" | "upload";
+export type IconName = "alert" | "arrow-right" | "calendar" | "check" | "chevron-down" | "clock" | "close" | "info" | "ban" | "document" | "download" | "flag" | "gps" | "heart-pulse" | "lifebuoy" | "medal" | "moon" | "phone" | "route" | "run" | "search" | "shield-check" | "sun" | "team" | "trophy" | "upload";
 
 export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string }
 export interface ButtonProps { variant?: "primary" | "secondary" | "ghost" | "lime" | "on-band"; size?: "sm" | "md" | "lg"; icon?: IconName; arrow?: boolean; href?: string; external?: boolean; type?: "button" | "submit"; disabled?: boolean; onClick?: () => void; className?: string; children: ReactNode }
@@ -98,7 +98,7 @@ export interface FaqItemProps { id?: string; question: ReactNode; defaultOpen?: 
 export interface CalloutProps { tone?: "attention" | "info" | "rule"; title?: string; icon?: IconName; children: ReactNode }
 export interface DocumentCardProps { title: string; description: string; href: string; size?: string; note?: string; type?: string; download?: string | boolean }
 export interface NavLink { href: string; label: string; current?: boolean }
-export interface NavbarProps { logos: { src: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }
+export interface NavbarProps { logos: { src: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string; theme?: boolean }
 """)
 
 # ───────── komponen: README + preview
@@ -136,7 +136,7 @@ h("div", { style: { display: "grid", gap: 16 } },
 comp("Icon", "Dasar", 200, """
 Set ikon garis 24 px, tebal 2 px, ujung bulat, warna mengikuti teks (`currentColor`). Konsumen memberi `name`; beri `label` hanya bila ikon berdiri tanpa teks.
 
-Makna tetap: `run` aktivitas, `team` tim, `route` jarak, `calendar` jadwal, `clock` waktu dan pace, `upload` submit, `shield-check` verifikasi, `medal` finisher, `trophy` juara, `phone` aplikasi, `gps` GPS, `lifebuoy` bantuan, `document` dan `download` dokumen, `alert` perhatian, `info` keterangan, `ban` tidak dihitung, `heart-pulse` kesehatan, `flag` mulai.
+Makna tetap: `run` aktivitas, `team` tim, `route` jarak, `calendar` jadwal, `clock` waktu dan pace, `upload` submit, `shield-check` verifikasi, `medal` finisher, `trophy` juara, `phone` aplikasi, `gps` GPS, `lifebuoy` bantuan, `document` dan `download` dokumen, `alert` perhatian, `info` keterangan, `ban` tidak dihitung, `heart-pulse` kesehatan, `flag` mulai, `moon` dan `sun` tombol tema (ikon tema tujuan).
 
 Jangan memakai satu ikon untuk dua makna, atau ikon tanpa teks untuk aksi penting.
 """, """
@@ -381,7 +381,9 @@ h("div", { style: { display: "grid", gap: 12, maxWidth: 640 } },
 """)
 
 comp("Navbar", "Navigasi", 300, """
-Header lengket berlatar `band` (hijau hutan) di kedua tema, menyambung ke hero: hanya logo Planters Club horizontal putih (penyelenggara) di kiri, tanpa pelat; tinggi 44 px, 36 px di ponsel. Danantara dan PTPN tidak tampil di header; tempatnya di footer. Tautan bagian `band-ink` di kanan dengan garis bawah `lime` yang tergambar saat disorot, satu tombol `lime`. Bayangan muncul setelah halaman digulir. Di bawah 860 px berubah menjadi tombol menu yang membuka lembar tautan.
+Header lengket berlatar `band` (hijau hutan) di kedua tema, menyambung ke hero: hanya logo Planters Club horizontal putih (penyelenggara) di kiri, tanpa pelat; tinggi 44 px, 36 px di ponsel. Danantara dan PTPN tidak tampil di header; tempatnya di footer. Tautan bagian `band-ink` di kanan dengan garis bawah `lime` yang tergambar saat disorot, satu tombol `lime`. Bayangan muncul setelah halaman digulir. Di bawah 960 px (agar tautan, tombol tema, dan Help Desk tidak menabrak logo) berubah menjadi tombol menu yang membuka lembar tautan.
+
+Tombol tema (`ThemeToggle`, bulat 44 px seperti tombol menu) selalu tampil di header, di sebelah kiri tombol `lime` atau tombol menu. Ikonnya menunjukkan tema tujuan: bulan saat terang, matahari saat gelap. Tanpa pilihan, tema mengikuti perangkat. Pilihan disimpan di `localStorage` dengan kunci `gs-theme`; konsumen memasangnya sebagai `data-theme` pada `<html>` lewat skrip kecil di `<head>` agar halaman tidak berkedip. `theme: false` menyembunyikan tombol.
 
 Konsumen memberi `logos` (satu entri: `logo-planters-club-horizontal-white.png`), `links` (anchor ke bagian yang benar-benar ada), dan `cta`.
 """, """
@@ -457,7 +459,7 @@ index = {
     "libraries": [{"name": "react", "version": "18"}, {"name": "react-dom", "version": "18"}],
     "sections": {}, "groups": groups, "assetGroups": asset_groups, "blobs": {},
     "docs": {"readme": "project/README.md", "sections": []},
-    "lastChange": {"by": "Claude", "at": now, "via": "Claude Code", "note": "Ringkasan dan Jadwal dirombak: TeamRoute, RuleGraphic, RaceCalendar rencana 4 minggu, ScheduleItem dengan chip tanggal, ActivityCheck dengan keadaan kosong bergrafik."},
+    "lastChange": {"by": "Claude", "at": now, "via": "Claude Code", "note": "Tombol tema terang/gelap (ThemeToggle) di Navbar, ikon sun dan moon."},
 }
 w("design-system.json", json.dumps(index, indent=2, ensure_ascii=False) + "\n")
 

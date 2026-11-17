@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"GreenStride","components":[{"name":"Button"},{"name":"Icon"},{"name":"SectionHeader"},{"name":"Pillar"},{"name":"FactTile"},{"name":"Countdown"},{"name":"KmSplitter"},{"name":"TeamBar"},{"name":"TeamRoute"},{"name":"RuleGraphic"},{"name":"Route"},{"name":"ActivityCheck"},{"name":"RaceCalendar"},{"name":"RewardLadder"},{"name":"Illustration"},{"name":"ScheduleItem"},{"name":"RewardCard"},{"name":"AppSteps"},{"name":"AppCard"},{"name":"Chip"},{"name":"SearchField"},{"name":"FaqItem"},{"name":"Callout"},{"name":"DocumentCard"},{"name":"Navbar"}]} */
+/* @ds-bundle: {"format":4,"namespace":"GreenStride","components":[{"name":"Button"},{"name":"Icon"},{"name":"SectionHeader"},{"name":"Pillar"},{"name":"FactTile"},{"name":"Countdown"},{"name":"KmSplitter"},{"name":"TeamBar"},{"name":"TeamRoute"},{"name":"RuleGraphic"},{"name":"Route"},{"name":"ActivityCheck"},{"name":"RaceCalendar"},{"name":"RewardLadder"},{"name":"Illustration"},{"name":"ScheduleItem"},{"name":"RewardCard"},{"name":"AppSteps"},{"name":"AppCard"},{"name":"Chip"},{"name":"SearchField"},{"name":"FaqItem"},{"name":"Callout"},{"name":"DocumentCard"},{"name":"Navbar"},{"name":"ThemeToggle"}]} */
 (function () {
   "use strict";
   var React = window.React;
@@ -498,6 +498,33 @@
     );
   }
 
+  /* Tombol tema terang/gelap. Tanpa pilihan, tema mengikuti perangkat; pilihan disimpan di localStorage "gs-theme"
+     dan konsumen memasangnya lagi di <head> sebelum cat pertama. Ikon dipilih CSS menurut tema yang berlaku. */
+  function ThemeToggle() {
+    var st = useState(null); var dark = st[0], setDark = st[1];
+    function isDark() {
+      var t = document.documentElement.getAttribute("data-theme");
+      return t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    useEffect(function () {
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      function sync() { setDark(isDark()); }
+      sync(); mq.addEventListener("change", sync);
+      var mo = new MutationObserver(sync); mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      return function () { mq.removeEventListener("change", sync); mo.disconnect(); };
+    }, []);
+    function toggle() {
+      var next = isDark() ? "light" : "dark";
+      try { localStorage.setItem("gs-theme", next); } catch (e) {}
+      function apply() { document.documentElement.setAttribute("data-theme", next); }
+      if (typeof document.startViewTransition === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.startViewTransition(apply); else apply();
+    }
+    var label = dark === null ? "Ganti tema terang atau gelap" : dark ? "Pakai tema terang" : "Pakai tema gelap";
+    return h("button", { type: "button", className: "gs-nav__theme", onClick: toggle, "aria-label": label, title: label },
+      h(Icon, { name: "moon", size: 20, className: "gs-nav__theme-moon" }),
+      h(Icon, { name: "sun", size: 20, className: "gs-nav__theme-sun" }));
+  }
+
   function Navbar(props) {
     var s = useState(false); var open = s[0], setOpen = s[1];
     var sc = useState(false); var scrolled = sc[0], setScrolled = sc[1];
@@ -516,6 +543,7 @@
         h("nav", { className: "gs-nav__links", "aria-label": "Utama" }, links.map(function (l) {
           return h("a", { key: l.href, href: l.href, "aria-current": l.current ? "true" : undefined }, l.label);
         })),
+        props.theme === false ? null : h(ThemeToggle),
         props.cta ? h(Button, { variant: "lime", className: "gs-nav__cta", href: props.cta.href, size: "sm", external: props.cta.external }, props.cta.label) : null,
         h("button", { type: "button", className: "gs-nav__toggle", "aria-expanded": open, "aria-label": open ? "Tutup menu" : "Buka menu", onClick: function () { setOpen(!open); } },
           h(Icon, { name: open ? "close" : "chevron-down", size: 20 }))
@@ -530,7 +558,7 @@
   window.GreenStride = Object.assign(window.GreenStride || {}, {
     Icon: Icon, Button: Button, SectionHeader: SectionHeader, Pillar: Pillar, FactTile: FactTile, Countdown: Countdown,
     KmSplitter: KmSplitter, TeamBar: TeamBar, TeamRoute: TeamRoute, RuleGraphic: RuleGraphic, Route: Route, ActivityCheck: ActivityCheck, RaceCalendar: RaceCalendar, RewardLadder: RewardLadder, Illustration: Illustration, ScheduleItem: ScheduleItem, RewardCard: RewardCard, AppSteps: AppSteps, AppCard: AppCard,
-    Chip: Chip, SearchField: SearchField, FaqItem: FaqItem, Callout: Callout, DocumentCard: DocumentCard, Navbar: Navbar,
+    Chip: Chip, SearchField: SearchField, FaqItem: FaqItem, Callout: Callout, DocumentCard: DocumentCard, Navbar: Navbar, ThemeToggle: ThemeToggle,
     iconNames: Object.keys(ICONS)
   });
 })();

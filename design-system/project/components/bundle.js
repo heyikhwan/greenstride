@@ -1,11 +1,11 @@
-/* @ds-bundle: {"format":4,"namespace":"GreenStride","components":[{"name":"Button"},{"name":"Icon"},{"name":"SectionHeader"},{"name":"Pillar"},{"name":"FactTile"},{"name":"Countdown"},{"name":"KmSplitter"},{"name":"TeamBar"},{"name":"TeamRoute"},{"name":"RuleGraphic"},{"name":"Route"},{"name":"ActivityCheck"},{"name":"RaceCalendar"},{"name":"RewardLadder"},{"name":"Illustration"},{"name":"ScheduleItem"},{"name":"RewardCard"},{"name":"AppSteps"},{"name":"AppCard"},{"name":"Chip"},{"name":"SearchField"},{"name":"FaqItem"},{"name":"Callout"},{"name":"DocumentCard"},{"name":"Navbar"}]} */
+/* @ds-bundle: {"format":4,"namespace":"GreenStride","components":[{"name":"Button"},{"name":"Icon"},{"name":"SectionHeader"},{"name":"Pillar"},{"name":"FactTile"},{"name":"Countdown"},{"name":"KmSplitter"},{"name":"TeamBar"},{"name":"TeamRoute"},{"name":"RuleGraphic"},{"name":"Route"},{"name":"ActivityCheck"},{"name":"RaceCalendar"},{"name":"RewardLadder"},{"name":"Illustration"},{"name":"ScheduleItem"},{"name":"RewardCard"},{"name":"AppSteps"},{"name":"AppCard"},{"name":"Chip"},{"name":"SearchField"},{"name":"FaqItem"},{"name":"Callout"},{"name":"DocumentCard"},{"name":"Navbar"},{"name":"ThemeToggle"}]} */
 (function () {
   "use strict";
   var React = window.React;
   var h = React.createElement;
   var useState = React.useState, useEffect = React.useEffect, useRef = React.useRef, useSyncExternalStore = React.useSyncExternalStore;
 
-  var ICONS = {"run": "<circle cx=\"15.5\" cy=\"4.5\" r=\"2\"/><path d=\"M8 21l3.2-5.6 3.3 2.6V21\"/><path d=\"M6 11.5l3-3.2h4.2l2.3 3.4 3 .8\"/><path d=\"M11.2 15.4l1.6-6.9\"/><path d=\"M5 15.5h3.2l1.3-2.3\"/>", "team": "<circle cx=\"9\" cy=\"8\" r=\"3.2\"/><path d=\"M3 20c.5-3.6 2.9-5.6 6-5.6s5.5 2 6 5.6\"/><circle cx=\"17.2\" cy=\"9\" r=\"2.4\"/><path d=\"M16 14.6c2.6-.3 4.6 1.3 5 4.4\"/>", "route": "<circle cx=\"6\" cy=\"18\" r=\"2.2\"/><circle cx=\"18\" cy=\"6\" r=\"2.2\"/><path d=\"M8.2 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.8\"/>", "calendar": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15.5\" rx=\"3\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/><path d=\"M8 14h2M14 14h2M8 17h2\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M12 7.5V12l3 2\"/>", "upload": "<path d=\"M12 15V4m0 0L7.5 8.5M12 4l4.5 4.5\"/><path d=\"M4 14.5v3.5A2 2 0 0 0 6 20h12a2 2 0 0 0 2-2v-3.5\"/>", "medal": "<circle cx=\"12\" cy=\"15\" r=\"5\"/><path d=\"M8.6 3h-3l3.7 7.4M15.4 3h3l-3.7 7.4M9.5 3l2.5 5 2.5-5\"/><path d=\"M12 13v4\"/>", "trophy": "<path d=\"M8 4h8v5a4 4 0 0 1-8 0V4z\"/><path d=\"M8 6H4.5v1.5A3.5 3.5 0 0 0 8 11M16 6h3.5v1.5A3.5 3.5 0 0 1 16 11\"/><path d=\"M12 13v4M8.5 20.5h7M10 17h4l.5 3.5h-5z\"/>", "phone": "<rect x=\"6.5\" y=\"2.5\" width=\"11\" height=\"19\" rx=\"2.6\"/><path d=\"M10.5 18.5h3\"/>", "gps": "<circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/><path d=\"M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5\"/>", "shield-check": "<path d=\"M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z\"/><path d=\"M8.8 12.2l2.2 2.2 4.4-4.6\"/>", "lifebuoy": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/><path d=\"M6 6l3.5 3.5M14.5 14.5L18 18M18 6l-3.5 3.5M9.5 14.5L6 18\"/>", "document": "<path d=\"M6 3h8l4.5 4.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M13.5 3v5h5M8 13h8M8 16.5h5\"/>", "download": "<path d=\"M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5\"/><path d=\"M4.5 19.5h15\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"M20 20l-4.2-4.2\"/>", "arrow-right": "<path d=\"M4.5 12h14M13 6.5l5.5 5.5-5.5 5.5\"/>", "chevron-down": "<path d=\"M6 9.5l6 6 6-6\"/>", "alert": "<path d=\"M12 4l9 15.5H3z\"/><path d=\"M12 10v4M12 17.2v.3\"/>", "heart-pulse": "<path d=\"M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z\"/><path d=\"M4.8 12h3.4l1.6-2.6 2.4 5 1.6-2.4h5.4\"/>", "flag": "<path d=\"M5 21V4\"/><path d=\"M5 4.5h11.5l-2 4 2 4H5\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7.5\"/>", "close": "<path d=\"M6 6l12 12M18 6L6 18\"/>", "info": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M12 11v5.5M12 7.6v.4\"/>", "ban": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M6 6l12 12\"/>"};
+  var ICONS = {"run": "<circle cx=\"15.5\" cy=\"4.5\" r=\"2\"/><path d=\"M8 21l3.2-5.6 3.3 2.6V21\"/><path d=\"M6 11.5l3-3.2h4.2l2.3 3.4 3 .8\"/><path d=\"M11.2 15.4l1.6-6.9\"/><path d=\"M5 15.5h3.2l1.3-2.3\"/>", "team": "<circle cx=\"9\" cy=\"8\" r=\"3.2\"/><path d=\"M3 20c.5-3.6 2.9-5.6 6-5.6s5.5 2 6 5.6\"/><circle cx=\"17.2\" cy=\"9\" r=\"2.4\"/><path d=\"M16 14.6c2.6-.3 4.6 1.3 5 4.4\"/>", "route": "<circle cx=\"6\" cy=\"18\" r=\"2.2\"/><circle cx=\"18\" cy=\"6\" r=\"2.2\"/><path d=\"M8.2 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.8\"/>", "calendar": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15.5\" rx=\"3\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/><path d=\"M8 14h2M14 14h2M8 17h2\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M12 7.5V12l3 2\"/>", "upload": "<path d=\"M12 15V4m0 0L7.5 8.5M12 4l4.5 4.5\"/><path d=\"M4 14.5v3.5A2 2 0 0 0 6 20h12a2 2 0 0 0 2-2v-3.5\"/>", "medal": "<circle cx=\"12\" cy=\"15\" r=\"5\"/><path d=\"M8.6 3h-3l3.7 7.4M15.4 3h3l-3.7 7.4M9.5 3l2.5 5 2.5-5\"/><path d=\"M12 13v4\"/>", "trophy": "<path d=\"M8 4h8v5a4 4 0 0 1-8 0V4z\"/><path d=\"M8 6H4.5v1.5A3.5 3.5 0 0 0 8 11M16 6h3.5v1.5A3.5 3.5 0 0 1 16 11\"/><path d=\"M12 13v4M8.5 20.5h7M10 17h4l.5 3.5h-5z\"/>", "phone": "<rect x=\"6.5\" y=\"2.5\" width=\"11\" height=\"19\" rx=\"2.6\"/><path d=\"M10.5 18.5h3\"/>", "gps": "<circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/><path d=\"M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5\"/>", "shield-check": "<path d=\"M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z\"/><path d=\"M8.8 12.2l2.2 2.2 4.4-4.6\"/>", "lifebuoy": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/><path d=\"M6 6l3.5 3.5M14.5 14.5L18 18M18 6l-3.5 3.5M9.5 14.5L6 18\"/>", "document": "<path d=\"M6 3h8l4.5 4.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M13.5 3v5h5M8 13h8M8 16.5h5\"/>", "download": "<path d=\"M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5\"/><path d=\"M4.5 19.5h15\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"M20 20l-4.2-4.2\"/>", "arrow-right": "<path d=\"M4.5 12h14M13 6.5l5.5 5.5-5.5 5.5\"/>", "chevron-down": "<path d=\"M6 9.5l6 6 6-6\"/>", "alert": "<path d=\"M12 4l9 15.5H3z\"/><path d=\"M12 10v4M12 17.2v.3\"/>", "heart-pulse": "<path d=\"M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z\"/><path d=\"M4.8 12h3.4l1.6-2.6 2.4 5 1.6-2.4h5.4\"/>", "flag": "<path d=\"M5 21V4\"/><path d=\"M5 4.5h11.5l-2 4 2 4H5\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7.5\"/>", "close": "<path d=\"M6 6l12 12M18 6L6 18\"/>", "info": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M12 11v5.5M12 7.6v.4\"/>", "ban": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M6 6l12 12\"/>", "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M5.3 18.7l1.5-1.5M17.2 6.8l1.5-1.5\"/>", "moon": "<path d=\"M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z\"/>"};
 
   function cx() {
     var out = [];
@@ -498,6 +498,33 @@
     );
   }
 
+  /* Tombol tema terang/gelap. Tanpa pilihan, tema mengikuti perangkat; pilihan disimpan di localStorage "gs-theme"
+     dan konsumen memasangnya lagi di <head> sebelum cat pertama. Ikon dipilih CSS menurut tema yang berlaku. */
+  function ThemeToggle() {
+    var st = useState(null); var dark = st[0], setDark = st[1];
+    function isDark() {
+      var t = document.documentElement.getAttribute("data-theme");
+      return t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    useEffect(function () {
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      function sync() { setDark(isDark()); }
+      sync(); mq.addEventListener("change", sync);
+      var mo = new MutationObserver(sync); mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      return function () { mq.removeEventListener("change", sync); mo.disconnect(); };
+    }, []);
+    function toggle() {
+      var next = isDark() ? "light" : "dark";
+      try { localStorage.setItem("gs-theme", next); } catch (e) {}
+      function apply() { document.documentElement.setAttribute("data-theme", next); }
+      if (typeof document.startViewTransition === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.startViewTransition(apply); else apply();
+    }
+    var label = dark === null ? "Ganti tema terang atau gelap" : dark ? "Pakai tema terang" : "Pakai tema gelap";
+    return h("button", { type: "button", className: "gs-nav__theme", onClick: toggle, "aria-label": label, title: label },
+      h(Icon, { name: "moon", size: 20, className: "gs-nav__theme-moon" }),
+      h(Icon, { name: "sun", size: 20, className: "gs-nav__theme-sun" }));
+  }
+
   function Navbar(props) {
     var s = useState(false); var open = s[0], setOpen = s[1];
     var sc = useState(false); var scrolled = sc[0], setScrolled = sc[1];
@@ -516,6 +543,7 @@
         h("nav", { className: "gs-nav__links", "aria-label": "Utama" }, links.map(function (l) {
           return h("a", { key: l.href, href: l.href, "aria-current": l.current ? "true" : undefined }, l.label);
         })),
+        props.theme === false ? null : h(ThemeToggle),
         props.cta ? h(Button, { variant: "lime", className: "gs-nav__cta", href: props.cta.href, size: "sm", external: props.cta.external }, props.cta.label) : null,
         h("button", { type: "button", className: "gs-nav__toggle", "aria-expanded": open, "aria-label": open ? "Tutup menu" : "Buka menu", onClick: function () { setOpen(!open); } },
           h(Icon, { name: open ? "close" : "chevron-down", size: 20 }))
@@ -530,7 +558,7 @@
   window.GreenStride = Object.assign(window.GreenStride || {}, {
     Icon: Icon, Button: Button, SectionHeader: SectionHeader, Pillar: Pillar, FactTile: FactTile, Countdown: Countdown,
     KmSplitter: KmSplitter, TeamBar: TeamBar, TeamRoute: TeamRoute, RuleGraphic: RuleGraphic, Route: Route, ActivityCheck: ActivityCheck, RaceCalendar: RaceCalendar, RewardLadder: RewardLadder, Illustration: Illustration, ScheduleItem: ScheduleItem, RewardCard: RewardCard, AppSteps: AppSteps, AppCard: AppCard,
-    Chip: Chip, SearchField: SearchField, FaqItem: FaqItem, Callout: Callout, DocumentCard: DocumentCard, Navbar: Navbar,
+    Chip: Chip, SearchField: SearchField, FaqItem: FaqItem, Callout: Callout, DocumentCard: DocumentCard, Navbar: Navbar, ThemeToggle: ThemeToggle,
     iconNames: Object.keys(ICONS)
   });
 })();

@@ -36,3 +36,6 @@ export const SITE = {
   ],
   themeColor: "#0b3d24",
 };
+
+/** Kunci localStorage untuk tema pilihan pengunjung ("light" | "dark"); dibaca skrip di layout dan ThemeToggle. */
+export const THEME_KEY = "gs-theme";

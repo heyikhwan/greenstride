@@ -316,12 +316,26 @@
 .gs-nav__links a:hover::after, .gs-nav__links a[aria-current="true"]::after { transform: scaleX(1); }
 .gs-nav__toggle { display: none; margin-left: auto; width: 44px; height: 44px; border: 1px solid var(--band-muted); border-radius: 50%; background: transparent; color: var(--band-ink); cursor: pointer; place-items: center; transition: background var(--dur-fast) var(--ease-out); }
 .gs-nav__toggle:hover { background: var(--band-raised); }
+/* Tombol tema: bentuk sama dengan tombol menu, berdiri di header di setiap lebar layar. Ikon menunjukkan tema tujuan
+   (bulan saat terang, matahari saat gelap) dan dipilih CSS, jadi HTML statis sudah benar sebelum skrip berjalan. */
+.gs-nav__theme { display: grid; flex: none; width: 44px; height: 44px; place-items: center; border: 1px solid var(--band-muted); border-radius: 50%; background: transparent; color: var(--band-ink); cursor: pointer; transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+.gs-nav__theme:hover { background: var(--band-raised); }
+.gs-nav__theme:active, .gs-nav__toggle:active { transform: scale(0.94); }
+.gs-nav__theme-sun { display: none; }
+:root[data-theme="dark"] .gs-nav__theme-sun { display: block; }
+:root[data-theme="dark"] .gs-nav__theme-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .gs-nav__theme-sun { display: block; }
+  :root:not([data-theme="light"]) .gs-nav__theme-moon { display: none; }
+}
 .gs-nav__sheet { display: none; }
-@media (max-width: 860px) {
+@media (max-width: 960px) {
   .gs-nav__bar { height: 64px; padding: 0 var(--space-4); }
   .gs-nav__logo img { height: 36px; }
   .gs-nav__links, .gs-nav__cta { display: none; }
-  .gs-nav__toggle { display: grid; }
+  .gs-nav__bar { gap: var(--space-3); }
+  .gs-nav__theme { margin-left: auto; }
+  .gs-nav__toggle { display: grid; margin-left: 0; }
   .gs-nav__sheet[data-open="true"] { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4) var(--space-5); border-top: 1px solid rgba(243, 247, 236, 0.12); }
   .gs-nav__sheet a:not(.gs-btn) { display: flex; align-items: center; min-height: 52px; padding: 0 var(--space-3); font: 600 17px/1 var(--font-text); color: var(--band-ink); text-decoration: none; border-radius: var(--radius-sm); }
   .gs-nav__sheet a:not(.gs-btn):hover { background: var(--band-raised); }
