@@ -3,7 +3,7 @@ import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
 import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
-import { APPS, DOCUMENTS, EVENT } from "@/lib/event";
+import { APPS, DOCUMENTS, EVENT, SOCIALS } from "@/lib/event";
 
 export default function Home() {
   return (
@@ -371,8 +371,10 @@ export default function Home() {
                 <span className="footer__logo-parents">
                   <img src="/img/logo-danantara.png" alt="Danantara Indonesia" width={99} height={26} loading="lazy" />
                   <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" width={75} height={36} loading="lazy" />
+                  <img src="/img/logo-lifeatptpn.png" alt="Life at PTPN" width={101} height={75} loading="lazy" />
                 </span>
-              </div>            </div>
+              </div>
+            </div>
             <nav className="footer__nav" aria-label="Footer">
               <h3>Halaman ini</h3>
               <a href="#tentang">Tentang</a>
@@ -386,6 +388,28 @@ export default function Home() {
               </a>
             </nav>
           </div>
+          <section className="footer__social" aria-labelledby="footer-ig">
+            <div className="footer__social-head">
+              <h3 id="footer-ig">Ikuti di Instagram</h3>
+              <p>Kabar terbaru dari PTPN dan Planters Club.</p>
+            </div>
+            <ul>
+              {SOCIALS.map((s) => (
+                <li key={s.handle}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer">
+                    <span className="footer__social-disc">
+                      <Icon name="instagram" size={20} />
+                    </span>
+                    <span className="footer__social-text">
+                      <strong>@{s.handle}</strong>
+                      <small>{s.name}</small>
+                    </span>
+                    <Icon name="arrow-right" size={18} className="footer__social-go" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
           <div className="footer__legal">
             <span>© 2026 Planters Club · PTPN Group</span>
             <span>{EVENT.tagline}</span>

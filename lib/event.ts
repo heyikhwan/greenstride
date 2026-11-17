@@ -39,6 +39,13 @@ export const EVENT = {
   appName: "99 Virtual Race",
 } as const;
 
+/** Akun Instagram yang diajak diikuti di footer. */
+export const SOCIALS = [
+  { name: "Holding Perkebunan", handle: "holdingperkebunan", href: "https://www.instagram.com/holdingperkebunan/" },
+  { name: "Life at PTPN", handle: "lifeatptpn", href: "https://www.instagram.com/lifeatptpn/" },
+  { name: "Planters Club", handle: "plantersclubptpn", href: "https://www.instagram.com/plantersclubptpn/" },
+] as const;
+
 /** Rp30.000.000 */
 export const rupiah = (n: number) => `Rp${String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
 
@@ -184,13 +191,7 @@ export type DocumentEntry = { title: string; description: string; href: string; 
 export const DOCUMENTS: DocumentEntry[] = [
   {
     title: "Guidebook GreenStride 2026",
-    description: "Ketentuan teknis, mekanisme lomba, dan penghargaan.",
-    href: "/dokumen/guidebook-greenstride-2026.pdf",
-    size: "PDF · 2,2 MB",
-  },
-  {
-    title: "Virtual Running",
-    description: "Gambaran acara, tahapan lomba, dan cara perhitungan poin.",
+    description: "Mekanisme dan tahapan lomba, cara perhitungan poin, dan penghargaan.",
     href: "/dokumen/virtual-running-greenstride-2026.pdf",
     size: "PDF · 7,5 MB",
   },
