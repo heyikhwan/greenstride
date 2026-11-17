@@ -1,0 +1,24 @@
+// GreenStride 2026: tipe komponen (dokumentasi).
+import type { ReactNode } from "react";
+
+export type IconName = "alert" | "arrow-right" | "calendar" | "check" | "chevron-down" | "clock" | "close" | "info" | "ban" | "document" | "download" | "flag" | "gps" | "heart-pulse" | "lifebuoy" | "medal" | "phone" | "route" | "run" | "search" | "shield-check" | "team" | "trophy" | "upload";
+
+export interface IconProps { name: IconName; size?: number; strokeWidth?: number; label?: string; className?: string }
+export interface ButtonProps { variant?: "primary" | "secondary" | "ghost" | "lime" | "on-band"; size?: "sm" | "md" | "lg"; icon?: IconName; arrow?: boolean; href?: string; external?: boolean; type?: "button" | "submit"; disabled?: boolean; onClick?: () => void; className?: string; children: ReactNode }
+export interface SectionHeaderProps { eyebrow?: string; title: ReactNode; lead?: ReactNode; align?: "start" | "center"; as?: "h1" | "h2" | "h3" }
+export interface PillarProps { icon: IconName; children: ReactNode }
+export interface FactTileProps { icon: IconName; value: string | number; unit?: string; label: string; note?: string }
+export interface CountdownProps { start: string; end: string; rangeLabel?: string; rangeNote?: string; idleLabel?: string; now?: number }
+export interface KmSplitterProps { target?: number; days?: number; dailyMax?: number; memberMin?: number; options?: number[]; question?: string; footnote?: boolean }
+export interface ScheduleItemProps { date: string; title: string; status?: "done" | "now" | "next" | "tba"; children?: ReactNode }
+export interface RewardCardProps { icon?: IconName; who: string; title: string; feature?: boolean; children?: ReactNode }
+export interface AppStep { title: string; body: string; image: string; alt: string }
+export interface AppStepsProps { steps: AppStep[] }
+export interface AppCardProps { name: string; role: string; icon: string; appStore?: string; playStore?: string; appStoreBadge: string; playStoreBadge: string }
+export interface ChipProps { icon?: IconName; count?: number; pressed?: boolean; quiet?: boolean; onClick?: () => void; children: ReactNode }
+export interface SearchFieldProps { id?: string; label?: string; placeholder?: string; value: string; onChange: (value: string) => void }
+export interface FaqItemProps { id?: string; question: ReactNode; defaultOpen?: boolean; open?: boolean; onToggle?: (open: boolean) => void; children: ReactNode }
+export interface CalloutProps { tone?: "attention" | "info" | "rule"; title?: string; icon?: IconName; children: ReactNode }
+export interface DocumentCardProps { title: string; description: string; href: string; size?: string; type?: string; download?: string | boolean }
+export interface NavLink { href: string; label: string; current?: boolean }
+export interface NavbarProps { logos: { src: string; srcDark?: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }

@@ -1,0 +1,16 @@
+<!-- @dsCard group="Navigasi" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Navbar</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;} .pvnav{padding:0;}</style></head>
+<body>
+<div id="root" class="gs pv pvnav"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h(G.Navbar, {
+  logos: [{ src: "/_blob/da7b296bfe5e41124aed2c44d74a08ca", srcDark: "/_blob/c45ad310d9490f9ee909f06c6c8ed466", alt: "Danantara Indonesia" }, { src: "/_blob/bb5b7beb50f12c0362cebf15b0bf426a", srcDark: "/_blob/6546e4133134d5af0acf355a7e80e37a", alt: "Perkebunan Nusantara" }],
+  links: [{ href: "#ringkasan", label: "Ringkasan", current: true }, { href: "#cara-ikut", label: "Cara ikut" }, { href: "#jadwal", label: "Jadwal" }, { href: "#faq", label: "FAQ" }, { href: "#unduhan", label: "Unduhan" }],
+  cta: { href: "https://99virtualrace.com/HDPTPN", label: "Help Desk", external: true }
+}));
+</script>
+</body>
+</html>

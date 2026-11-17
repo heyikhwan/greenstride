@@ -1,0 +1,15 @@
+<!-- @dsCard group="Konten" height=230 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FactTile</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 } },
+  h(G.FactTile, { icon: "team", value: 5, unit: "orang", label: "Maksimal per tim", note: "Maksimal 2 tim per unit" }),
+  h(G.FactTile, { icon: "route", value: 300, unit: "km", label: "Target tim", note: "Minimal 60 km per anggota" }),
+  h(G.FactTile, { icon: "clock", value: "24", unit: "km", label: "Batas per hari", note: "Batas, bukan target" })));
+</script>
+</body>
+</html>

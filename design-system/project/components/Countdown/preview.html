@@ -1,0 +1,13 @@
+<!-- @dsCard group="Interaktif" height=210 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Countdown</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { maxWidth: 420, padding: 20, borderRadius: 24, background: "var(--band)" } },
+  h(G.Countdown, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", rangeLabel: "23 November – 20 Desember 2026", rangeNote: "28 hari" })));
+</script>
+</body>
+</html>

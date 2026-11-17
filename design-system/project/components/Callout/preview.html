@@ -1,0 +1,15 @@
+<!-- @dsCard group="Konten" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Callout</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gap: 12, maxWidth: 640 } },
+  h(G.Callout, { tone: "attention", title: "Perlu diperhatikan" }, "Ubah Who can view menjadi Everyone sebelum Save Activity."),
+  h(G.Callout, { tone: "info", title: "Syarat finisher" }, "Total tim minimal 300 km dan setiap anggota minimal 60 km."),
+  h(G.Callout, { tone: "rule", title: "Tidak dihitung" }, "Treadmill, bersepeda, dan aktivitas dengan pace di luar 5:00 – 15:00 menit/km.")));
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!-- @dsCard group="Aksi" height=150 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Button</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gap: 16 } },
+  h("div", { style: { display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" } },
+    h(G.Button, { arrow: true }, "Cari jawaban"),
+    h(G.Button, { variant: "secondary", icon: "phone" }, "Unduh aplikasi"),
+    h(G.Button, { variant: "ghost", icon: "download" }, "Unduh PDF")),
+  h("div", { className: "gs-on-band", style: { display: "flex", flexWrap: "wrap", gap: 12, padding: 20, borderRadius: 14, background: "var(--band)" } },
+    h(G.Button, { variant: "lime", arrow: true, size: "lg" }, "Buka Help Desk"),
+    h(G.Button, { variant: "on-band" }, "Lihat aturan"))));
+</script>
+</body>
+</html>

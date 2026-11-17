@@ -1,0 +1,16 @@
+<!-- @dsCard group="Konten" height=110 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Pillar</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gap: 20 } },
+  h("div", { style: { display: "flex", flexWrap: "wrap", gap: 24 } },
+    h(G.Pillar, { icon: "run" }, "Move together"), h(G.Pillar, { icon: "heart-pulse" }, "Live better"), h(G.Pillar, { icon: "team" }, "Grow stronger")),
+  h("div", { className: "gs-on-band", style: { display: "flex", flexWrap: "wrap", gap: 24, padding: 20, borderRadius: 14, background: "var(--band)" } },
+    h(G.Pillar, { icon: "run" }, "Move together"), h(G.Pillar, { icon: "heart-pulse" }, "Live better"), h(G.Pillar, { icon: "team" }, "Grow stronger"))));
+</script>
+</body>
+</html>

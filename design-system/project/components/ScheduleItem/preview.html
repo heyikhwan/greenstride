@@ -1,0 +1,16 @@
+<!-- @dsCard group="Konten" height=400 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ScheduleItem</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("ol", { className: "gs-schedule", style: { maxWidth: 560 } },
+  h(G.ScheduleItem, { status: "done", date: "6 – 18 November 2026", title: "Pendaftaran tim" }, "Ketua tim melengkapi data seluruh anggota."),
+  h(G.ScheduleItem, { status: "now", date: "23 November 2026, 00.00 WIB", title: "Lomba dimulai" }, "Lari atau jalan di luar ruangan mulai dihitung."),
+  h(G.ScheduleItem, { status: "next", date: "20 Desember 2026, 23.59 WIB", title: "Lomba ditutup" }, "Batas akhir aktivitas dan submit."),
+  h(G.ScheduleItem, { status: "tba", date: "Diumumkan panitia", title: "Offline race dan awarding di Jakarta" }, "Untuk 50 tim terbaik dan peraih MVP.")));
+</script>
+</body>
+</html>

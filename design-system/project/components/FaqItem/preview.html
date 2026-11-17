@@ -1,0 +1,17 @@
+<!-- @dsCard group="Interaktif" height=380 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FaqItem</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { maxWidth: 720 } },
+  h(G.FaqItem, { id: "kurang-dari-lima", question: "Bolehkah tim kurang dari 5 orang?", defaultOpen: true },
+    h("p", null, h("strong", null, "Boleh."), " Target tim tetap 300 km dan setiap anggota minimal 60 km."),
+    h("ul", null, h("li", null, "4 orang: 75 km per orang"), h("li", null, "3 orang: 100 km per orang"))),
+  h(G.FaqItem, { id: "treadmill", question: "Apakah treadmill dihitung?" }, h("p", null, h("strong", null, "Tidak."), " Hanya lari atau jalan di luar ruangan.")),
+  h(G.FaqItem, { id: "kode", question: "Perlu kode undangan?" }, h("p", null, h("strong", null, "Tidak."), " Panitia mendaftarkan timmu lewat sistem."))));
+</script>
+</body>
+</html>

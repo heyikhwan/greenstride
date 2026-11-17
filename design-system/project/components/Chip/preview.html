@@ -1,0 +1,19 @@
+<!-- @dsCard group="Interaktif" height=130 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Chip</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gap: 16 } },
+  h("div", { style: { display: "flex", flexWrap: "wrap", gap: 8 } },
+    h(G.Chip, { icon: "flag", count: 6, pressed: true }, "Tentang lomba"),
+    h(G.Chip, { icon: "team", count: 11 }, "Tim"),
+    h(G.Chip, { icon: "phone", count: 9 }, "Aplikasi"),
+    h(G.Chip, { icon: "medal", count: 8 }, "Hadiah")),
+  h("div", { style: { display: "flex", flexWrap: "wrap", gap: 8 } },
+    h(G.Chip, { quiet: true }, "24 km"), h(G.Chip, { quiet: true }, "Strava"), h(G.Chip, { quiet: true }, "PKWT"))));
+</script>
+</body>
+</html>

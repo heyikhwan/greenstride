@@ -1,0 +1,13 @@
+<!-- @dsCard group="Konten" height=190 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SectionHeader</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gap: 32 } },
+  h(G.SectionHeader, { eyebrow: "Cara ikut", title: h(React.Fragment, null, "Lima langkah sebelum ", h("em", null, "lari pertama")), lead: "Siapkan dua aplikasi, hubungkan, lalu setiap lari otomatis tercatat untuk timmu." })));
+</script>
+</body>
+</html>

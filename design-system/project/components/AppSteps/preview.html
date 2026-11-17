@@ -1,0 +1,18 @@
+<!-- @dsCard group="Interaktif" height=620 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>AppSteps</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h(G.AppSteps, { steps: [
+    { title: "Unduh dan daftar 99 Virtual Race", body: "Daftar dengan email yang sama dengan formulir tim.", image: "/_blob/d1e65fff9d8d4736d42397c7358dcddf", alt: "Formulir pendaftaran akun 99 Virtual Race" },
+    { title: "Hubungkan Strava", body: "Pilih Submit, lalu Strava Connect, dan izinkan semua pilihan.", image: "/_blob/3b6c7619da2382bedc597a4d90fa0cf6", alt: "Halaman Submit dengan pilihan Strava Connect" },
+    { title: "Rekam di Strava", body: "Tunggu GPS Acquired, lalu tekan Start.", image: "/_blob/8201f812cd1c8bc4de8645084fa966db", alt: "Layar rekam Strava" },
+    { title: "Simpan untuk Everyone", body: "Ubah Who can view menjadi Everyone, lalu Save Activity.", image: "/_blob/2d0b305040c8fda261bd7dd5bdc597ad", alt: "Layar simpan aktivitas Strava" },
+    { title: "Pantau peringkat", body: "Buka Ranking, lalu Group Leaderboard.", image: "/_blob/5e430151f101338aa8ad1d3df03b9681", alt: "Papan peringkat tim di 99 Virtual Race" }
+  ] }));
+</script>
+</body>
+</html>

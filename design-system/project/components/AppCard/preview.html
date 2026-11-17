@@ -1,0 +1,14 @@
+<!-- @dsCard group="Interaktif" height=210 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>AppCard</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 } },
+  h(G.AppCard, { name: "99 Virtual Race", role: "Aplikasi resmi lomba: eBIB, submit, peringkat", icon: "/_blob/7633b1b2f61834c1fc158d4465b99cb4", appStore: "https://apps.apple.com/id/app/99-virtual-race/id6686407581", playStore: "https://play.google.com/store/apps/details?id=id.app99virtualrace.mobile", appStoreBadge: "/_blob/b09f63ce9980f0e1f36c6f15a5610450", playStoreBadge: "/_blob/fdfc76569ba0da75c75a420049e9dd53" }),
+  h(G.AppCard, { name: "Strava", role: "Merekam lari dan jalan dengan GPS", icon: "/_blob/1bb1836cb8a4255224c43a9446bf00f6", appStore: "https://apps.apple.com/us/app/strava-run-bike-walk/id426826309", playStore: "https://play.google.com/store/apps/details?id=com.strava&hl=id", appStoreBadge: "/_blob/b09f63ce9980f0e1f36c6f15a5610450", playStoreBadge: "/_blob/fdfc76569ba0da75c75a420049e9dd53" })));
+</script>
+</body>
+</html>

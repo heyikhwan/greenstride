@@ -1,0 +1,1 @@
+Foto acara, tangkapan layar aplikasi 99 Virtual Race dan Strava (tampilkan di dalam bingkai ponsel AppSteps), badge toko resmi, dan ikon aplikasi resmi. `key-visual.webp` hanya rujukan gaya: memuat tanggal lama, jangan ditampilkan utuh.

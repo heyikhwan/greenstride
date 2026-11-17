@@ -1,0 +1,1 @@
+Logo resmi. Versi warna (`logo-danantara.png`, `logo-ptpn-holding.png`, `logo-planters-club.png`) di atas `surface`; versi putih (`-white`) di atas `band`. `logo-holding-only.png` untuk favicon dan ruang sempit. `logo-greenstride-white.png` adalah logotype acara, hanya di atas `band`. Jangan mengubah warna atau proporsi.

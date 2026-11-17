@@ -1,0 +1,1 @@
+Ikon garis 24 px, tebal 2 px, bertinta `band` (#0B3D24) untuk diunduh. Di situs, pakai komponen `Icon` agar warna mengikuti teks. Digambar mengikuti gaya lencana di key visual; ganti bila tersedia file resmi.

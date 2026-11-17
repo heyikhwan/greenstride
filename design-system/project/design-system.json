@@ -1,0 +1,385 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-17T04:00:06Z"
+  },
+  "title": "GreenStride 2026",
+  "namespace": "GreenStride",
+  "libraries": [
+    {
+      "name": "react",
+      "version": "18"
+    },
+    {
+      "name": "react-dom",
+      "version": "18"
+    }
+  ],
+  "sections": {},
+  "groups": [
+    "Logos",
+    "Images",
+    "Icons"
+  ],
+  "assetGroups": {
+    "Logos": {
+      "name": "Logos",
+      "tile": "l",
+      "order": [
+        "logo-danantara.png",
+        "logo-danantara-white.png",
+        "logo-ptpn-holding.png",
+        "logo-ptpn-white.png",
+        "logo-holding-only.png",
+        "logo-planters-club.png",
+        "logo-planters-club-white.png",
+        "logo-greenstride-white.png"
+      ],
+      "files": {
+        "logo-danantara.png": {
+          "name": "logo-danantara.png",
+          "blob": "da7b296bfe5e41124aed2c44d74a08ca",
+          "size": 87830,
+          "type": "image/png"
+        },
+        "logo-danantara-white.png": {
+          "name": "logo-danantara-white.png",
+          "blob": "c45ad310d9490f9ee909f06c6c8ed466",
+          "size": 23708,
+          "type": "image/png"
+        },
+        "logo-ptpn-holding.png": {
+          "name": "logo-ptpn-holding.png",
+          "blob": "bb5b7beb50f12c0362cebf15b0bf426a",
+          "size": 35428,
+          "type": "image/png"
+        },
+        "logo-ptpn-white.png": {
+          "name": "logo-ptpn-white.png",
+          "blob": "6546e4133134d5af0acf355a7e80e37a",
+          "size": 28596,
+          "type": "image/png"
+        },
+        "logo-holding-only.png": {
+          "name": "logo-holding-only.png",
+          "blob": "7ce6b1e12e127b6de7ebd4aaa4d65e4d",
+          "size": 19100,
+          "type": "image/png"
+        },
+        "logo-planters-club.png": {
+          "name": "logo-planters-club.png",
+          "blob": "19138a90142bb9256988a6725774c768",
+          "size": 149932,
+          "type": "image/png"
+        },
+        "logo-planters-club-white.png": {
+          "name": "logo-planters-club-white.png",
+          "blob": "bf2cb3d7458a3464cdf9dc580b39f015",
+          "size": 17535,
+          "type": "image/png"
+        },
+        "logo-greenstride-white.png": {
+          "name": "logo-greenstride-white.png",
+          "blob": "43351617112e5f7a54e300b9d905e098",
+          "size": 24299,
+          "type": "image/png"
+        }
+      }
+    },
+    "Images": {
+      "name": "Images",
+      "tile": "m",
+      "order": [
+        "hero-runners.webp",
+        "photo-langkah-pelari.webp",
+        "pelari-greenstride.webp",
+        "key-visual.webp",
+        "app-daftar.webp",
+        "app-hubungkan.webp",
+        "app-rekam.webp",
+        "app-simpan.webp",
+        "app-ranking.webp",
+        "app-ebib.webp",
+        "badge-app-store.png",
+        "badge-google-play.png",
+        "icon-99-virtual-race.png",
+        "icon-strava.png"
+      ],
+      "files": {
+        "hero-runners.webp": {
+          "name": "hero-runners.webp",
+          "blob": "6765ecb352125631b8d53b42a41a5222",
+          "size": 110110,
+          "type": "image/webp"
+        },
+        "photo-langkah-pelari.webp": {
+          "name": "photo-langkah-pelari.webp",
+          "blob": "114c7cee350b98e85e1d661be63930ed",
+          "size": 130672,
+          "type": "image/webp"
+        },
+        "pelari-greenstride.webp": {
+          "name": "pelari-greenstride.webp",
+          "blob": "322a89086e060b9ea34419bdc556b115",
+          "size": 62100,
+          "type": "image/webp"
+        },
+        "key-visual.webp": {
+          "name": "key-visual.webp",
+          "blob": "8b4a68d719af1699dc3088adcd65005c",
+          "size": 183560,
+          "type": "image/webp"
+        },
+        "app-daftar.webp": {
+          "name": "app-daftar.webp",
+          "blob": "d1e65fff9d8d4736d42397c7358dcddf",
+          "size": 24838,
+          "type": "image/webp"
+        },
+        "app-hubungkan.webp": {
+          "name": "app-hubungkan.webp",
+          "blob": "3b6c7619da2382bedc597a4d90fa0cf6",
+          "size": 318802,
+          "type": "image/webp"
+        },
+        "app-rekam.webp": {
+          "name": "app-rekam.webp",
+          "blob": "8201f812cd1c8bc4de8645084fa966db",
+          "size": 19620,
+          "type": "image/webp"
+        },
+        "app-simpan.webp": {
+          "name": "app-simpan.webp",
+          "blob": "2d0b305040c8fda261bd7dd5bdc597ad",
+          "size": 30192,
+          "type": "image/webp"
+        },
+        "app-ranking.webp": {
+          "name": "app-ranking.webp",
+          "blob": "5e430151f101338aa8ad1d3df03b9681",
+          "size": 57166,
+          "type": "image/webp"
+        },
+        "app-ebib.webp": {
+          "name": "app-ebib.webp",
+          "blob": "c46fd0acdb97bda18793388651614174",
+          "size": 25712,
+          "type": "image/webp"
+        },
+        "badge-app-store.png": {
+          "name": "badge-app-store.png",
+          "blob": "b09f63ce9980f0e1f36c6f15a5610450",
+          "size": 32067,
+          "type": "image/png"
+        },
+        "badge-google-play.png": {
+          "name": "badge-google-play.png",
+          "blob": "fdfc76569ba0da75c75a420049e9dd53",
+          "size": 29340,
+          "type": "image/png"
+        },
+        "icon-99-virtual-race.png": {
+          "name": "icon-99-virtual-race.png",
+          "blob": "7633b1b2f61834c1fc158d4465b99cb4",
+          "size": 37645,
+          "type": "image/png"
+        },
+        "icon-strava.png": {
+          "name": "icon-strava.png",
+          "blob": "1bb1836cb8a4255224c43a9446bf00f6",
+          "size": 31099,
+          "type": "image/png"
+        }
+      }
+    },
+    "Icons": {
+      "name": "Icons",
+      "tile": "xs",
+      "order": [
+        "alert.svg",
+        "arrow-right.svg",
+        "calendar.svg",
+        "check.svg",
+        "chevron-down.svg",
+        "clock.svg",
+        "close.svg",
+        "document.svg",
+        "download.svg",
+        "flag.svg",
+        "gps.svg",
+        "heart-pulse.svg",
+        "lifebuoy.svg",
+        "medal.svg",
+        "phone.svg",
+        "route.svg",
+        "run.svg",
+        "search.svg",
+        "shield-check.svg",
+        "team.svg",
+        "trophy.svg",
+        "upload.svg",
+        "info.svg",
+        "ban.svg"
+      ],
+      "files": {
+        "alert.svg": {
+          "name": "alert.svg",
+          "blob": "746082cee032516d3bba8c226439c8c6",
+          "size": 252,
+          "type": "image/svg+xml"
+        },
+        "arrow-right.svg": {
+          "name": "arrow-right.svg",
+          "blob": "1a6594d5062c98e3fb6535429ae13b9b",
+          "size": 233,
+          "type": "image/svg+xml"
+        },
+        "calendar.svg": {
+          "name": "calendar.svg",
+          "blob": "675e79f84718f00848162b0ea2a5b5b8",
+          "size": 322,
+          "type": "image/svg+xml"
+        },
+        "check.svg": {
+          "name": "check.svg",
+          "blob": "07287cb5a31c3233a97496060d47c1b3",
+          "size": 222,
+          "type": "image/svg+xml"
+        },
+        "chevron-down.svg": {
+          "name": "chevron-down.svg",
+          "blob": "787ad2747430735e6c446ffbc1d4216c",
+          "size": 214,
+          "type": "image/svg+xml"
+        },
+        "clock.svg": {
+          "name": "clock.svg",
+          "blob": "69ca86ff98a4205e8925a79ef4a2e035",
+          "size": 255,
+          "type": "image/svg+xml"
+        },
+        "close.svg": {
+          "name": "close.svg",
+          "blob": "a895e22ab4ad73b18ae9e624288050ca",
+          "size": 220,
+          "type": "image/svg+xml"
+        },
+        "document.svg": {
+          "name": "document.svg",
+          "blob": "f48383a3540c09a533fcca4cf6c1ed7b",
+          "size": 309,
+          "type": "image/svg+xml"
+        },
+        "download.svg": {
+          "name": "download.svg",
+          "blob": "3f8b9da50e58740676e42f11131a1f6c",
+          "size": 265,
+          "type": "image/svg+xml"
+        },
+        "flag.svg": {
+          "name": "flag.svg",
+          "blob": "95c749c04ceb484b304c938c518fe687",
+          "size": 247,
+          "type": "image/svg+xml"
+        },
+        "gps.svg": {
+          "name": "gps.svg",
+          "blob": "0a0dcc0b8382b35dd6b52ec4ef622c99",
+          "size": 316,
+          "type": "image/svg+xml"
+        },
+        "heart-pulse.svg": {
+          "name": "heart-pulse.svg",
+          "blob": "6157f80c9bad29f67c2c87c02ef96511",
+          "size": 345,
+          "type": "image/svg+xml"
+        },
+        "lifebuoy.svg": {
+          "name": "lifebuoy.svg",
+          "blob": "9ac8cd7cbef7fa2e0c0e5ac7275439e7",
+          "size": 338,
+          "type": "image/svg+xml"
+        },
+        "medal.svg": {
+          "name": "medal.svg",
+          "blob": "d495382dff0a39a0f8e1e62642628673",
+          "size": 318,
+          "type": "image/svg+xml"
+        },
+        "phone.svg": {
+          "name": "phone.svg",
+          "blob": "3232f1e36656f0b8fa6986837abda857",
+          "size": 273,
+          "type": "image/svg+xml"
+        },
+        "route.svg": {
+          "name": "route.svg",
+          "blob": "94a044545faddc9f40f0752d90c9ecfa",
+          "size": 324,
+          "type": "image/svg+xml"
+        },
+        "run.svg": {
+          "name": "run.svg",
+          "blob": "7568a99ac7d016b6949bde2150eb6719",
+          "size": 387,
+          "type": "image/svg+xml"
+        },
+        "search.svg": {
+          "name": "search.svg",
+          "blob": "85625a93523841d8c4993856b4079057",
+          "size": 256,
+          "type": "image/svg+xml"
+        },
+        "shield-check.svg": {
+          "name": "shield-check.svg",
+          "blob": "76b8641225e7748f371803c84e42086d",
+          "size": 305,
+          "type": "image/svg+xml"
+        },
+        "team.svg": {
+          "name": "team.svg",
+          "blob": "1f59d12a9f529d0cc85cbc325eee242e",
+          "size": 366,
+          "type": "image/svg+xml"
+        },
+        "trophy.svg": {
+          "name": "trophy.svg",
+          "blob": "189c08b212fb35d5794a7147eff6daaf",
+          "size": 363,
+          "type": "image/svg+xml"
+        },
+        "upload.svg": {
+          "name": "upload.svg",
+          "blob": "763e6f195e73fa14af849780f3c4092f",
+          "size": 299,
+          "type": "image/svg+xml"
+        },
+        "info.svg": {
+          "name": "info.svg",
+          "blob": "122a76ac8a02536f2d6bf9e3bee7ff5e",
+          "size": 261,
+          "type": "image/svg+xml"
+        },
+        "ban.svg": {
+          "name": "ban.svg",
+          "blob": "13c78b25514d2253569ab51e2f75c40e",
+          "size": 251,
+          "type": "image/svg+xml"
+        }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Claude",
+    "at": "2026-11-17T04:00:06Z",
+    "via": "Claude Code",
+    "note": "Sistem desain awal dari key visual, konten 24 KM, logo dan tangkapan layar aplikasi."
+  }
+}

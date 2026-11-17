@@ -1,0 +1,15 @@
+<!-- @dsCard group="Konten" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>RewardCard</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16 } },
+  h(G.RewardCard, { feature: true, icon: "flag", who: "50 tim terbaik", title: "Jersey dan undangan offline race" }, "Lari bersama di Jakarta, tanggal diumumkan panitia."),
+  h(G.RewardCard, { icon: "medal", who: "Semua tim finisher", title: "Medali dan e-certificate" }, "Tim mencapai 300 km dan tiap anggota 60 km."),
+  h(G.RewardCard, { icon: "trophy", who: "6 tim terbaik", title: "Uang tunai" }, "Juara I, II, III dan Harapan I, II, III.")));
+</script>
+</body>
+</html>

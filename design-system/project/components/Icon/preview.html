@@ -1,0 +1,17 @@
+<!-- @dsCard group="Dasar" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Icon</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(92px, 1fr))", gap: 12 } },
+  G.iconNames.map(function (n) {
+    return h("div", { key: n, style: { display: "grid", justifyItems: "center", gap: 8, padding: "14px 6px", borderRadius: 14, background: "var(--surface-raised)", border: "1px solid var(--line)", color: "var(--band)" } },
+      h("span", { style: { color: "var(--leaf)" } }, h(G.Icon, { name: n, size: 28 })),
+      h("span", { style: { fontSize: 12, color: "var(--ink-muted)" } }, n));
+  })));
+</script>
+</body>
+</html>
