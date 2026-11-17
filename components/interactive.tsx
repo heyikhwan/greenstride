@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { createElement, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
+import { createElement, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import { Icon, Illustration } from "./ds";
 import { APP_STEPS, EVENT, SCHEDULE, rupiah } from "@/lib/event";
 import { THEME_KEY } from "@/lib/site";
@@ -608,6 +608,18 @@ export function AppSteps() {
   const lastShot = shot === shots.length - 1;
   const next = () => setPos(lastShot ? { step: step + 1, shot: 0 } : { step, shot: shot + 1 });
   const prev = () => setPos(shot > 0 ? { step, shot: shot - 1 } : { step: step - 1, shot: APP_STEPS[step - 1].shots.length - 1 });
+  // Geser layar ponsel: kiri untuk maju, kanan untuk mundur. Hanya sentuh dan pena; tetikus memakai tombol.
+  const swipeFrom = useRef<{ x: number; y: number } | null>(null);
+  const onSwipeEnd = (e: ReactPointerEvent) => {
+    const from = swipeFrom.current;
+    swipeFrom.current = null;
+    if (!from) return;
+    const dx = e.clientX - from.x;
+    const dy = e.clientY - from.y;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0 && !atEnd) next();
+    else if (dx > 0 && !atStart) prev();
+  };
   return (
     <div className="gs-steps">
       <ol className="gs-steps__list" aria-label="Langkah menyiapkan aplikasi">
@@ -638,7 +650,14 @@ export function AppSteps() {
       </ol>
       <div className="gs-steps__panel">
         <div className="gs-phone">
-          <div className="gs-phone__screen">
+          <div
+            className="gs-phone__screen"
+            onPointerDown={(e) => {
+              if (e.pointerType !== "mouse") swipeFrom.current = { x: e.clientX, y: e.clientY };
+            }}
+            onPointerUp={onSwipeEnd}
+            onPointerCancel={() => (swipeFrom.current = null)}
+          >
             {/* Hanya layar langkah yang terbuka yang dipasang, jadi 24 gambar tidak diunduh sekaligus. */}
             {shots.map((s, j) => (
               <img
