@@ -22,6 +22,9 @@
 .gs-btn:active { transform: translateY(0) scale(0.98); }
 .gs-btn .gs-btn__arrow { transition: transform var(--dur-base) var(--ease-spring); }
 .gs-btn:hover .gs-btn__arrow { transform: translateX(4px); }
+/* Ikon di depan label ikut menjawab kursor, sama seperti ikon FactTile. */
+.gs-btn > .gs-icon:first-child { transition: transform var(--dur-base) var(--ease-spring); }
+.gs-btn:hover > .gs-icon:first-child { transform: rotate(-8deg) scale(1.08); }
 .gs-btn[disabled], .gs-btn[aria-disabled="true"] { cursor: not-allowed; opacity: 0.5; transform: none; }
 .gs-btn--lg { min-height: 56px; padding: 0 var(--space-6); font-size: 16px; }
 .gs-btn--sm { min-height: 40px; padding: 0 var(--space-4); font-size: 14px; }
@@ -48,6 +51,11 @@
 .gs-on-band .gs-section-head h2 em { color: var(--lime); }
 .gs-on-band .gs-section-head p { color: var(--band-muted); }
 .gs-on-band .gs-eyebrow { color: var(--lime); }
+/* Kata kunci judul bergaris lime di bawahnya: motif garis rute, satu per judul. Teksnya tampil sejak awal;
+   hanya garisnya yang tergambar kiri ke kanan sekali saat judul terlihat (useDraw). */
+.gs-keyline { font-style: inherit; padding-bottom: 0.04em; background: linear-gradient(var(--lime), var(--lime)) 0 100% / 100% 0.11em no-repeat; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.gs-keyline[data-draw="wait"] { background-size: 0% 0.11em; }
+.gs-keyline[data-draw="on"] { transition: background-size 560ms var(--ease-out) 160ms; }
 @media (max-width: 640px) { .gs-section-head h2 { font-size: 30px; } .gs-section-head p { font-size: 16px; } }
 
 /* ───────── Pillar (lingkaran ikon + label dari key visual) */
@@ -70,10 +78,13 @@
 /* ───────── Countdown */
 .gs-countdown { display: grid; gap: var(--space-4); padding: var(--space-5); background: var(--band-raised); color: var(--band-ink); border-radius: var(--radius-leaf) var(--radius-sm); }
 .gs-countdown__status { display: inline-flex; align-items: center; gap: var(--space-2); justify-self: start; padding: 6px var(--space-3); border-radius: var(--radius-pill); background: var(--sun); color: var(--on-sun); font: 700 13px/1.2 var(--font-text); }
-.gs-countdown__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--on-sun); animation: gs-pulse 1.8s var(--ease-out) infinite; }
+/* Titik berdenyut dua kali lalu diam: gerak sendiri tidak boleh lebih dari 5 detik tanpa tombol jeda. */
+.gs-countdown__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--on-sun); animation: gs-pulse 1.8s var(--ease-out) 2; }
 .gs-countdown__units { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); }
-.gs-countdown__unit { display: grid; gap: 2px; padding: var(--space-3) var(--space-2); text-align: center; background: var(--band); border-radius: var(--radius-sm); }
-.gs-countdown__num { font: italic 800 34px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--band-ink); }
+.gs-countdown__unit { display: grid; gap: 2px; padding: var(--space-3) var(--space-2); overflow: hidden; text-align: center; background: var(--band); border-radius: var(--radius-sm); }
+/* Angka meluncur turun ke tempatnya saat dipasang: sekali saat dimuat, lalu tiap hari, jam atau menit berganti. */
+.gs-countdown__num { font: italic 800 34px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--band-ink); animation: gs-tick 380ms var(--ease-out) both; }
+@keyframes gs-tick { from { opacity: 0; transform: translateY(-45%); } }
 .gs-countdown__cap { font: 500 11px/1.2 var(--font-text); letter-spacing: 0.08em; text-transform: uppercase; color: var(--band-muted); }
 .gs-countdown__range { font-size: 14px; color: var(--band-muted); }
 .gs-countdown__range strong { color: var(--band-ink); font-weight: 600; }
@@ -82,7 +93,8 @@
 .gs-countdown__day span { font-size: 18px; color: var(--band-muted); }
 /* Bar periode lomba: motif garis rute, titik lime di posisi hari ini. */
 .gs-countdown__track { position: relative; height: 10px; margin-block: var(--space-2); border-radius: var(--radius-pill); background: var(--band); }
-.gs-countdown__fill { position: absolute; inset: 0 auto 0 0; min-width: 10px; border-radius: inherit; background: var(--lime); }
+.gs-countdown__fill { position: absolute; inset: 0 auto 0 0; min-width: 10px; border-radius: inherit; background: var(--lime); animation: gs-fill 900ms var(--ease-out) 300ms both; }
+@keyframes gs-fill { from { width: 10px; } }
 .gs-countdown__fill::after { content: ""; position: absolute; right: -9px; top: 50%; width: 18px; height: 18px; border-radius: 50%; background: var(--lime); border: 3px solid var(--band-raised); transform: translateY(-50%); }
 @keyframes gs-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
@@ -151,7 +163,7 @@
 /* Linimasa dengan chip tanggal: tanggal terbaca sekilas, garis menyambung antar chip, tahap yang berjalan menjadi kartu. */
 .gs-sched { position: relative; display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: var(--space-4); padding-bottom: var(--space-4); }
 .gs-sched:last-child { padding-bottom: 0; }
-.gs-sched::before { content: ""; position: absolute; left: 35px; top: 72px; bottom: 0; width: 2px; background: var(--line-strong); }
+.gs-sched::before { content: ""; position: absolute; left: 35px; top: 72px; bottom: 0; width: 2px; background: var(--line-strong); transform-origin: top; }
 .gs-sched:last-child::before { display: none; }
 .gs-sched--done::before { background: var(--leaf); }
 .gs-sched__chip { position: relative; z-index: 1; display: grid; justify-items: center; align-content: center; gap: 2px; width: 72px; min-height: 72px; padding: var(--space-2) 4px; border-radius: var(--radius-md); background: var(--surface-raised); border: 1.5px solid var(--line); color: var(--ink); text-align: center; }
@@ -173,7 +185,13 @@
 .gs-sched__badge, .gs-sched__past { display: inline-block; margin-left: var(--space-2); padding: 2px 8px; border-radius: var(--radius-pill); font: 700 11px/1.4 var(--font-text); letter-spacing: 0.06em; text-transform: uppercase; vertical-align: 1px; }
 .gs-sched__badge { background: var(--sun); color: var(--on-sun); }
 .gs-sched__past { background: var(--leaf-soft); color: var(--leaf); }
-@keyframes gs-glow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: var(--shadow-glow); } }
+/* Saat terlihat: garis tahap yang selesai tumbuh ke bawah, tanda centang muncul, lalu cincin "Sekarang" berdenyut dua kali. */
+.gs-schedule[data-draw="wait"] .gs-sched--done::before { transform: scaleY(0); }
+.gs-schedule[data-draw="wait"] .gs-sched__done { transform: scale(0); }
+.gs-schedule[data-draw="on"] .gs-sched--done::before { transition: transform 360ms var(--ease-out) calc(var(--i) * 120ms); }
+.gs-schedule[data-draw="on"] .gs-sched__done { transition: transform 280ms var(--ease-spring) calc(var(--i) * 120ms + 120ms); }
+.gs-schedule[data-draw="on"] .gs-sched--now .gs-sched__chip { animation: gs-now 1.6s var(--ease-out) 400ms 2; }
+@keyframes gs-now { 50% { box-shadow: 0 0 0 11px color-mix(in srgb, var(--sun) 16%, transparent); } }
 
 /* ───────── RewardCard */
 .gs-reward { position: relative; display: grid; gap: var(--space-3); align-content: start; padding: var(--space-5); border-radius: var(--radius-md); background: var(--surface-raised); border: 1px solid var(--line); overflow: hidden;
@@ -199,13 +217,16 @@
 .gs-step__title { display: block; margin: 0; font: 700 18px/1.3 var(--font-display); color: var(--ink); }
 .gs-step__body { display: block; margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-muted); }
 .gs-step[aria-selected="true"] { background: var(--surface-raised); border-color: var(--line); box-shadow: var(--shadow-sm); }
-.gs-step[aria-selected="true"] .gs-step__num { background: var(--leaf); border-color: var(--leaf); color: var(--on-leaf); }
+.gs-step[aria-selected="true"] .gs-step__num { background: var(--leaf); border-color: var(--leaf); color: var(--on-leaf); animation: gs-bump 420ms var(--ease-spring); }
+@keyframes gs-bump { 40% { transform: scale(1.14); } }
 .gs-step__bar { grid-column: 2; height: 3px; margin-top: var(--space-3); border-radius: 2px; background: var(--line); overflow: hidden; display: none; }
 .gs-step[aria-selected="true"] .gs-step__bar { display: block; }
 .gs-step__bar > i { display: block; height: 100%; width: 100%; background: var(--lime); transform-origin: left; animation: gs-bar var(--dur-slow) var(--ease-out); }
 @keyframes gs-bar { from { transform: scaleX(0); } }
 .gs-steps__panel { position: relative; isolation: isolate; display: grid; justify-items: center; gap: var(--space-5); }
 .gs-steps__caption { display: none; }
+.gs-steps__say { display: grid; justify-items: start; gap: var(--space-2); animation: gs-rise var(--dur-base) var(--ease-out) both; }
+@keyframes gs-rise { from { opacity: 0; transform: translateY(8px); } }
 .gs-phone { position: relative; justify-self: center; width: 100%; max-width: 300px; aspect-ratio: 600 / 1298; padding: 10px; background: var(--ink); border-radius: 40px; box-shadow: var(--shadow-md); }
 .gs-phone::before { content: ""; position: absolute; inset: -18px -26px; z-index: -1; background: var(--leaf-soft); border-radius: var(--radius-leaf) var(--radius-sm); transform: rotate(-4deg); }
 .gs-phone__screen { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 30px; background: var(--surface-tint); }
@@ -260,8 +281,20 @@
 .gs-seg button { min-width: 56px; min-height: 44px; padding: 0 var(--space-4); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--ink-muted); font: 600 15px/1 var(--font-text); cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
 .gs-seg button:hover { color: var(--ink); }
 .gs-seg button[aria-pressed="true"] { background: var(--band); color: var(--band-ink); }
+/* Penanda pilihan meluncur dengan pegas ke tombol yang dipilih, searah dengan bar TeamBar yang ikut berubah.
+   Tanpa :has() tombol terpilih tetap berlatar band seperti di atas. Empat pilihan selebar sama. */
+@supports selector(:has(*)) {
+  .gs-seg { position: relative; grid-auto-columns: minmax(0, 1fr); }
+  .gs-seg::before { content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc((100% - 20px) / 4); border-radius: var(--radius-pill); background: var(--band);
+    transform: translateX(calc(var(--k, 0) * (100% + 4px))); transition: transform var(--dur-slow) var(--ease-spring); }
+  .gs-seg button { position: relative; z-index: 1; }
+  .gs-seg button[aria-pressed="true"] { background: transparent; }
+  .gs-seg:has(> :nth-child(2)[aria-pressed="true"]) { --k: 1; }
+  .gs-seg:has(> :nth-child(3)[aria-pressed="true"]) { --k: 2; }
+  .gs-seg:has(> :nth-child(4)[aria-pressed="true"]) { --k: 3; }
+}
 .gs-split__out { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
-.gs-split__num { font: italic 800 48px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--ink); }
+.gs-split__num { font: italic 800 48px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--ink); animation: gs-tick 380ms var(--ease-out) both; }
 .gs-split__num small { font-size: 0.42em; color: var(--leaf); margin-left: 4px; }
 .gs-split__cap { margin-top: var(--space-1); font-size: 14px; color: var(--ink-muted); }
 .gs-split__scale { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-muted); }
@@ -270,6 +303,13 @@
 /* ───────── Navbar */
 /* Header berdiri di `band` di kedua tema agar logo Planters Club putih selalu terbaca; menyambung ke hero. */
 .gs-nav { position: sticky; top: 0; z-index: 20; background: var(--band); color: var(--band-ink); border-bottom: 1px solid rgba(243, 247, 236, 0.12); transition: box-shadow var(--dur-base) var(--ease-out); }
+/* Garis lime di tepi bawah header memanjang mengikuti gulir: seberapa jauh halaman panjang ini sudah ditempuh.
+   Hanya di peramban yang mendukung animasi berbasis gulir; di peramban lain garis tidak tampil. */
+@supports (animation-timeline: scroll()) {
+  .gs-nav::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--lime); transform-origin: left; transform: scaleX(0);
+    animation: gs-progress linear both; animation-timeline: scroll(root); }
+}
+@keyframes gs-progress { to { transform: scaleX(1); } }
 .gs-nav--scrolled { box-shadow: var(--shadow-md); }
 .gs-nav__bar { display: flex; align-items: center; gap: var(--space-5); max-width: var(--container); height: 72px; margin: 0 auto; padding: 0 var(--space-5); }
 /* Header hanya memuat logo Planters Club horizontal tanpa pelat: berwarna asli di tema terang, versi putih (srcDark) di tema gelap. */
@@ -293,7 +333,13 @@
   .gs-nav__sheet a:not(.gs-btn) { display: flex; align-items: center; min-height: 52px; padding: 0 var(--space-3); font: 600 17px/1 var(--font-text); color: var(--band-ink); text-decoration: none; border-radius: var(--radius-sm); }
   .gs-nav__sheet a:not(.gs-btn):hover { background: var(--band-raised); }
   .gs-nav__sheet .gs-btn { margin-top: var(--space-3); }
+  /* Menu ponsel: tautan turun berurutan dari header, ikon tombol berputar saat berganti. */
+  .gs-nav__sheet[data-open="true"] > * { animation: gs-rise var(--dur-base) var(--ease-out) both; }
+  .gs-nav__sheet > :nth-child(2) { animation-delay: 30ms; } .gs-nav__sheet > :nth-child(3) { animation-delay: 60ms; } .gs-nav__sheet > :nth-child(4) { animation-delay: 90ms; }
+  .gs-nav__sheet > :nth-child(5) { animation-delay: 120ms; } .gs-nav__sheet > :nth-child(6) { animation-delay: 150ms; } .gs-nav__sheet > :nth-child(n+7) { animation-delay: 180ms; }
+  .gs-nav__toggle .gs-icon { animation: gs-turn var(--dur-base) var(--ease-spring); }
 }
+@keyframes gs-turn { from { opacity: 0; transform: rotate(-90deg); } }
 
 @media (prefers-reduced-motion: reduce) {
   .gs *, .gs *::before, .gs *::after { animation: none !important; transition: none !important; }
@@ -372,7 +418,7 @@
 .gs-check__empty p, .gs-check__error { display: flex; align-items: flex-start; gap: var(--space-2); margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-muted); }
 .gs-check__empty .gs-icon { flex: none; color: var(--leaf); }
 .gs-check__out > .gs-gauge:first-child { margin-top: var(--space-4); }
-.gs-check__error { color: var(--ink); }
+.gs-check__error { color: var(--ink); animation: gs-rise var(--dur-base) var(--ease-out) both; }
 .gs-check__error .gs-icon { color: var(--danger); }
 .gs-check__pace { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); }
 .gs-check__num { font: italic 800 48px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--ink); }
@@ -389,6 +435,11 @@
 .gs-gauge__ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-muted); }
 .gs-check__verdict { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); padding: var(--space-4); border-radius: var(--radius-md); font-size: 15px; line-height: 1.55; color: var(--ink); }
 .gs-check__verdict strong { display: block; margin-bottom: 2px; font-weight: 700; }
+/* Hasil baru masuk dengan pegas dan ikonnya tergambar, jadi terlihat bahwa jawaban berubah. Dipasang ulang hanya bila jenis hasil berganti. */
+.gs-check__verdict { animation: gs-pop 320ms var(--ease-spring) both; }
+.gs-check__verdict .gs-icon > * { stroke-dasharray: 64; animation: gs-stroke 480ms var(--ease-out) 120ms both; }
+@keyframes gs-pop { from { opacity: 0; transform: translateY(6px) scale(0.97); } }
+@keyframes gs-stroke { from { stroke-dashoffset: 64; } }
 .gs-check__verdict--ok { background: var(--leaf-soft); }
 .gs-check__verdict--ok .gs-icon { color: var(--leaf); }
 .gs-check__verdict--fast, .gs-check__verdict--slow { background: var(--danger-soft); }
@@ -436,6 +487,9 @@
 .gs-cal[data-draw="wait"] .gs-cal__goal i { transform: scaleX(0); }
 .gs-cal[data-draw="on"] .gs-cal__day { transition: background-color 240ms var(--ease-out) calc(var(--i) * 12ms), border-color 240ms var(--ease-out) calc(var(--i) * 12ms), color 240ms var(--ease-out) calc(var(--i) * 12ms); }
 .gs-cal[data-draw="on"] .gs-cal__goal i { transition: transform 360ms var(--ease-out) calc(var(--i) * 70ms); }
+/* Setelah sel terisi, cincin hari ini berdenyut dua kali. */
+.gs-cal[data-draw="on"] .gs-cal__day--today { animation: gs-today 1.6s var(--ease-out) 700ms 2; }
+@keyframes gs-today { 50% { box-shadow: 0 0 0 2px var(--surface-raised), 0 0 0 9px color-mix(in srgb, var(--sun) 55%, transparent); } }
 @media (max-width: 520px) {
   .gs-cal { padding: var(--space-4); }
   .gs-cal__grid { grid-template-columns: repeat(7, minmax(0, 1fr)) 58px; gap: 4px; }
@@ -521,3 +575,17 @@
 .gs-rulegfx__hand { stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; }
 .gs-rulegfx__hand--min { stroke-width: 2.5; }
 .gs-rulegfx__pin { fill: var(--sun); stroke: var(--ink); stroke-width: 1.5; }
+/* Digambar sekali bersama barisnya (useDraw pada induk): rambu batas tergambar melingkar lalu angkanya muncul,
+   dua token submit naik bergantian, jarum jam berputar maju sampai 23.59. Paling lama 600 ms. */
+.gs-rulegfx__sign { stroke-dasharray: 170; }
+.gs-rulegfx__hand { transform-origin: 32px 32px; }
+[data-draw="wait"] .gs-rulegfx__sign { stroke-dashoffset: 170; }
+[data-draw="wait"] .gs-rulegfx--limit text { opacity: 0; }
+[data-draw="wait"] .gs-rulegfx--submit > * { opacity: 0; transform: translateY(10px); }
+[data-draw="wait"] .gs-rulegfx__hand { transform: rotate(-40deg); }
+[data-draw="wait"] .gs-rulegfx__hand--min { transform: rotate(-240deg); }
+[data-draw="on"] .gs-rulegfx__sign { transition: stroke-dashoffset 520ms var(--ease-out); }
+[data-draw="on"] .gs-rulegfx--limit text { transition: opacity 200ms var(--ease-out) 360ms; }
+[data-draw="on"] .gs-rulegfx--submit > * { transition: opacity 240ms var(--ease-out), transform 360ms var(--ease-spring); }
+[data-draw="on"] .gs-rulegfx--submit > :nth-child(n+3) { transition-delay: 140ms; }
+[data-draw="on"] .gs-rulegfx__hand { transition: transform 600ms var(--ease-out); }

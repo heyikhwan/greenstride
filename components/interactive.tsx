@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent } from "react";
+import { createElement, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { Icon, Illustration } from "./ds";
 import { APP_STEPS, EVENT, SCHEDULE } from "@/lib/event";
 
@@ -67,6 +67,12 @@ export function useDraw<T extends Element>() {
   return [ref, draw] as const;
 }
 
+/** Pembungkus useDraw untuk markup dari server: kata kunci judul (garis lime) dan baris aturan harian (RuleGraphic). */
+export function Drawn({ as = "div", className, children }: { as?: "div" | "ul" | "em"; className?: string; children: ReactNode }) {
+  const [ref, draw] = useDraw<HTMLElement>();
+  return createElement(as, { ref, className, "data-draw": draw }, children);
+}
+
 const pad = (n: number) => String(n).padStart(2, "0");
 const fmt = (n: number) => n.toLocaleString("id-ID", { maximumFractionDigits: 1 });
 const idx = (i: number) => ({ "--i": i }) as CSSProperties;
@@ -125,7 +131,10 @@ export function Countdown() {
       <div className="gs-countdown__units" aria-hidden={day !== 0}>
         {units.map(([v, cap], i) => (
           <div key={cap} className="gs-countdown__unit">
-            <span className="gs-countdown__num">{day === 0 ? (i === 0 ? v : pad(v)) : "–"}</span>
+            {/* Hari, jam dan menit meluncur masuk saat angkanya berganti; detik tidak, agar tidak ada gerak tiap detik. */}
+            <span key={i === 3 ? "s" : v} className="gs-countdown__num">
+              {day === 0 ? (i === 0 ? v : pad(v)) : "–"}
+            </span>
             <span className="gs-countdown__cap">{cap}</span>
           </div>
         ))}
@@ -201,14 +210,14 @@ export function KmSplitter() {
       <TeamBar members={n} />
       <div className="gs-split__out" aria-live="polite">
         <div>
-          <div className="gs-split__num">
+          <div className="gs-split__num" key={per}>
             {fmt(per)}
             <small>km</small>
           </div>
           <div className="gs-split__cap">per orang selama {EVENT.raceDays} hari</div>
         </div>
         <div>
-          <div className="gs-split__num">
+          <div className="gs-split__num" key={perDay}>
             {fmt(perDay)}
             <small>km</small>
           </div>
@@ -408,7 +417,7 @@ export function ActivityCheck({ wide = false }: { wide?: boolean }) {
           </>
         )}
         {error && (
-          <p className="gs-check__error">
+          <p className="gs-check__error" key={error}>
             <Icon name="alert" size={20} />
             {error}
           </p>
@@ -423,7 +432,7 @@ export function ActivityCheck({ wide = false }: { wide?: boolean }) {
               <span className="gs-check__speed">{fmt(speed)} km/jam</span>
             </div>
             <PaceGauge pace={pace} verdict={verdict} />
-            <div className={`gs-check__verdict gs-check__verdict--${verdict}`}>
+            <div key={verdict} className={`gs-check__verdict gs-check__verdict--${verdict}`}>
               <Icon name={verdict === "ok" ? "check" : "ban"} size={22} strokeWidth={2.5} />
               <div>
                 {verdict === "ok" && (
@@ -545,7 +554,7 @@ export function RaceCalendar() {
   );
 }
 
-/* ───────── Tangga penghargaan *//* ───────── Tangga penghargaan */
+/* ───────── Tangga penghargaan */
 const LADDER = [
   { illo: "medal", who: "Semua tim finisher", title: "Medali dan e-certificate", body: `Tim mencapai ${EVENT.teamTargetKm} km dan tiap anggota minimal ${EVENT.memberMinKm} km.` },
   { illo: "jersey", who: `${EVENT.topTeamsInvited} tim terbaik`, title: "Finisher jersey dan undangan offline race di Jakarta", body: `Lari bersama tim-tim terbaik PTPN Group, ${EVENT.offlineRaceLabel}.` },
@@ -632,11 +641,14 @@ export function AppSteps() {
           </div>
         </div>
         <div className="gs-steps__caption">
-          <span className="gs-steps__count">
-            Langkah {active + 1} dari {APP_STEPS.length}
-          </span>
-          <p className="gs-steps__title">{cur.title}</p>
-          <p className="gs-steps__body">{cur.body}</p>
+          {/* Hanya teks yang dipasang ulang saat langkah berganti; tombol di bawahnya tetap, jadi fokus papan ketik tidak hilang. */}
+          <div className="gs-steps__say" key={active}>
+            <span className="gs-steps__count">
+              Langkah {active + 1} dari {APP_STEPS.length}
+            </span>
+            <p className="gs-steps__title">{cur.title}</p>
+            <p className="gs-steps__body">{cur.body}</p>
+          </div>
           {!last && (
             <button type="button" className="gs-btn gs-btn--secondary gs-btn--sm" onClick={() => go(active + 1)}>
               <span>Langkah {active + 2}</span>
@@ -650,6 +662,7 @@ export function AppSteps() {
 
 export function Schedule() {
   const now = useNow();
+  const [ref, draw] = useDraw<HTMLOListElement>();
   const raw = SCHEDULE.map((s): "done" | "now" | "next" | "tba" => {
     if (!s.from && !s.to) return "tba";
     if (!now) return "next";
@@ -660,11 +673,11 @@ export function Schedule() {
   const firstNow = raw.indexOf("now");
   const statuses = raw.map((st, i) => (st === "now" && i !== firstNow ? "next" : st));
   return (
-    <ol className="gs-schedule">
+    <ol className="gs-schedule" ref={ref} data-draw={draw}>
       {SCHEDULE.map((s, i) => {
         const status = statuses[i];
         return (
-          <li key={s.title} className={`gs-sched gs-sched--${status}`}>
+          <li key={s.title} className={`gs-sched gs-sched--${status}`} style={idx(i)}>
             <span className="gs-sched__chip" aria-hidden="true">
               {s.chip.pre && <small>{s.chip.pre}</small>}
               {s.chip.day ? <b className={s.chip.day.length > 2 ? "is-long" : undefined}>{s.chip.day}</b> : <Icon name="flag" size={22} />}
@@ -743,7 +756,7 @@ export function Navbar() {
           <span>Help Desk</span>
         </a>
         <button type="button" className="gs-nav__toggle" aria-expanded={open} aria-controls="nav-sheet" aria-label={open ? "Tutup menu" : "Buka menu"} onClick={() => setOpen(!open)}>
-          <Icon name={open ? "close" : "chevron-down"} size={20} />
+          <Icon key={open ? "close" : "open"} name={open ? "close" : "chevron-down"} size={20} />
         </button>
       </div>
       <div className="gs-nav__sheet" id="nav-sheet" data-open={open ? "true" : "false"}>

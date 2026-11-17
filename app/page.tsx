@@ -2,7 +2,7 @@
 import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
-import { ActivityCheck, AppSteps, Countdown, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
+import { ActivityCheck, AppSteps, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
 import { APPS, DOCUMENTS, EVENT } from "@/lib/event";
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
             <div>
               <img className="hero__brand enter" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} />
               <h1 id="hero-h" className="enter enter--2">
-                Kumpulkan <em>300 km</em> bersama timmu
+                Kumpulkan <Drawn as="em" className="gs-keyline">300 km</Drawn> bersama timmu
               </h1>
               <p className="hero__lead enter enter--3">
                 Lomba lari virtual beregu untuk karyawan PTPN Group. Lari atau jalan di mana saja, rekam di Strava, dan
@@ -74,7 +74,7 @@ export default function Home() {
                 eyebrow="Ringkasan aturan"
                 title={
                   <>
-                    Tiga hal yang <em>perlu kamu ingat</em>
+                    Tiga hal yang <Drawn as="em" className="gs-keyline">perlu kamu ingat</Drawn>
                   </>
                 }
                 lead="Target tim, batas harian, dan aktivitas yang dihitung. Cek aktivitasmu langsung di bawah."
@@ -104,7 +104,7 @@ export default function Home() {
                 <h3 className="rules__label">
                   <Icon name="calendar" size={20} /> Setiap hari
                 </h3>
-                <ul className="rules__list">
+                <Drawn as="ul" className="rules__list">
                   <li>
                     <RuleGraphic name="limit" value={EVENT.dailyMaxKm} />
                     <div>
@@ -134,7 +134,7 @@ export default function Home() {
                       <p className="rules__desc">Batas unggah aktivitas dan foto ke grup Strava “{EVENT.stravaGroup}”.</p>
                     </div>
                   </li>
-                </ul>
+                </Drawn>
               </div>
 
               <div className="rules__valid">
@@ -213,7 +213,7 @@ export default function Home() {
                 eyebrow="Cara ikut"
                 title={
                   <>
-                    Lima langkah sebelum <em>lari pertama</em>
+                    Lima langkah sebelum <Drawn as="em" className="gs-keyline">lari pertama</Drawn>
                   </>
                 }
                 lead="Pilih langkah untuk melihat layarnya. Setelah Strava terhubung, setiap lari otomatis tercatat untuk timmu."
@@ -236,7 +236,7 @@ export default function Home() {
               <img className="km__photo" src="/img/photo-langkah-pelari.webp" alt="" width={1400} height={931} loading="lazy" />
               <span className="gs-eyebrow">Batas {EVENT.dailyMaxKm} km</span>
               <h2 id="km-h" className="km__statement">
-                Gak harus jauh, yang penting <em>melangkah</em>.
+                Gak harus jauh, yang penting <Drawn as="em" className="gs-keyline">melangkah</Drawn>.
               </h2>
               <p className="km__text">
                 <strong>{EVENT.dailyMaxKm} km adalah batas harian, bukan target.</strong> Di tim berisi lima orang, rata-rata 2,1 km per orang per hari sudah
@@ -257,7 +257,7 @@ export default function Home() {
                 eyebrow="Jadwal"
                 title={
                   <>
-                    {EVENT.raceDays} hari untuk <em>300 km</em>
+                    {EVENT.raceDays} hari untuk <Drawn as="em" className="gs-keyline">300 km</Drawn>
                   </>
                 }
                 lead="Semua batas waktu memakai WIB. Tanda kuning menandai tahap yang sedang berjalan."
@@ -279,7 +279,7 @@ export default function Home() {
                 eyebrow="Penghargaan"
                 title={
                   <>
-                    Setiap langkah <em>dihargai</em>
+                    Setiap langkah <Drawn as="em" className="gs-keyline">dihargai</Drawn>
                   </>
                 }
                 lead="Peringkat ditentukan dari total jarak yang lolos verifikasi. Bila sama, dari pace rata-rata."
@@ -298,7 +298,7 @@ export default function Home() {
                 eyebrow="Pusat jawaban"
                 title={
                   <>
-                    Ada pertanyaan? <em>Cari di sini</em>
+                    Ada pertanyaan? <Drawn as="em" className="gs-keyline">Cari di sini</Drawn>
                   </>
                 }
                 lead="Ketik kata kunci atau pilih topik. Tekan / untuk langsung ke kolom pencarian."
@@ -331,7 +331,7 @@ export default function Home() {
                 eyebrow="Bantuan"
                 title={
                   <>
-                    Masih ada <em>kendala</em>?
+                    Masih ada <Drawn as="em" className="gs-keyline">kendala</Drawn>?
                   </>
                 }
                 lead="Laporkan ke Help Desk GreenStride. Siapkan data berikut agar laporanmu cepat ditangani."

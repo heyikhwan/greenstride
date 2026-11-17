@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Callout, Icon } from "./ds";
 import { FAQ, FAQ_CATEGORIES, type FaqCategoryId } from "@/lib/faq";
 import { EVENT } from "@/lib/event";
@@ -148,10 +148,12 @@ export default function Faq() {
           <p aria-live="polite">{results.length} pertanyaan</p>
         </div>
 
-        {results.map((f) => {
+        {/* Dipasang ulang saat topik berganti atau pencarian dimulai, jadi daftar baru masuk berurutan dan terlihat sudah berganti. Mengetik tidak memasang ulang. */}
+        <div className="faq-center__list" key={searching ? "cari" : cat}>
+        {results.map((f, i) => {
           const isOpen = open === f.id || (searching && results.length <= 2);
           return (
-            <div key={f.id} id={f.id} className={`gs-faq${isOpen ? " gs-faq--open" : ""}`}>
+            <div key={f.id} id={f.id} className={`gs-faq${isOpen ? " gs-faq--open" : ""}`} style={{ "--i": Math.min(i, 6) } as CSSProperties}>
               <button
                 type="button"
                 className="gs-faq__q"
@@ -194,6 +196,7 @@ export default function Faq() {
             </div>
           );
         })}
+        </div>
 
         {results.length === 0 && (
           <div className="faq-empty">

@@ -4,7 +4,7 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 
 1. **Jawaban dulu.** Setiap layar menjawab satu pertanyaan peserta. Hiasan tidak boleh menunda informasi.
 2. **Satu energi per layar.** Satu elemen tebal (judul miring besar, pita `band`, atau titik `sun`) per layar; sisanya tenang di `surface`.
-3. **Bergerak karena disentuh atau karena data tampil.** Gerak menjawab kursor, ketukan dan pilihan. Grafik data digambar sekali saat pertama terlihat. Tidak ada yang bergerak sendiri selain itu, kecuali hitung mundur dan satu titik "sekarang".
+3. **Bergerak karena disentuh atau karena data tampil.** Gerak menjawab kursor, ketukan, pilihan dan gulir. Grafik data dan garis kata kunci digambar sekali saat pertama terlihat. Tidak ada yang bergerak sendiri selain itu, kecuali hitung mundur dan satu titik "sekarang", dan keduanya berhenti sebelum 5 detik.
 4. **Ponsel dulu.** Rancang di lebar 360 px, target sentuh 44 px, gambar ringan.
 
 ## Suara dan penulisan
@@ -49,7 +49,7 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 - **Archivo** (keluarga `display`) dipakai miring, tebal 800 dan dilebarkan 112% (`font-stretch`) karena meniru logotype GREENSTRIDE yang miring, tebal dan melaju. **Poppins** (keluarga `text`) adalah huruf yang sudah dipakai di konten media sosial acara, jadi situs dan feed terasa satu suara.
 - `display-xl`: judul hero, huruf kapital, satu kali per halaman. Kata kuncinya diberi `lime`.
 - `display-l`: satu pernyataan kampanye per halaman (pesan 24 km).
-- `heading-1`: judul bagian. Kalimat biasa, bukan kapital. Satu kata kunci boleh diberi `leaf`.
+- `heading-1`: judul bagian. Kalimat biasa, bukan kapital. Satu kata kunci boleh diberi `leaf` dan garis `lime` di bawahnya (`gs-keyline`, motif garis rute). Kata kunci di `display-xl` dan `display-l` memakai garis yang sama.
 - `heading-2` dan `heading-3`: judul kartu dan langkah. `heading-3` tegak, tidak miring.
 - `stat`: angka besar di FactTile, hitung mundur dan KmSplitter.
 - `lead` di bawah judul, maksimal dua baris. `body` untuk semua bacaan, lebar baris maksimal 64 karakter. `label` untuk eyebrow dan pilar, kapital, satu per bagian.
@@ -66,18 +66,29 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 
 ## Gerak dan mikro-interaksi
 
-Durasi `dur-fast` untuk hover dan tekan, `dur-base` untuk buka tutup, `dur-slow` untuk masuknya hero. Kurva `ease-out`, kecuali `ease-spring` untuk panah tombol dan angka KmSplitter.
+Durasi `dur-fast` untuk hover dan tekan, `dur-base` untuk buka tutup, `dur-slow` untuk masuknya hero. Kurva `ease-out`, kecuali `ease-spring` untuk panah tombol, angka KmSplitter dan hal yang "mendarat" (penanda pilihan, nomor langkah, hasil cek).
 
-- Tombol naik 2 px saat disorot, mengecil 2% saat ditekan; panah bergeser 4 px.
+Bahasa geraknya **melaju**: garis `lime` tergambar dari kiri ke kanan seperti garis rute, dan nilai yang berganti meluncur ke tempatnya. Teks bacaan tidak pernah ditahan atau dimunculkan belakangan.
+
+Disentuh:
+- Tombol naik 2 px saat disorot, mengecil 2% saat ditekan; panah bergeser 4 px; ikon di depan label berputar -8°.
 - FactTile, RewardCard, DocumentCard naik 3 px dengan `shadow-md`; ikon FactTile berputar -8°.
-- FAQ membuka dengan tinggi mengalir (`grid-template-rows`), chevron berputar 180°, kartu terbuka bertepi `leaf`.
-- AppSteps mengganti layar ponsel dengan crossfade, bar progres `lime` mengisi di langkah aktif; panah atas/bawah berpindah langkah.
-- KmSplitter menggeser bar dengan pegas saat jumlah anggota diganti.
+- FAQ membuka dengan tinggi mengalir (`grid-template-rows`), chevron berputar 180°, kartu terbuka bertepi `leaf`. Saat topik berganti atau pencarian dimulai, daftar baru naik 8 px berurutan (jeda 35 ms, paling banyak tujuh butir); mengetik tidak memicu ulang.
+- AppSteps mengganti layar ponsel dengan crossfade, bar progres `lime` mengisi di langkah aktif, nomor langkah membesar sekejap dengan pegas; di ponsel keterangan langkah naik masuk. Panah atas/bawah berpindah langkah.
+- KmSplitter: penanda pilihan `band` meluncur dengan pegas ke tombol yang dipilih, bar menggeser dengan pegas, angka porsi meluncur masuk saat berubah.
+- ActivityCheck: penanda pace bergeser dengan pegas saat isian berubah; kotak hasil masuk dengan pegas dan ikonnya tergambar setiap kali jenis hasil berganti; pesan salah naik masuk.
+- Menu ponsel: tautan turun berurutan dari header, ikon tombol berputar saat berganti buka/tutup.
 - Hasil pencarian FAQ menandai kata yang cocok dengan `leaf-soft`.
-- Hero masuk sekali saat dimuat (naik 16 px dan memudar masuk, `dur-slow`).
-- **Grafik data digambar sekali saat pertama terlihat** (`useDraw`, IntersectionObserver): segmen TeamBar terisi berurutan, garis Route tergambar lalu titik akhirnya muncul, sel kalender yang lewat terisi, anak tangga RewardLadder naik. Paling lama 600 ms, kurva `ease-out`. Hanya grafik data, tidak pernah judul, teks, atau kartu biasa. HTML awal memuat grafik utuh, jadi tanpa JavaScript grafik tetap terbaca.
-- ActivityCheck: penanda pace bergeser dengan pegas saat isian berubah.
-- Tidak ada: animasi teks muncul saat menggulir, hitung naik angka, parallax, karusel, tab yang berganti sendiri. `prefers-reduced-motion` mematikan semua gerak; grafik tampil utuh.
+
+Dimuat dan digulir:
+- Hero masuk sekali saat dimuat (naik 16 px dan memudar masuk, `dur-slow`); lapis gelombang `leaf` dan `lime` naik dari balik lapis halaman. Bar periode Countdown memanjang ke hari ini.
+- Countdown: angka hari, jam dan menit meluncur turun saat berganti; detik berganti tanpa gerak. Titik status berdenyut dua kali lalu diam.
+- **Garis kemajuan baca**: garis `lime` 3 px di tepi bawah header memanjang mengikuti gulir halaman (CSS `animation-timeline: scroll()`; peramban tanpa dukungan tidak menampilkannya).
+- **Garis kata kunci** (`gs-keyline`) tergambar sekali dari kiri saat judul terlihat. Teks judul sudah tampil penuh sejak awal.
+- **Grafik data digambar sekali saat pertama terlihat** (`useDraw`, IntersectionObserver): segmen TeamBar terisi berurutan, garis Route tergambar lalu titik akhirnya muncul, sel kalender yang lewat terisi, anak tangga RewardLadder naik, RuleGraphic (rambu batas tergambar melingkar, token submit naik, jarum jam berputar ke 23.59), garis tahap jadwal yang selesai tumbuh ke bawah. Paling lama 600 ms. HTML awal memuat grafik utuh, jadi tanpa JavaScript grafik tetap terbaca.
+- Satu titik "sekarang" berdenyut dua kali setelah terlihat: sel hari ini di kalender selama lomba, atau chip "Sekarang" di jadwal di luar masa lomba. Tidak pernah keduanya.
+
+- Tidak ada: teks yang muncul belakangan saat menggulir, hitung naik angka, parallax, karusel, tab yang berganti sendiri, gerak berulang tanpa henti. `prefers-reduced-motion` mematikan semua gerak; grafik dan garis kata kunci tampil utuh.
 
 ## Gambar
 
