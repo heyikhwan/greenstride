@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
-import { AppCard, Button, Callout, DocumentCard, FactTile, Pillar, RewardCard, SectionHeader } from "@/components/ds";
-import { AppSteps, Countdown, KmSplitter, Navbar, Schedule } from "@/components/interactive";
+import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
+import { ActivityCheck, AppSteps, Countdown, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
 import { APPS, DOCUMENTS, EVENT } from "@/lib/event";
 
 export default function Home() {
@@ -57,6 +57,12 @@ export default function Home() {
               </div>
             </div>
           </div>
+          {/* Gelombang bertumpuk dari key visual: daun, lime, lalu warna halaman. */}
+          <svg className="hero__wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+            <path className="hero__wave-leaf" d="M0 58C300 6 640 118 1000 70c180-24 320-58 440-62v112H0z" />
+            <path className="hero__wave-lime" d="M0 84C340 40 700 124 1060 84c150-17 270-38 380-44v80H0z" />
+            <path className="hero__wave-page" d="M0 100c360-38 740 30 1100-4 130-12 240-22 340-26v50H0z" />
+          </svg>
         </section>
 
         {/* ───────── Ringkasan */}
@@ -68,23 +74,133 @@ export default function Home() {
                 eyebrow="Ringkasan aturan"
                 title={
                   <>
-                    Enam angka yang <em>perlu kamu ingat</em>
+                    Tiga hal yang <em>perlu kamu ingat</em>
                   </>
                 }
-                lead="Semua aturan inti lomba dalam satu pandangan. Rinciannya ada di pusat jawaban."
+                lead="Target tim, batas harian, dan aktivitas yang dihitung. Cek aktivitasmu langsung di bawah."
               />
             </div>
-            <div className="facts">
-              <FactTile icon="team" value={EVENT.teamMax} unit="orang" label="Maksimal per tim" note={`Maksimal ${EVENT.teamsPerUnit} tim per unit`} />
-              <FactTile icon="route" value={EVENT.teamTargetKm} unit="km" label="Target tim" note={`Dikumpulkan dalam ${EVENT.raceDays} hari`} />
-              <FactTile icon="flag" value={EVENT.memberMinKm} unit="km" label="Minimal per anggota" note="Syarat tim menjadi finisher" />
-              <FactTile icon="calendar" value={EVENT.dailyMaxKm} unit="km" label="Batas per hari" note="Jarak terbanyak yang dihitung, bukan target" />
-              <FactTile icon="upload" value={EVENT.dailySubmitMax} unit="kali" label="Submit per hari" note="Paling lambat 23.59 WIB" />
-              <FactTile icon="clock" value="5–15" unit="menit/km" label="Rentang pace" note="Dihitung dari moving time" />
+            <div className="rules">
+              <div className="rules__team gs-on-band">
+                <div className="rules__team-head">
+                  <div>
+                    <h3 className="rules__label">
+                      <Icon name="team" size={20} /> Target tim
+                    </h3>
+                    <p className="rules__big">
+                      {EVENT.teamTargetKm}
+                      <small>km</small>
+                    </p>
+                  </div>
+                  <p className="rules__sub">
+                    dalam <strong>{EVENT.raceDays} hari</strong>, dari tim berisi maksimal <strong>{EVENT.teamMax} orang</strong>. Maksimal {EVENT.teamsPerUnit} tim
+                    per unit.
+                  </p>
+                </div>
+                <TeamRoute />
+              </div>
+
+              <div className="rules__daily">
+                <h3 className="rules__label">
+                  <Icon name="calendar" size={20} /> Setiap hari
+                </h3>
+                <ul className="rules__list">
+                  <li>
+                    <RuleGraphic name="limit" value={EVENT.dailyMaxKm} />
+                    <div>
+                      <p className="rules__num">
+                        {EVENT.dailyMaxKm}
+                        <small>km</small>
+                      </p>
+                      <p className="rules__desc">Batas jarak yang dihitung per orang. Batas, bukan target.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <RuleGraphic name="submit" />
+                    <div>
+                      <p className="rules__num">
+                        {EVENT.dailySubmitMax}
+                        <small>kali submit</small>
+                      </p>
+                      <p className="rules__desc">Misalnya lari pagi dan jalan sore.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <RuleGraphic name="deadline" />
+                    <div>
+                      <p className="rules__num">
+                        23.59<small>WIB</small>
+                      </p>
+                      <p className="rules__desc">Batas unggah aktivitas dan foto ke grup Strava “{EVENT.stravaGroup}”.</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="rules__valid">
+                <div className="rules__valid-text">
+                  <div className="verdicts">
+                    <div className="verdicts__col verdicts__col--yes">
+                      <h3>
+                        <span className="verdicts__mark">
+                          <Icon name="check" size={16} strokeWidth={3} />
+                        </span>
+                        Dihitung
+                      </h3>
+                      <ul>
+                        <li>
+                          <Icon name="gps" size={20} />
+                          Lari atau jalan di luar ruangan, direkam GPS di Strava
+                        </li>
+                        <li>
+                          <Icon name="clock" size={20} />
+                          Pace {EVENT.paceFast} – {EVENT.paceSlow} menit/km dari moving time
+                        </li>
+                        <li>
+                          <Icon name="upload" size={20} />
+                          Disimpan untuk Everyone, masuk sebelum 23.59 WIB
+                        </li>
+                        <li>
+                          <Icon name="calendar" size={20} />
+                          Terjadi {EVENT.raceRangeLabel}
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="verdicts__col verdicts__col--no">
+                      <h3>
+                        <span className="verdicts__mark">
+                          <Icon name="close" size={16} strokeWidth={3} />
+                        </span>
+                        Tidak dihitung
+                      </h3>
+                      <ul>
+                        <li>
+                          <Icon name="ban" size={20} />
+                          Treadmill dan lari di dalam ruangan
+                        </li>
+                        <li>
+                          <Icon name="ban" size={20} />
+                          Bersepeda atau olahraga lain
+                        </li>
+                        <li>
+                          <Icon name="ban" size={20} />
+                          Aktivitas di luar periode lomba
+                        </li>
+                        <li>
+                          <Icon name="alert" size={20} />
+                          Merekam sambil berkendara: kepesertaan dibatalkan
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p className="rules__verify">
+                    <Icon name="shield-check" size={18} />
+                    Panitia memverifikasi secara berkala, jadi angka di leaderboard bisa berubah sampai verifikasi final.
+                  </p>
+                </div>
+                <ActivityCheck wide />
+              </div>
             </div>
-            <Callout tone="rule" title="Tidak dihitung">
-              Treadmill, lari di dalam ruangan, bersepeda, dan aktivitas di luar {EVENT.raceRangeLabel}.
-            </Callout>
           </div>
         </section>
 
@@ -116,23 +232,17 @@ export default function Home() {
         {/* ───────── 24 km */}
         <section className="section" id="batas-harian" aria-labelledby="km-h">
           <div className="wrap km">
-            <div>
-              <span className="gs-eyebrow">Batas 24 km</span>
-              <h2 id="km-h" className="km__statement" style={{ marginTop: 12 }}>
+            <div className="km__panel gs-on-band">
+              <img className="km__photo" src="/img/photo-langkah-pelari.webp" alt="" width={1400} height={931} loading="lazy" />
+              <span className="gs-eyebrow">Batas {EVENT.dailyMaxKm} km</span>
+              <h2 id="km-h" className="km__statement">
                 Gak harus jauh, yang penting <em>melangkah</em>.
               </h2>
               <p className="km__text">
-                <strong>{EVENT.dailyMaxKm} km adalah batas harian, bukan target.</strong> Di tim berisi lima orang, rata-rata
-                2,1 km per orang per hari sudah membawa tim ke {EVENT.teamTargetKm} km. Lari pagi dan sore pun boleh.
+                <strong>{EVENT.dailyMaxKm} km adalah batas harian, bukan target.</strong> Di tim berisi lima orang, rata-rata 2,1 km per orang per hari sudah
+                membawa tim ke {EVENT.teamTargetKm} km. Lari pagi dan sore pun boleh.
               </p>
-              <img
-                className="km__photo"
-                src="/img/photo-langkah-pelari.webp"
-                alt="Langkah kaki para pelari di jalan aspal"
-                width={1400}
-                height={931}
-                loading="lazy"
-              />
+              <KmRoute />
             </div>
             <KmSplitter />
           </div>
@@ -140,8 +250,8 @@ export default function Home() {
 
         {/* ───────── Jadwal */}
         <section className="section section--tint" id="jadwal" aria-labelledby="jadwal-h">
-          <div className="wrap split">
-            <div className="split__side">
+          <div className="wrap">
+            <div className="section__head">
               <SectionHeader
                 id="jadwal-h"
                 eyebrow="Jadwal"
@@ -150,13 +260,13 @@ export default function Home() {
                     {EVENT.raceDays} hari untuk <em>300 km</em>
                   </>
                 }
-                lead="Semua batas waktu memakai WIB. Titik kuning menandai tahap yang sedang berjalan."
+                lead="Semua batas waktu memakai WIB. Tanda kuning menandai tahap yang sedang berjalan."
               />
-              <Callout tone="attention" title="Tiap hari, sebelum 23.59 WIB">
-                Unggah aktivitas dan foto ke grup Strava “{EVENT.stravaGroup}”.
-              </Callout>
             </div>
-            <Schedule />
+            <div className="split">
+              <RaceCalendar />
+              <Schedule />
+            </div>
           </div>
         </section>
 
@@ -175,23 +285,7 @@ export default function Home() {
                 lead="Peringkat ditentukan dari total jarak yang lolos verifikasi. Bila sama, dari pace rata-rata."
               />
             </div>
-            <div className="rewards">
-              <RewardCard feature icon="flag" who={`${EVENT.topTeamsInvited} tim terbaik`} title="Finisher jersey dan undangan offline race di Jakarta">
-                Lari bersama tim-tim terbaik PTPN Group. Tanggal diumumkan panitia.
-              </RewardCard>
-              <RewardCard icon="medal" who="Semua tim finisher" title="Medali dan e-certificate">
-                Tim mencapai {EVENT.teamTargetKm} km dan tiap anggota minimal {EVENT.memberMinKm} km.
-              </RewardCard>
-              <RewardCard icon="trophy" who="6 tim terbaik" title="Uang tunai">
-                Juara I, II, III dan Harapan I, II, III.
-              </RewardCard>
-              <RewardCard icon="run" who="10 peraih MVP" title="Uang tunai dan undangan">
-                Anggota tim dengan jarak terjauh, tetap diundang ke Jakarta meski timnya di luar 50 besar.
-              </RewardCard>
-              <RewardCard icon="shield-check" who="Lomba yang jujur" title="Verifikasi berkala">
-                Kecurangan, seperti merekam sambil berkendara, membatalkan kepesertaan.
-              </RewardCard>
-            </div>
+            <RewardLadder />
           </div>
         </section>
 
@@ -240,13 +334,24 @@ export default function Home() {
                     Masih ada <em>kendala</em>?
                   </>
                 }
-                lead="Laporkan ke Help Desk GreenStride. Sertakan nama, unit, tim, waktu kejadian, dan tangkapan layar agar cepat ditangani."
+                lead="Laporkan ke Help Desk GreenStride. Siapkan data berikut agar laporanmu cepat ditangani."
               />
               <div className="help__actions">
                 <Button variant="lime" size="lg" href={EVENT.helpdeskUrl} external arrow>
                   Buka Help Desk
                 </Button>
               </div>
+            </div>
+            <div className="help__list">
+              <h3>Siapkan sebelum melapor</h3>
+              <ul>
+                {["Nama lengkap", "Unit kerja", "Nama tim", "Waktu kejadian", "Tangkapan layar aplikasi"].map((t) => (
+                  <li key={t}>
+                    <Icon name="check" size={16} strokeWidth={2.5} />
+                    {t}
+                  </li>
+                ))}
+              </ul>
             </div>
             <img className="help__runner" src="/img/pelari-greenstride.webp" alt="" width={540} height={1339} loading="lazy" />
           </div>

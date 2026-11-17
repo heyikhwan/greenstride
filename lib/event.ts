@@ -21,6 +21,7 @@ export const EVENT = {
   paceFast: "5:00",
   paceSlow: "15:00",
   topTeamsInvited: 50,
+  offlineRaceLabel: "Januari 2027",
 
   helpdeskUrl: "https://99virtualrace.com/HDPTPN",
   appName: "99 Virtual Race",
@@ -77,43 +78,47 @@ export const APP_STEPS = [
   },
 ] as const;
 
-export type ScheduleEntry = { date: string; title: string; body: string; from?: string; to?: string };
+/** chip: tanggal besar di linimasa (pre kecil di atas, day besar, month di bawah). */
+export type ScheduleEntry = { date: string; title: string; body: string; from?: string; to?: string; chip: { pre?: string; day?: string; month: string } };
 
 export const SCHEDULE: ScheduleEntry[] = [
   {
-    date: "Sampai 18 November 2026",
-    title: "Pendaftaran tim",
-    body: "Ketua tim melengkapi email pribadi, NIK SAP, dan surat pernyataan bermeterai seluruh anggota.",
-    to: "2026-11-18T23:59:59+07:00",
-  },
-  {
-    date: "Sebelum 23 November 2026",
-    title: "Siapkan aplikasi",
-    body: "Unduh 99 Virtual Race dan Strava, lalu hubungkan keduanya.",
+    date: "19 – 20 November 2026",
+    title: "Verifikasi data peserta",
+    body: "Panitia memeriksa data peserta dan tim yang sudah terdaftar.",
     from: "2026-11-19T00:00:00+07:00",
-    to: "2026-11-22T23:59:59+07:00",
+    to: "2026-11-20T23:59:59+07:00",
+    chip: { day: "19–20", month: "Nov" },
   },
   {
-    date: "23 November 2026, 00.00 WIB",
-    title: "Lomba dimulai",
-    body: "Lari atau jalan di luar ruangan mulai dihitung untuk timmu.",
+    date: "Jumat, 20 November 2026",
+    title: "Technical meeting",
+    body: "Penjelasan teknis lomba untuk peserta sebelum lomba dimulai.",
+    from: "2026-11-20T00:00:00+07:00",
+    to: "2026-11-20T23:59:59+07:00",
+    chip: { pre: "Jum", day: "20", month: "Nov" },
+  },
+  {
+    date: "23 November, 00.00 WIB – 20 Desember 2026, 23.59 WIB",
+    title: "Virtual running/walking race",
+    body: "Lari atau jalan di luar ruangan, rekam di Strava, submit paling banyak 2 kali sehari.",
     from: "2026-11-23T00:00:00+07:00",
     to: "2026-12-20T23:59:59+07:00",
+    chip: { pre: "23 Nov", day: "28", month: "hari" },
   },
   {
-    date: "20 Desember 2026, 23.59 WIB",
-    title: "Lomba ditutup",
-    body: "Batas akhir aktivitas dan submit. Setelah ini panitia melakukan verifikasi final.",
-    to: "2026-12-20T23:59:59+07:00",
-  },
-  {
-    date: "Diumumkan panitia",
-    title: "Offline race dan awarding di Jakarta",
+    date: "Januari 2027",
+    title: "Offline race di Jakarta",
     body: `Untuk ${EVENT.topTeamsInvited} tim terbaik dan 10 peraih MVP.`,
+    from: "2027-01-01T00:00:00+07:00",
+    to: "2027-01-31T23:59:59+07:00",
+    chip: { pre: "Jakarta", day: "Jan", month: "2027" },
   },
 ];
 
-export const DOCUMENTS = [
+export type DocumentEntry = { title: string; description: string; href: string; size: string; note?: string };
+
+export const DOCUMENTS: DocumentEntry[] = [
   {
     title: "Guidebook GreenStride 2026",
     description: "Ketentuan teknis, mekanisme lomba, dan penghargaan.",
@@ -131,5 +136,6 @@ export const DOCUMENTS = [
     description: "Panduan bergambar dari membuat akun sampai melihat peringkat.",
     href: "/dokumen/user-journey-99-virtual-race.pdf",
     size: "PDF · 42 MB",
+    note: "Sebaiknya unduh lewat Wi-Fi",
   },
-] as const;
+];

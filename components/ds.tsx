@@ -124,7 +124,7 @@ export function Callout({ tone = "attention", title, children }: { tone?: "atten
   );
 }
 
-export function DocumentCard({ title, description, href, size }: { title: string; description: string; href: string; size: string }) {
+export function DocumentCard({ title, description, href, size, note }: { title: string; description: string; href: string; size: string; note?: string }) {
   return (
     <a className="gs-doc" href={href} download>
       <span className="gs-doc__icon">
@@ -134,7 +134,10 @@ export function DocumentCard({ title, description, href, size }: { title: string
       <span>
         <h3 className="gs-doc__title">{title}</h3>
         <p className="gs-doc__desc">{description}</p>
-        <span className="gs-doc__meta">{size}</span>
+        <span className="gs-doc__meta">
+          {size}
+          {note && <span className="gs-doc__note">{note}</span>}
+        </span>
       </span>
       <span className="gs-doc__go" aria-hidden="true">
         <Icon name="download" size={20} />
@@ -160,5 +163,83 @@ export function AppCard({ name, role, icon, appStore, playStore }: { name: strin
         </a>
       </div>
     </div>
+  );
+}
+
+/**
+ * Ilustrasi penghargaan bergaya set ikon (garis 2 px, ujung bulat, isian lime dan leaf-soft).
+ * Gambar ini ilustrasi, bukan foto medali atau jersey resmi; ganti dengan foto panitia bila tersedia.
+ */
+export function Illustration({ name, size = 88 }: { name: "medal" | "jersey" | "trophy"; size?: number }) {
+  return (
+    <svg className="gs-illo" width={size} height={size} viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {name === "medal" && (
+        <>
+          <path className="gs-illo__soft" d="M28 6h14l12 30H40z" />
+          <path className="gs-illo__soft" d="M68 6H54L42 36h14z" />
+          <circle className="gs-illo__fill" cx="48" cy="62" r="24" />
+          <circle cx="48" cy="62" r="16" />
+          <path d="M40 63l6 6 11-13" />
+        </>
+      )}
+      {name === "jersey" && (
+        <>
+          <path className="gs-illo__soft" d="M35 12 22 17 8 31l10 11 8-6v48h44V36l8 6 10-11-14-14-13-5c-2 6-7 10-13 10s-11-4-13-10z" />
+          <path className="gs-illo__fill" stroke="none" d="M27 66 69 46v12L27 78z" />
+          <path d="M26 36v48h44V36" />
+        </>
+      )}
+      {name === "trophy" && (
+        <>
+          <path d="M30 22H19v6c0 8 5 13 12 13M66 22h11v6c0 8-5 13-12 13" />
+          <path className="gs-illo__fill" d="M30 12h36v22c0 11-8 20-18 20s-18-9-18-20z" />
+          <path d="M44 54v10h8V54" />
+          <rect className="gs-illo__soft" x="32" y="64" width="32" height="9" rx="2" />
+          <rect className="gs-illo__soft" x="26" y="73" width="44" height="11" rx="2" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+/**
+ * Grafik kecil untuk aturan harian. limit: rambu batas (lingkaran danger, angka di tengah), karena 24 km adalah batas, bukan target.
+ * submit: dua token unggah. deadline: jam dengan jarum di 23.59. Hiasan; teks di sebelahnya yang membawa informasi.
+ */
+export function RuleGraphic({ name, value }: { name: "limit" | "submit" | "deadline"; value?: number }) {
+  const ticks = Array.from({ length: 12 }, (_, i) => {
+    const a = (i * Math.PI) / 6;
+    return { x1: 32 + 22 * Math.sin(a), y1: 32 - 22 * Math.cos(a), x2: 32 + 26 * Math.sin(a), y2: 32 - 26 * Math.cos(a) };
+  });
+  return (
+    <svg className={cx("gs-rulegfx", `gs-rulegfx--${name}`)} width={64} height={64} viewBox="0 0 64 64" aria-hidden="true">
+      {name === "limit" && (
+        <>
+          <circle className="gs-rulegfx__sign" cx="32" cy="32" r="27" />
+          <text x="32" y="33">
+            {value}
+          </text>
+        </>
+      )}
+      {name === "submit" && (
+        <>
+          <circle className="gs-rulegfx__token gs-rulegfx__token--a" cx="24" cy="38" r="18" />
+          <path className="gs-rulegfx__arrow" d="M24 46V30m-6 6 6-6 6 6" />
+          <circle className="gs-rulegfx__token gs-rulegfx__token--b" cx="41" cy="26" r="18" />
+          <path className="gs-rulegfx__arrow gs-rulegfx__arrow--b" d="M41 34V18m-6 6 6-6 6 6" />
+        </>
+      )}
+      {name === "deadline" && (
+        <>
+          <circle className="gs-rulegfx__face" cx="32" cy="32" r="28" />
+          {ticks.map((t, i) => (
+            <line key={i} className={i === 0 ? "gs-rulegfx__tick gs-rulegfx__tick--12" : "gs-rulegfx__tick"} {...t} />
+          ))}
+          <line className="gs-rulegfx__hand" x1="32" y1="32" x2="31.9" y2="18" />
+          <line className="gs-rulegfx__hand gs-rulegfx__hand--min" x1="32" y1="32" x2="29.7" y2="10.4" />
+          <circle className="gs-rulegfx__pin" cx="32" cy="32" r="3.5" />
+        </>
+      )}
+    </svg>
   );
 }

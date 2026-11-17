@@ -77,6 +77,13 @@
 .gs-countdown__cap { font: 500 11px/1.2 var(--font-text); letter-spacing: 0.08em; text-transform: uppercase; color: var(--band-muted); }
 .gs-countdown__range { font-size: 14px; color: var(--band-muted); }
 .gs-countdown__range strong { color: var(--band-ink); font-weight: 600; }
+.gs-countdown__day { display: flex; align-items: baseline; gap: var(--space-2); font: italic 800 22px/1 var(--font-display); font-stretch: 112%; color: var(--band-ink); }
+.gs-countdown__day strong { font-size: 60px; line-height: 0.9; color: var(--lime); font-variant-numeric: tabular-nums; }
+.gs-countdown__day span { font-size: 18px; color: var(--band-muted); }
+/* Bar periode lomba: motif garis rute, titik lime di posisi hari ini. */
+.gs-countdown__track { position: relative; height: 10px; margin-block: var(--space-2); border-radius: var(--radius-pill); background: var(--band); }
+.gs-countdown__fill { position: absolute; inset: 0 auto 0 0; min-width: 10px; border-radius: inherit; background: var(--lime); }
+.gs-countdown__fill::after { content: ""; position: absolute; right: -9px; top: 50%; width: 18px; height: 18px; border-radius: 50%; background: var(--lime); border: 3px solid var(--band-raised); transform: translateY(-50%); }
 @keyframes gs-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
 /* ───────── Chip */
@@ -141,20 +148,31 @@
 
 /* ───────── ScheduleItem */
 .gs-schedule { list-style: none; margin: 0; padding: 0; display: grid; }
-.gs-sched { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: var(--space-4); padding-bottom: var(--space-6); }
+/* Linimasa dengan chip tanggal: tanggal terbaca sekilas, garis menyambung antar chip, tahap yang berjalan menjadi kartu. */
+.gs-sched { position: relative; display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: var(--space-4); padding-bottom: var(--space-4); }
 .gs-sched:last-child { padding-bottom: 0; }
-.gs-sched::before { content: ""; position: absolute; left: 13px; top: 28px; bottom: 0; width: 2px; background: var(--line); }
+.gs-sched::before { content: ""; position: absolute; left: 35px; top: 72px; bottom: 0; width: 2px; background: var(--line-strong); }
 .gs-sched:last-child::before { display: none; }
 .gs-sched--done::before { background: var(--leaf); }
-.gs-sched__dot { position: relative; z-index: 1; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--surface-raised); border: 2px solid var(--line-strong); color: var(--on-leaf); }
-.gs-sched--done .gs-sched__dot { background: var(--leaf); border-color: var(--leaf); }
-.gs-sched--now .gs-sched__dot { background: var(--lime); border-color: var(--lime); box-shadow: var(--shadow-glow); animation: gs-glow 2.2s var(--ease-out) infinite; }
-.gs-sched--tba .gs-sched__dot { border-style: dashed; }
+.gs-sched__chip { position: relative; z-index: 1; display: grid; justify-items: center; align-content: center; gap: 2px; width: 72px; min-height: 72px; padding: var(--space-2) 4px; border-radius: var(--radius-md); background: var(--surface-raised); border: 1.5px solid var(--line); color: var(--ink); text-align: center; }
+.gs-sched__chip b { font: italic 800 26px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; }
+.gs-sched__chip b.is-long { font-size: 18px; }
+.gs-sched__chip small { font: 600 11px/1.2 var(--font-text); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
+.gs-sched__chip .gs-icon { color: var(--leaf); }
+.gs-sched__done { position: absolute; top: -7px; right: -7px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--leaf); color: var(--on-leaf); border: 2px solid var(--surface-tint); }
+.gs-sched--done .gs-sched__chip { background: var(--leaf-soft); border-color: var(--leaf-soft); }
+.gs-sched--now .gs-sched__chip { background: var(--sun); border-color: var(--sun); color: var(--on-sun); box-shadow: 0 0 0 5px color-mix(in srgb, var(--sun) 30%, transparent); }
+.gs-sched--now .gs-sched__chip small { color: var(--on-sun); }
+.gs-sched--tba .gs-sched__chip { border-style: dashed; border-color: var(--line-strong); background: transparent; }
+.gs-sched__card { padding: var(--space-2) 0 var(--space-3); }
+.gs-sched--now .gs-sched__card { padding: var(--space-4) var(--space-5); margin-bottom: var(--space-2); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
 .gs-sched__date { font: 600 13px/1.3 var(--font-text); color: var(--leaf); letter-spacing: 0.02em; }
 .gs-sched--tba .gs-sched__date { color: var(--ink-muted); }
 .gs-sched__title { margin: 2px 0 var(--space-1); font: 700 19px/1.3 var(--font-display); color: var(--ink); }
 .gs-sched__body { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-muted); max-width: 52ch; }
-.gs-sched__badge { display: inline-block; margin-left: var(--space-2); padding: 2px 8px; border-radius: var(--radius-pill); background: var(--sun); color: var(--on-sun); font: 700 11px/1.4 var(--font-text); letter-spacing: 0.06em; text-transform: uppercase; vertical-align: 2px; }
+.gs-sched__badge, .gs-sched__past { display: inline-block; margin-left: var(--space-2); padding: 2px 8px; border-radius: var(--radius-pill); font: 700 11px/1.4 var(--font-text); letter-spacing: 0.06em; text-transform: uppercase; vertical-align: 1px; }
+.gs-sched__badge { background: var(--sun); color: var(--on-sun); }
+.gs-sched__past { background: var(--leaf-soft); color: var(--leaf); }
 @keyframes gs-glow { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 50% { box-shadow: var(--shadow-glow); } }
 
 /* ───────── RewardCard */
@@ -178,20 +196,38 @@
   transition: background-color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out); }
 .gs-step:hover { background: var(--surface-raised); }
 .gs-step__num { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--line-strong); font: italic 800 17px/1 var(--font-display); color: var(--ink-muted); transition: all var(--dur-base) var(--ease-out); }
-.gs-step__title { margin: 0; font: 700 18px/1.3 var(--font-display); color: var(--ink); }
-.gs-step__body { margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-muted); }
+.gs-step__title { display: block; margin: 0; font: 700 18px/1.3 var(--font-display); color: var(--ink); }
+.gs-step__body { display: block; margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-muted); }
 .gs-step[aria-selected="true"] { background: var(--surface-raised); border-color: var(--line); box-shadow: var(--shadow-sm); }
 .gs-step[aria-selected="true"] .gs-step__num { background: var(--leaf); border-color: var(--leaf); color: var(--on-leaf); }
 .gs-step__bar { grid-column: 2; height: 3px; margin-top: var(--space-3); border-radius: 2px; background: var(--line); overflow: hidden; display: none; }
 .gs-step[aria-selected="true"] .gs-step__bar { display: block; }
 .gs-step__bar > i { display: block; height: 100%; width: 100%; background: var(--lime); transform-origin: left; animation: gs-bar var(--dur-slow) var(--ease-out); }
 @keyframes gs-bar { from { transform: scaleX(0); } }
+.gs-steps__panel { position: relative; isolation: isolate; display: grid; justify-items: center; gap: var(--space-5); }
+.gs-steps__caption { display: none; }
 .gs-phone { position: relative; justify-self: center; width: 100%; max-width: 300px; aspect-ratio: 600 / 1298; padding: 10px; background: var(--ink); border-radius: 40px; box-shadow: var(--shadow-md); }
 .gs-phone::before { content: ""; position: absolute; inset: -18px -26px; z-index: -1; background: var(--leaf-soft); border-radius: var(--radius-leaf) var(--radius-sm); transform: rotate(-4deg); }
 .gs-phone__screen { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 30px; background: var(--surface-tint); }
 .gs-phone__screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.03); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
 .gs-phone__screen img.is-on { opacity: 1; transform: none; }
-@media (max-width: 760px) { .gs-steps { grid-template-columns: 1fr; } .gs-phone { max-width: 240px; order: -1; } }
+/* Ponsel: tab nomor di atas, layar di tengah, keterangan langkah di bawah agar layar selalu terlihat saat langkah diganti. */
+@media (max-width: 760px) {
+  .gs-steps { grid-template-columns: 1fr; gap: var(--space-5); }
+  .gs-steps__list { position: relative; display: flex; justify-content: space-between; max-width: 340px; width: 100%; justify-self: center; }
+  .gs-steps__list::before { content: ""; position: absolute; left: 22px; right: 22px; top: 50%; height: 2px; background: var(--line-strong); }
+  .gs-steps__list li { position: relative; }
+  .gs-step, .gs-step:hover, .gs-step[aria-selected="true"] { display: grid; place-items: center; grid-template-columns: 1fr; width: 48px; height: 48px; padding: 0; border: 0; background: transparent; box-shadow: none; border-radius: 50%; }
+  .gs-step__num { width: 44px; height: 44px; background: var(--surface-tint); }
+  .gs-step__text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .gs-step[aria-selected="true"] .gs-step__bar { display: none; }
+  .gs-phone { max-width: 240px; }
+  .gs-steps__caption { display: grid; justify-items: start; gap: var(--space-2); width: 100%; max-width: 420px; }
+  .gs-steps__count { font: 600 13px/1.3 var(--font-text); color: var(--leaf); }
+  .gs-steps__title { margin: 0; font: 700 19px/1.3 var(--font-display); color: var(--ink); }
+  .gs-steps__body { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-muted); }
+  .gs-steps__caption .gs-btn { margin-top: var(--space-2); }
+}
 
 /* ───────── StoreBadges */
 .gs-app { display: grid; grid-template-columns: 64px 1fr; gap: var(--space-4); align-items: center; padding: var(--space-5); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); }
@@ -211,7 +247,9 @@
 .gs-doc__type { position: absolute; bottom: -6px; right: -8px; padding: 2px 6px; border-radius: 6px; background: var(--danger); color: var(--on-leaf); font: 700 10px/1.3 var(--font-text); letter-spacing: 0.06em; }
 .gs-doc__title { margin: 0; font: 700 17px/1.3 var(--font-display); }
 .gs-doc__desc { margin: 2px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-muted); }
-.gs-doc__meta { margin-top: var(--space-1); font-size: 13px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.gs-doc__meta { display: block; margin-top: var(--space-1); font-size: 13px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.gs-doc__note::before { content: " · "; }
+.gs-doc__note { font-weight: 600; color: var(--ink); }
 .gs-doc__go { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--surface-tint); color: var(--leaf); transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-spring); }
 .gs-doc:hover .gs-doc__go { background: var(--leaf); color: var(--on-leaf); transform: translateY(2px); }
 
@@ -226,11 +264,8 @@
 .gs-split__num { font: italic 800 48px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--ink); }
 .gs-split__num small { font-size: 0.42em; color: var(--leaf); margin-left: 4px; }
 .gs-split__cap { margin-top: var(--space-1); font-size: 14px; color: var(--ink-muted); }
-.gs-split__meter { display: grid; gap: var(--space-2); }
-.gs-split__track { position: relative; height: 12px; border-radius: var(--radius-pill); background: var(--surface-tint); overflow: hidden; }
-.gs-split__fill { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: var(--leaf); transition: width var(--dur-slow) var(--ease-spring); }
 .gs-split__scale { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-muted); }
-@media (max-width: 520px) { .gs-split { padding: var(--space-5); } .gs-split__num { font-size: 40px; } }
+@media (max-width: 520px) { .gs-split { padding: var(--space-5); } .gs-split__num { font-size: 40px; } .gs-seg { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); justify-self: stretch; } .gs-seg button { min-width: 0; padding: 0 var(--space-2); white-space: nowrap; font-size: 14px; } }
 
 /* ───────── Navbar */
 /* Header berdiri di `band` di kedua tema agar logo Planters Club putih selalu terbaca; menyambung ke hero. */
@@ -264,3 +299,225 @@
   .gs *, .gs *::before, .gs *::after { animation: none !important; transition: none !important; }
   .gs-btn:hover, .gs-fact:hover, .gs-reward:hover, .gs-doc:hover, .gs-chip:hover, .gs-store:hover { transform: none; }
 }
+
+/* ───────── Gambar sekali saat terlihat
+   [data-draw] diatur useDraw: "static" (HTML awal, grafik utuh), "wait" (siap digambar), "on" (digambar sekali).
+   Hanya untuk grafik data. Total gerak paling lama 600 ms. Dimatikan oleh prefers-reduced-motion. */
+
+/* ───────── Garis rute (motif dari konten 24 KM) */
+.gs-route { display: block; overflow: visible; }
+.gs-route path { fill: none; stroke: currentColor; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.gs-route circle { fill: var(--lime); stroke: currentColor; stroke-width: 3; transform-box: fill-box; transform-origin: center; }
+.gs-route[data-draw="wait"] path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.gs-route[data-draw="wait"] circle:last-of-type { transform: scale(0); }
+.gs-route[data-draw="on"] path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 440ms var(--ease-out); }
+.gs-route[data-draw="on"] circle:last-of-type { transition: transform 200ms var(--ease-spring) 400ms; }
+
+/* ───────── TeamBar: 300 km dibagi per anggota */
+.gs-teambar { display: grid; gap: var(--space-2); }
+.gs-teambar__track, .gs-teambar__labels { display: flex; }
+.gs-teambar__track { height: 40px; }
+.gs-teambar__seg { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; border-radius: var(--radius-sm); background: var(--lime); transform-origin: left center;
+  transition: flex-grow var(--dur-slow) var(--ease-spring), margin var(--dur-slow) var(--ease-spring); }
+.gs-teambar__seg + .gs-teambar__seg, .gs-teambar__labels > span + span { margin-left: 4px; }
+.gs-teambar__min { position: absolute; inset: 0 auto 0 0; background: var(--leaf); transition: width var(--dur-slow) var(--ease-spring); }
+.gs-teambar__labels > span { display: inline-flex; align-items: center; gap: 4px; flex: 1 1 0; min-width: 0; overflow: hidden; white-space: nowrap; font: 600 13px/1.3 var(--font-text); color: var(--ink-muted); font-variant-numeric: tabular-nums;
+  transition: flex-grow var(--dur-slow) var(--ease-spring), margin var(--dur-slow) var(--ease-spring), opacity var(--dur-base) var(--ease-out); }
+.gs-teambar__labels .gs-icon { color: var(--leaf); }
+.gs-teambar__seg[data-on="false"], .gs-teambar__labels > [data-on="false"] { flex-grow: 0; margin-left: 0; }
+.gs-teambar__labels > [data-on="false"] { opacity: 0; }
+.gs-teambar__legend { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); margin-top: var(--space-1); font-size: 13px; line-height: 1.4; color: var(--ink-muted); }
+.gs-teambar__legend > span { display: inline-flex; align-items: center; gap: 6px; }
+.gs-teambar__key { flex: none; width: 12px; height: 12px; border-radius: 3px; background: var(--leaf); }
+.gs-teambar__key--extra { background: var(--lime); }
+.gs-teambar[data-draw="wait"] .gs-teambar__seg { transform: scaleX(0); }
+.gs-teambar[data-draw="on"] .gs-teambar__seg { transition: flex-grow var(--dur-slow) var(--ease-spring), margin var(--dur-slow) var(--ease-spring), transform 420ms var(--ease-out) calc(var(--i) * 45ms); }
+
+/* ───────── Jalan 0 sampai 24 km di KmSplitter */
+.gs-road { display: grid; gap: var(--space-2); }
+.gs-road__track { position: relative; height: 8px; margin-block: 14px; border-radius: var(--radius-pill); background: var(--surface-tint); }
+.gs-road__track::after { content: ""; position: absolute; right: -2px; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: var(--surface-raised); border: 3px solid var(--line-strong); transform: translateY(-50%); }
+.gs-road__done { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: var(--leaf); transition: width var(--dur-slow) var(--ease-spring); }
+.gs-road__runner { position: absolute; top: 50%; z-index: 1; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--lime); color: var(--on-lime); border: 3px solid var(--surface-raised); box-shadow: var(--shadow-sm);
+  transform: translate(-50%, -50%); transition: left var(--dur-slow) var(--ease-spring); }
+.gs-split__scale { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-muted); }
+
+/* ───────── ActivityCheck */
+.gs-check { display: grid; gap: var(--space-5); align-content: start; padding: var(--space-6); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.gs-check__head h3 { margin: 0; font: italic 700 26px/1.2 var(--font-display); font-stretch: 112%; color: var(--ink); }
+.gs-check__head p { margin: var(--space-1) 0 0; font-size: 15px; line-height: 1.55; color: var(--ink-muted); }
+.gs-check__inputs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-4); align-items: end; }
+.gs-check__time { min-width: 0; margin: 0; padding: 0; border: 0; }
+.gs-check__time legend { padding: 0; margin-bottom: var(--space-2); font: 600 14px/1.3 var(--font-text); color: var(--ink); }
+.gs-check__time-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); }
+.gs-check__time .gs-check__field label { font-weight: 500; color: var(--ink-muted); }
+.gs-check__field { display: grid; gap: 6px; min-width: 0; }
+.gs-check__field label { font: 600 14px/1.3 var(--font-text); color: var(--ink); }
+.gs-check__field input { width: 100%; height: 52px; padding: 0 var(--space-4); font: 600 18px/1 var(--font-text); font-variant-numeric: tabular-nums; color: var(--ink); background: var(--surface);
+  border: 1.5px solid var(--line-strong); border-radius: var(--radius-pill); -webkit-appearance: none; appearance: none; transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+.gs-check__field input::placeholder { color: var(--ink-muted); font-weight: 400; }
+.gs-check__field input:hover { border-color: var(--ink); }
+.gs-check__field input:focus { outline: none; border-color: var(--leaf); box-shadow: 0 0 0 4px var(--leaf-soft); }
+.gs-check__out { display: grid; gap: var(--space-4); align-content: start; min-height: 112px; padding-top: var(--space-5); border-top: 1px solid var(--line); }
+/* wide: dipakai selebar kontainer. Isian dan catatan di kiri, hasil di kanan, sehingga tinggi panel ditentukan isinya dan tidak menyisakan kolom kosong di sebelahnya. */
+@media (min-width: 861px) {
+  .gs-check--wide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: var(--space-7); }
+  .gs-check--wide > .gs-check__head, .gs-check--wide > .gs-check__inputs, .gs-check--wide > .gs-check__note { grid-column: 1; }
+  .gs-check--wide > .gs-check__note { align-self: end; }
+  .gs-check--wide > .gs-check__out { grid-column: 2; grid-row: 1 / span 3; padding: 0 0 0 var(--space-7); border-top: 0; border-left: 1px solid var(--line); }
+  .gs-check--wide > .gs-check__out > .gs-gauge:first-child { margin-top: var(--space-5); }
+}
+/* Keadaan kosong menampilkan zona pace dan tombol contoh, jadi panel tidak pernah kosong dan cara pakainya terlihat. */
+.gs-check__empty { display: grid; justify-items: start; gap: var(--space-3); }
+.gs-check__empty p, .gs-check__error { display: flex; align-items: flex-start; gap: var(--space-2); margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-muted); }
+.gs-check__empty .gs-icon { flex: none; color: var(--leaf); }
+.gs-check__out > .gs-gauge:first-child { margin-top: var(--space-4); }
+.gs-check__error { color: var(--ink); }
+.gs-check__error .gs-icon { color: var(--danger); }
+.gs-check__pace { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+.gs-check__num { font: italic 800 48px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--ink); }
+.gs-check__num small { margin-left: 6px; font-size: 0.4em; font-weight: 700; color: var(--leaf); }
+.gs-check__speed { font-size: 14px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.gs-gauge { display: grid; gap: 6px; }
+.gs-gauge__track { position: relative; height: 12px; margin-block: 6px; border-radius: var(--radius-pill); background: var(--surface-tint); }
+.gs-gauge__ok { position: absolute; top: 0; bottom: 0; border-radius: var(--radius-pill); background: var(--leaf-soft); box-shadow: inset 0 0 0 2px var(--leaf); }
+.gs-gauge__mark { position: absolute; top: 50%; width: 24px; height: 24px; border-radius: 50%; background: var(--leaf); border: 3px solid var(--surface-raised); box-shadow: var(--shadow-sm); transform: translate(-50%, -50%); transition: left var(--dur-slow) var(--ease-spring), background-color var(--dur-base) var(--ease-out); }
+.gs-gauge__mark--fast, .gs-gauge__mark--slow { background: var(--danger); }
+.gs-gauge__ok em { position: absolute; left: 0; right: 0; bottom: calc(100% + 6px); font: 600 12px/1 var(--font-text); font-style: normal; text-align: center; white-space: nowrap; color: var(--leaf); }
+.gs-gauge__ticks { position: relative; height: 18px; font: 600 12px/1.5 var(--font-text); color: var(--ink); font-variant-numeric: tabular-nums; }
+.gs-gauge__ticks span { position: absolute; top: 0; transform: translateX(-50%); }
+.gs-gauge__ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-muted); }
+.gs-check__verdict { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); padding: var(--space-4); border-radius: var(--radius-md); font-size: 15px; line-height: 1.55; color: var(--ink); }
+.gs-check__verdict strong { display: block; margin-bottom: 2px; font-weight: 700; }
+.gs-check__verdict--ok { background: var(--leaf-soft); }
+.gs-check__verdict--ok .gs-icon { color: var(--leaf); }
+.gs-check__verdict--fast, .gs-check__verdict--slow { background: var(--danger-soft); }
+.gs-check__verdict--fast .gs-icon, .gs-check__verdict--slow .gs-icon, .gs-check__verdict--fast strong, .gs-check__verdict--slow strong { color: var(--danger); }
+.gs-check__note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--ink-muted); }
+@media (max-width: 520px) {
+  .gs-check { padding: var(--space-5); }
+  .gs-check__inputs { grid-template-columns: 1fr; }
+  .gs-check__num { font-size: 40px; }
+}
+
+/* ───────── RaceCalendar: rencana empat minggu dengan target kumulatif tim per minggu */
+.gs-cal { display: grid; gap: var(--space-4); align-content: start; margin: 0; padding: var(--space-6); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.gs-cal__top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-4); }
+.gs-cal__title { margin: 0; font: italic 700 24px/1.2 var(--font-display); font-stretch: 112%; color: var(--ink); }
+.gs-cal__range { font: 600 13px/1.3 var(--font-text); color: var(--ink-muted); }
+.gs-cal__grid { display: grid; grid-template-columns: 40px repeat(7, minmax(0, 1fr)) 84px; gap: 6px; align-items: center; }
+.gs-cal__row { display: contents; }
+.gs-cal__dow, .gs-cal__head { padding-bottom: 2px; font: 600 12px/1.2 var(--font-text); color: var(--ink-muted); text-align: center; }
+.gs-cal__wk { font: 600 12px/1.2 var(--font-text); color: var(--ink-muted); }
+.gs-cal__day { position: relative; display: grid; place-items: center; aspect-ratio: 1; min-height: 36px; border-radius: var(--radius-sm); background: var(--surface); border: 1px solid var(--line);
+  font: 600 15px/1 var(--font-text); font-variant-numeric: tabular-nums; color: var(--ink); }
+.gs-cal__day small { position: absolute; top: 3px; left: 4px; font-size: 9px; font-weight: 700; line-height: 1; color: var(--leaf); }
+.gs-cal__day--start, .gs-cal__day--finish { background: var(--lime); border-color: var(--lime); color: var(--on-lime); }
+.gs-cal__day--start small, .gs-cal__day--finish small { color: var(--on-lime); }
+.gs-cal__day--done { background: var(--leaf); border-color: var(--leaf); color: var(--on-leaf); }
+.gs-cal__day--done small { color: var(--on-leaf); }
+.gs-cal__day--today { background: var(--sun); border-color: var(--sun); color: var(--on-sun); box-shadow: 0 0 0 2px var(--surface-raised), 0 0 0 4px var(--sun); }
+.gs-cal__day--today small { color: var(--on-sun); }
+.gs-cal__goal { position: relative; padding: 0 0 8px 10px; font: 600 12px/1 var(--font-text); color: var(--ink-muted); white-space: nowrap; }
+.gs-cal__goal.gs-cal__head { padding: 0 0 2px 10px; text-align: left; }
+.gs-cal__goal b { font: italic 800 20px/1 var(--font-display); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--ink); }
+.gs-cal__goal i { position: absolute; left: 10px; bottom: 0; height: 4px; max-width: calc(100% - 10px); border-radius: 2px; background: var(--leaf); transform-origin: left; }
+.gs-cal__row:last-child .gs-cal__goal b { color: var(--leaf); }
+.gs-cal__row.is-current .gs-cal__wk { color: var(--ink); }
+.gs-cal__legend { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); font-size: 13px; color: var(--ink-muted); }
+.gs-cal__legend span { display: inline-flex; align-items: center; gap: 6px; }
+.gs-cal__legend i { width: 12px; height: 12px; border-radius: 3px; background: var(--leaf); }
+.gs-cal__legend i.is-edge { background: var(--lime); }
+.gs-cal__legend i.is-today { background: var(--sun); }
+.gs-cal__caption { display: flex; align-items: flex-start; gap: var(--space-2); padding-top: var(--space-4); border-top: 1px solid var(--line); font-size: 14px; line-height: 1.55; color: var(--ink-muted); }
+.gs-cal__caption strong { color: var(--ink); font-weight: 600; }
+.gs-cal__caption .gs-icon { flex: none; margin-top: 2px; color: var(--leaf); }
+.gs-cal[data-draw="wait"] .gs-cal__day--done { background: var(--surface); border-color: var(--line); color: var(--ink); }
+.gs-cal[data-draw="wait"] .gs-cal__goal i { transform: scaleX(0); }
+.gs-cal[data-draw="on"] .gs-cal__day { transition: background-color 240ms var(--ease-out) calc(var(--i) * 12ms), border-color 240ms var(--ease-out) calc(var(--i) * 12ms), color 240ms var(--ease-out) calc(var(--i) * 12ms); }
+.gs-cal[data-draw="on"] .gs-cal__goal i { transition: transform 360ms var(--ease-out) calc(var(--i) * 70ms); }
+@media (max-width: 520px) {
+  .gs-cal { padding: var(--space-4); }
+  .gs-cal__grid { grid-template-columns: repeat(7, minmax(0, 1fr)) 58px; gap: 4px; }
+  .gs-cal__wk { display: none; }
+  .gs-cal__day { min-height: 0; font-size: 14px; }
+  .gs-cal__day small { font-size: 8px; left: 3px; }
+  .gs-cal__goal, .gs-cal__goal.gs-cal__head { padding-left: 6px; }
+  .gs-cal__goal i { left: 6px; }
+  .gs-cal__goal b { font-size: 17px; }
+}
+
+/* ───────── RewardLadder: anak tangga naik, MVP sebagai jalur individu */
+.gs-ladder { display: grid; gap: var(--space-4); }
+.gs-ladder__steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); align-items: end; }
+.gs-ladder__step { display: grid; gap: var(--space-2); align-content: start; justify-items: start; padding: var(--space-6) var(--space-5); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--ink); }
+/* Selisih 32 px cukup untuk terbaca sebagai tangga tanpa menyisakan ruang kosong di anak tangga teratas. */
+.gs-ladder__step:nth-child(1) { min-height: 300px; }
+.gs-ladder__step:nth-child(2) { min-height: 332px; }
+.gs-ladder__step:nth-child(3) { min-height: 364px; }
+.gs-ladder__step .gs-illo { margin-bottom: var(--space-3); }
+.gs-ladder__step--top { background: var(--band); border-color: var(--band); border-radius: var(--radius-leaf) var(--radius-sm); color: var(--band-ink); }
+.gs-ladder__who { font: 600 12px/1.3 var(--font-text); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
+.gs-ladder__title { margin: 0; font: italic 700 24px/1.15 var(--font-display); font-stretch: 112%; color: inherit; }
+.gs-ladder__body { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-muted); }
+.gs-ladder__step--top .gs-ladder__who { color: var(--lime); }
+.gs-ladder__step--top .gs-ladder__title { font-size: 30px; }
+.gs-ladder__step--top .gs-ladder__body { color: var(--band-muted); }
+.gs-ladder__mvp { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4); align-items: center; padding: var(--space-5); background: var(--surface-tint); border-radius: var(--radius-md); }
+.gs-ladder__mvp > div { display: grid; gap: var(--space-1); }
+.gs-ladder__mvp-disc { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--lime); color: var(--on-lime); }
+.gs-ladder[data-draw="wait"] .gs-ladder__step { opacity: 0; transform: translateY(32px); }
+.gs-ladder[data-draw="on"] .gs-ladder__step { transition: opacity 360ms var(--ease-out) calc(var(--i) * 90ms), transform 420ms var(--ease-out) calc(var(--i) * 90ms); }
+@media (max-width: 860px) {
+  .gs-ladder__steps { grid-template-columns: 1fr; }
+  .gs-ladder__step:nth-child(n) { min-height: 0; }
+  .gs-ladder__step:nth-child(2) { margin-left: var(--space-4); }
+  .gs-ladder__step:nth-child(3) { margin-left: var(--space-6); }
+}
+
+/* ───────── Ilustrasi (garis seperti set ikon, isian lime dan leaf-soft) */
+.gs-illo { display: block; flex: none; }
+.gs-illo__fill { fill: var(--lime); }
+.gs-illo__soft { fill: var(--leaf-soft); }
+.gs-on-band .gs-illo__soft, .gs-ladder__step--top .gs-illo__soft { fill: var(--band-raised); }
+
+/* ───────── TeamRoute: 300 km sebagai rute lima ruas di atas band. Ruas berselang lime dan lime redup; titik putih tiap 60 km, titik lime di finis. */
+.gs-teamroute { display: grid; gap: var(--space-3); }
+.gs-teamroute__map { position: relative; margin-block: 30px 24px; }
+.gs-teamroute__map svg { display: block; width: 100%; height: auto; overflow: visible; }
+.gs-teamroute__base { fill: none; stroke: color-mix(in srgb, var(--band-ink) 14%, transparent); stroke-width: 18; stroke-linecap: round; }
+.gs-teamroute__a, .gs-teamroute__b { fill: none; stroke-width: 12; stroke-dasharray: 1 1; }
+.gs-teamroute__a { stroke: var(--lime); }
+.gs-teamroute__b { stroke: color-mix(in srgb, var(--lime) 45%, var(--band)); stroke-dashoffset: 1; }
+.gs-teamroute__stop { fill: var(--band); stroke: var(--band-ink); stroke-width: 3; }
+.gs-teamroute__finish { fill: var(--lime); stroke: var(--band-ink); stroke-width: 3; }
+.gs-teamroute__runner, .gs-teamroute__disc { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--band); border: 2px solid var(--band-ink); color: var(--band-ink); font: italic 800 14px/1 var(--font-display); }
+.gs-teamroute__runner { position: absolute; transform: translate(-50%, -50%); }
+.gs-teamroute__disc { flex: none; width: 26px; height: 26px; font-size: 12px; }
+.gs-teamroute__km { position: absolute; transform: translate(-50%, 16px); font: 600 13px/1 var(--font-text); white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--band-muted); }
+.gs-teamroute__km--up { transform: translate(-50%, calc(-100% - 18px)); }
+.gs-teamroute__km--end { font-weight: 700; color: var(--lime); transform: translate(-70%, calc(-100% - 22px)); }
+.gs-teamroute__note { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 14px; line-height: 1.5; color: var(--band-muted); }
+.gs-teamroute[data-draw="wait"] svg { clip-path: inset(0 100% 0 0); }
+.gs-teamroute[data-draw="wait"] .gs-teamroute__runner, .gs-teamroute[data-draw="wait"] .gs-teamroute__km { opacity: 0; }
+.gs-teamroute[data-draw="on"] svg { clip-path: inset(0 0 0 0); transition: clip-path 560ms var(--ease-out); }
+.gs-teamroute[data-draw="on"] .gs-teamroute__runner, .gs-teamroute[data-draw="on"] .gs-teamroute__km { transition: opacity 200ms var(--ease-out) calc(var(--i) * 80ms + 60ms); }
+@media (max-width: 520px) {
+  .gs-teamroute__runner { width: 24px; height: 24px; font-size: 12px; }
+  .gs-teamroute__km { font-size: 12px; }
+}
+
+/* ───────── RuleGraphic: rambu batas, token submit, jam 23.59 */
+.gs-rulegfx { display: block; flex: none; overflow: visible; }
+.gs-rulegfx__sign { fill: var(--band-ink); stroke: var(--danger); stroke-width: 7; }
+.gs-rulegfx text { font: italic 800 22px var(--font-display); font-stretch: 112%; fill: var(--on-sun); text-anchor: middle; dominant-baseline: central; }
+.gs-rulegfx__token--a { fill: var(--leaf-soft); stroke: var(--leaf); stroke-width: 2.5; }
+.gs-rulegfx__token--b { fill: var(--lime); stroke: var(--surface-tint); stroke-width: 3; }
+.gs-rulegfx__arrow { fill: none; stroke: var(--leaf); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.gs-rulegfx__arrow--b { stroke: var(--on-lime); }
+.gs-rulegfx__face { fill: var(--surface-raised); stroke: var(--ink); stroke-width: 3; }
+.gs-rulegfx__tick { stroke: var(--line-strong); stroke-width: 2; stroke-linecap: round; }
+.gs-rulegfx__tick--12 { stroke: var(--danger); stroke-width: 3; }
+.gs-rulegfx__hand { stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; }
+.gs-rulegfx__hand--min { stroke-width: 2.5; }
+.gs-rulegfx__pin { fill: var(--sun); stroke: var(--ink); stroke-width: 1.5; }

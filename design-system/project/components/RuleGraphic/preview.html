@@ -1,0 +1,13 @@
+<!-- @dsCard group="Grafik" height=140 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>RuleGraphic</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "flex", gap: 32, padding: 16, borderRadius: 24, background: "var(--surface-tint)", width: "max-content" } },
+  h(G.RuleGraphic, { name: "limit", value: 24 }), h(G.RuleGraphic, { name: "submit" }), h(G.RuleGraphic, { name: "deadline" })));
+</script>
+</body>
+</html>

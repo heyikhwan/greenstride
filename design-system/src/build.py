@@ -76,18 +76,27 @@ export interface ButtonProps { variant?: "primary" | "secondary" | "ghost" | "li
 export interface SectionHeaderProps { eyebrow?: string; title: ReactNode; lead?: ReactNode; align?: "start" | "center"; as?: "h1" | "h2" | "h3" }
 export interface PillarProps { icon: IconName; children: ReactNode }
 export interface FactTileProps { icon: IconName; value: string | number; unit?: string; label: string; note?: string }
-export interface CountdownProps { start: string; end: string; rangeLabel?: string; rangeNote?: string; idleLabel?: string; now?: number }
-export interface KmSplitterProps { target?: number; days?: number; dailyMax?: number; memberMin?: number; options?: number[]; question?: string; footnote?: boolean }
-export interface ScheduleItemProps { date: string; title: string; status?: "done" | "now" | "next" | "tba"; children?: ReactNode }
+export interface CountdownProps { start: string; end: string; days?: number; rangeLabel?: string; rangeNote?: string; endLabel?: string; idleLabel?: string; now?: number }
+export interface KmSplitterProps { target?: number; days?: number; dailyMax?: number; memberMin?: number; options?: number[]; question?: string }
+export interface TeamBarProps { target?: number; memberMin?: number; max?: number; members?: number }
+export interface RouteProps { className?: string; style?: Record<string, string | number> }
+export interface ActivityCheckProps { id?: string; wide?: boolean; title?: string; paceFast?: string; paceSlow?: string; dailyMax?: number }
+export interface RaceCalendarProps { start: string; end: string; days?: number; target?: number; now?: number }
+export interface TeamRouteProps { target?: number; memberMin?: number; note?: boolean }
+export interface RuleGraphicProps { name: "limit" | "submit" | "deadline"; value?: number }
+export interface IllustrationProps { name: "medal" | "jersey" | "trophy"; size?: number }
+export interface RewardStep { illustration: "medal" | "jersey" | "trophy"; who: string; title: string; body?: string }
+export interface RewardLadderProps { steps: RewardStep[]; side?: { icon?: IconName; who: string; title: string; body?: string } }
+export interface ScheduleItemProps { date: string; title: string; status?: "done" | "now" | "next" | "tba"; chip?: { pre?: string; day?: string; month?: string }; children?: ReactNode }
 export interface RewardCardProps { icon?: IconName; who: string; title: string; feature?: boolean; children?: ReactNode }
 export interface AppStep { title: string; body: string; image: string; alt: string }
-export interface AppStepsProps { steps: AppStep[] }
+export interface AppStepsProps { steps: AppStep[]; label?: string }
 export interface AppCardProps { name: string; role: string; icon: string; appStore?: string; playStore?: string; appStoreBadge: string; playStoreBadge: string }
 export interface ChipProps { icon?: IconName; count?: number; pressed?: boolean; quiet?: boolean; onClick?: () => void; children: ReactNode }
 export interface SearchFieldProps { id?: string; label?: string; placeholder?: string; value: string; onChange: (value: string) => void }
 export interface FaqItemProps { id?: string; question: ReactNode; defaultOpen?: boolean; open?: boolean; onToggle?: (open: boolean) => void; children: ReactNode }
 export interface CalloutProps { tone?: "attention" | "info" | "rule"; title?: string; icon?: IconName; children: ReactNode }
-export interface DocumentCardProps { title: string; description: string; href: string; size?: string; type?: string; download?: string | boolean }
+export interface DocumentCardProps { title: string; description: string; href: string; size?: string; note?: string; type?: string; download?: string | boolean }
 export interface NavLink { href: string; label: string; current?: boolean }
 export interface NavbarProps { logos: { src: string; alt: string }[]; links: NavLink[]; cta?: { href: string; label: string; external?: boolean }; homeHref?: string; homeLabel?: string }
 """)
@@ -169,37 +178,110 @@ h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minm
   h(G.FactTile, { icon: "clock", value: "24", unit: "km", label: "Batas per hari", note: "Batas, bukan target" }))
 """)
 
-comp("Countdown", "Interaktif", 210, """
-Status lomba dan sisa waktu, dihitung dari jam perangkat. Sebelum mulai: "Lomba dimulai dalam"; saat berjalan: "Lomba berlangsung, sisa waktu"; setelahnya: "Lomba sudah selesai". Tampil di hero di atas `band`.
+comp("Countdown", "Interaktif", 420, """
+Status lomba, dihitung dari jam perangkat. Sebelum mulai: hitung mundur hari, jam, menit, detik. Saat berjalan: "Hari ke X dari 28" dengan bar periode `lime` (motif garis rute, titik di posisi hari ini) dan sisa waktu sampai ditutup, karena peserta yang sedang berlomba butuh tahu posisinya, bukan detik. Setelah selesai: "Lomba sudah selesai". Tampil di hero di atas `band`.
 
-Konsumen memberi `start` dan `end` (ISO dengan zona +07:00) serta `rangeLabel`. Saat dirender di server, isi `idleLabel` agar HTML statis tetap bermakna.
+Konsumen memberi `start` dan `end` (ISO dengan zona +07:00), `rangeLabel`, dan `endLabel` ("20 Desember, 23.59 WIB"). Saat dirender di server, isi `idleLabel` agar HTML statis tetap bermakna. `now` hanya untuk pratinjau.
 """, """
-h("div", { style: { maxWidth: 420, padding: 20, borderRadius: 24, background: "var(--band)" } },
-  h(G.Countdown, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", rangeLabel: "23 November – 20 Desember 2026", rangeNote: "28 hari" }))
+h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16, maxWidth: 860 } },
+  h("div", { style: { padding: 20, borderRadius: 24, background: "var(--band)" } },
+    h(G.Countdown, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", rangeLabel: "23 November – 20 Desember 2026", rangeNote: "28 hari", now: Date.parse("2026-11-20T09:30:00+07:00") })),
+  h("div", { style: { padding: 20, borderRadius: 24, background: "var(--band)" } },
+    h(G.Countdown, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", endLabel: "20 Desember, 23.59 WIB", now: Date.parse("2026-11-28T10:00:00+07:00") })))
 """)
 
-comp("KmSplitter", "Interaktif", 420, """
-Kalkulator porsi: peserta memilih jumlah anggota tim (5, 4, 3, 2) dan melihat km per orang serta rata-rata per hari, dibandingkan dengan batas 24 km. Menjawab salah paham "harus lari 24 km sehari".
+comp("KmSplitter", "Interaktif", 560, """
+Kalkulator porsi: peserta memilih jumlah anggota tim (5, 4, 3, 2). `TeamBar` membelah ulang 300 km menjadi porsi tiap anggota (pegas), angka menunjukkan km per orang dan rata-rata per hari, dan jalan 0 sampai 24 km menempatkan penanda pelari di rata-rata harian. Menjawab salah paham "harus lari 24 km sehari".
 
-Konsumen memberi `target` (300), `days` (28), `dailyMax` (24), `memberMin` (60). Letakkan di samping pernyataan `display-l` di bagian `surface-tint`.
+Konsumen memberi `target` (300), `days` (28), `dailyMax` (24), `memberMin` (60). Letakkan di samping panel pernyataan 24 km.
 """, """
 h("div", { style: { maxWidth: 560 } }, h(G.KmSplitter, { target: 300, days: 28, dailyMax: 24, memberMin: 60 }))
 """)
 
-comp("ScheduleItem", "Konten", 400, """
-Satu baris linimasa jadwal di dalam `<ol class="gs-schedule">`. Status: `done` (lewat, titik `leaf` dengan centang), `now` (sedang berlangsung, titik `lime` berdenyut dan label "Sekarang"), `next`, `tba` (titik putus-putus, tanggal ditulis "Diumumkan panitia").
+comp("TeamBar", "Grafik", 200, """
+Grafik target tim: satu bar 300 km yang dibagi rata ke anggota. Bagian minimal tiap anggota (60 km) berwarna `leaf`, sisa porsi `lime`, label km di bawah tiap segmen dan legenda di bawahnya. Segmen terisi berurutan sekali saat pertama terlihat; saat `members` berubah, segmen membelah ulang dengan pegas.
 
-Konsumen menghitung status dari tanggal; hanya satu `now` per halaman.
+Konsumen memberi `target`, `memberMin`, `max` (jumlah anggota terbanyak, 5) dan `members`. Dipakai di klaster "Target tim" (5 orang, statis) dan di dalam KmSplitter.
 """, """
-h("ol", { className: "gs-schedule", style: { maxWidth: 560 } },
-  h(G.ScheduleItem, { status: "done", date: "6 – 18 November 2026", title: "Pendaftaran tim" }, "Ketua tim melengkapi data seluruh anggota."),
-  h(G.ScheduleItem, { status: "now", date: "23 November 2026, 00.00 WIB", title: "Lomba dimulai" }, "Lari atau jalan di luar ruangan mulai dihitung."),
-  h(G.ScheduleItem, { status: "next", date: "20 Desember 2026, 23.59 WIB", title: "Lomba ditutup" }, "Batas akhir aktivitas dan submit."),
-  h(G.ScheduleItem, { status: "tba", date: "Diumumkan panitia", title: "Offline race dan awarding di Jakarta" }, "Untuk 50 tim terbaik dan peraih MVP."))
+h("div", { style: { display: "grid", gap: 28, maxWidth: 560 } },
+  h(G.TeamBar, { target: 300, memberMin: 60, max: 5, members: 5 }),
+  h(G.TeamBar, { target: 300, memberMin: 60, max: 5, members: 3 }))
 """)
 
+comp("TeamRoute", "Grafik", 300, """
+Grafik target tim di klaster "Target tim" (kartu `band`): 300 km digambar sebagai rute berkelok lima ruas, satu ruas satu anggota. Ruas berselang `lime` dan `lime` redup, titik tiap 60 km, titik `lime` besar di finis, nomor anggota di tengah tiap ruas, jarak kumulatif (Mulai, 60, 120, 180, 240, 300 km) di atas atau bawah titik. Satu kalimat di bawah menegaskan bahwa jarak tim adalah jumlah, bukan estafet. Rute tergambar dari kiri sekali saat terlihat.
+
+Konsumen memberi `target` dan `memberMin`. Hanya di atas `band`.
+""", """
+h("div", { className: "gs-on-band", style: { padding: 24, borderRadius: 24, background: "linear-gradient(125deg, var(--band), var(--band-end))", color: "var(--band-ink)", maxWidth: 640 } },
+  h(G.TeamRoute, { target: 300, memberMin: 60 }))
+""")
+
+comp("RuleGraphic", "Grafik", 140, """
+Grafik 64 px untuk baris aturan harian: `limit` (rambu batas: lingkaran tepi `danger`, angka di tengah, karena 24 km adalah batas, bukan target), `submit` (dua token unggah `leaf-soft` dan `lime`), `deadline` (jam dengan jarum di 23.59, angka 12 bertanda `danger`, pin `sun`). Hiasan; angka dan kalimat di sebelahnya yang membawa informasi.
+""", """
+h("div", { style: { display: "flex", gap: 32, padding: 16, borderRadius: 24, background: "var(--surface-tint)", width: "max-content" } },
+  h(G.RuleGraphic, { name: "limit", value: 24 }), h(G.RuleGraphic, { name: "submit" }), h(G.RuleGraphic, { name: "deadline" }))
+""")
+
+comp("Route", "Grafik", 200, """
+Motif identitas dari konten 24 KM: garis berkelok tebal 6 px dengan titik ujung `lime`. Warna garis mengikuti teks, jadi di atas `band` atau panel foto menjadi `band-ink`. Tergambar sekali saat pertama terlihat (garis lalu titik akhir, 600 ms).
+
+Dipakai di panel pernyataan 24 km. Hiasan saja (`aria-hidden`); jangan dipakai sebagai latar berulang.
+""", """
+h("div", { className: "gs-on-band", style: { padding: 24, borderRadius: 24, background: "var(--band)", color: "var(--band-ink)", maxWidth: 480 } },
+  h(G.Route, { style: { width: "100%", height: "auto" } }))
+""")
+
+comp("ActivityCheck", "Interaktif", 380, """
+Alat cek aktivitas: peserta mengisi jarak (km, koma desimal) dan moving time (jam, menit, detik) dari Strava. Hasil langsung: pace `stat`, kecepatan, gauge rentang pace (zona `leaf-soft` 5:00 sampai 15:00, penanda `leaf` atau `danger`), lalu putusan dengan ikon dan judul: "Masuk rentang pace" (`leaf-soft`) atau "Terlalu cepat/lambat, tidak dihitung" (`danger-soft`). Jarak di atas 24 km diberi tahu hanya 24 km yang dihitung.
+
+`wide` untuk panel selebar kontainer: di atas 860 px isian dan catatan di kiri, hasil di kanan dipisah garis, jadi panel tidak lebih tinggi dari isinya. Tanpa `wide`, semua bertumpuk.
+
+Tiga keadaan: kosong (gauge zona pace, kalimat "sekitar 4 sampai 12 km/jam", dan tombol "Coba contoh: 5 km, 40 menit" yang mengisi kolom), salah isi (pesan dengan ikon `alert`), hasil. Catatan di bawah selalu menyebut bahwa hasil akhir mengikuti verifikasi panitia.
+""", """
+h(G.ActivityCheck, { wide: true, paceFast: "5:00", paceSlow: "15:00", dailyMax: 24 })
+""")
+
+comp("RaceCalendar", "Grafik", 520, """
+"Rencana 4 minggu" dalam kartu `surface-raised`: 28 hari dalam empat baris Senin sampai Minggu (23 November jatuh pada Senin, 20 Desember pada Minggu), label minggu di kiri, dan target kumulatif tim di kanan (75, 150, 225, 300 km) dengan bar `leaf` yang memanjang. Hari pertama dan terakhir `lime` berlabel "Mulai" dan "Finis", hari yang lewat `leaf`, hari ini `sun` dengan cincin. Keterangan di bawah memberi ritme yang perlu dikejar (75 km per minggu, sekitar 10,7 km per hari untuk satu tim) dan status hari ini dalam kata-kata, agar status tidak hanya lewat warna. Hari yang lewat dan bar target terisi berurutan sekali saat terlihat. Di bawah 520 px kolom minggu disembunyikan.
+
+Konsumen memberi `start`, `end`, `days`, `target`. `now` hanya untuk pratinjau. Di Jadwal, berdampingan dengan linimasa dan ikut lengket saat digulir.
+""", """
+h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32, maxWidth: 900 } },
+  h(G.RaceCalendar, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", days: 28, target: 300 }),
+  h(G.RaceCalendar, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", days: 28, target: 300, now: Date.parse("2026-11-28T10:00:00+07:00") }))
+""", bg="surface-tint")
+
+comp("RewardLadder", "Konten", 620, """
+Tingkat penghargaan sebagai anak tangga yang naik dari kiri ke kanan: dari yang diterima paling banyak tim (semua finisher) ke yang paling sedikit (6 tim juara). Metafora langkah sesuai nama acara. Anak tangga teratas memakai `band` dan sudut daun. Jalur individu (MVP) tampil sebagai pita `surface-tint` di bawahnya. Di ponsel anak tangga bertumpuk dengan geser kanan bertahap. Anak tangga naik berurutan sekali saat terlihat.
+
+Tiap anak tangga memakai `Illustration` (`medal`, `jersey`, `trophy`): ilustrasi garis 2,5 px seperti set ikon dengan isian `lime` dan `leaf-soft`. Ini ilustrasi, bukan foto medali atau jersey resmi; ganti dengan foto panitia bila tersedia. Jangan menulis nominal yang belum diumumkan.
+""", """
+h(G.RewardLadder, {
+  steps: [
+    { illustration: "medal", who: "Semua tim finisher", title: "Medali dan e-certificate", body: "Tim mencapai 300 km dan tiap anggota minimal 60 km." },
+    { illustration: "jersey", who: "50 tim terbaik", title: "Finisher jersey dan undangan offline race di Jakarta", body: "Tanggal diumumkan panitia." },
+    { illustration: "trophy", who: "6 tim terbaik", title: "Uang tunai", body: "Juara I, II, III dan Harapan I, II, III." }
+  ],
+  side: { icon: "run", who: "10 peraih MVP · jalur individu", title: "Uang tunai dan undangan ke Jakarta", body: "Anggota tim dengan jarak terjauh, tetap diundang meski timnya di luar 50 besar." }
+})
+""")
+
+comp("ScheduleItem", "Konten", 520, """
+Satu tahap linimasa di dalam `<ol class="gs-schedule">`. Kiri: chip tanggal 72 px (`pre` kecil seperti "s.d." atau nama hari, `day` besar miring, `month`), disambung garis antar chip. Kanan: tanggal lengkap, judul, satu kalimat.
+
+Status: `done` (chip `leaf-soft` dengan centang dan label "Selesai", garis `leaf`), `now` (chip `sun` dengan cincin, isi menjadi kartu `surface-raised` dengan label "Sekarang"), `next`, `tba` (chip putus-putus berikon `flag`, tanpa `day`; tanggal ditulis "Diumumkan panitia"). Konsumen menghitung status dari tanggal; hanya satu `now` per halaman.
+""", """
+h("ol", { className: "gs-schedule", style: { maxWidth: 600 } },
+  h(G.ScheduleItem, { status: "done", chip: { day: "19–20", month: "Nov" }, date: "19 – 20 November 2026", title: "Verifikasi data peserta" }, "Panitia memeriksa data peserta dan tim yang sudah terdaftar."),
+  h(G.ScheduleItem, { status: "done", chip: { pre: "Jum", day: "20", month: "Nov" }, date: "Jumat, 20 November 2026", title: "Technical meeting" }, "Penjelasan teknis lomba untuk peserta."),
+  h(G.ScheduleItem, { status: "now", chip: { pre: "23 Nov", day: "28", month: "hari" }, date: "23 November – 20 Desember 2026", title: "Virtual running/walking race" }, "Lari atau jalan di luar ruangan, rekam di Strava."),
+  h(G.ScheduleItem, { status: "next", chip: { pre: "Jakarta", day: "Jan", month: "2027" }, date: "Januari 2027", title: "Offline race di Jakarta" }, "Untuk 50 tim terbaik dan 10 peraih MVP."))
+""", bg="surface-tint")
+
 comp("RewardCard", "Konten", 300, """
-Satu tingkat penghargaan: siapa yang mendapat (`who`), apa (`title`), keterangan. Tingkat tertinggi yang paling diinginkan (undangan offline race) memakai `feature`: latar `band` dengan sudut daun. Satu `feature` per grid.
+Satu penghargaan dalam kartu, untuk konteks di luar halaman utama (halaman utama memakai `RewardLadder`). Siapa yang mendapat (`who`), apa (`title`), keterangan. Tingkat tertinggi yang paling diinginkan (undangan offline race) memakai `feature`: latar `band` dengan sudut daun. Satu `feature` per grid.
 
 Jangan menulis nominal yang belum diumumkan.
 """, """
@@ -219,7 +301,7 @@ steps = [
 steps_js = ",\n    ".join(
     "{ title: %s, body: %s, image: %s, alt: %s }" % (json.dumps(t), json.dumps(b), json.dumps(blob("Images", f)), json.dumps(a)) for t, b, f, a in steps)
 comp("AppSteps", "Interaktif", 620, """
-Panduan aplikasi: daftar langkah di kiri, layar ponsel di kanan berganti saat langkah dipilih (klik, ketuk, atau panah atas/bawah). Langkah aktif bertepi, bernomor `leaf`, dengan bar progres `lime`. Di ponsel, layar tampil di atas daftar.
+Panduan aplikasi: daftar langkah di kiri, layar ponsel di kanan berganti saat langkah dipilih (klik, ketuk, atau tombol panah). Langkah aktif bertepi, bernomor `leaf`, dengan bar progres `lime`. Di bawah 760 px, daftar menjadi baris tab nomor 1 sampai 5 yang disambung garis, layar ponsel di bawahnya, lalu keterangan langkah aktif dengan tombol ke langkah berikutnya, sehingga layar yang berganti selalu terlihat.
 
 Konsumen memberi `steps` (judul, satu kalimat, tangkapan layar asli, alt). Tiga sampai lima langkah. Tidak berganti sendiri.
 """, "h(G.AppSteps, { steps: [\n    " + steps_js + "\n  ] })")
@@ -290,12 +372,12 @@ h("div", { style: { display: "grid", gap: 12, maxWidth: 640 } },
 comp("DocumentCard", "Konten", 300, """
 Satu dokumen yang bisa diunduh: ikon berkas dengan jenis, judul, satu kalimat isi, ukuran berkas. Seluruh kartu adalah tautan unduh. Tiga kartu bertumpuk atau berdampingan.
 
-Konsumen memberi `href` ke berkas di situs dan ukuran yang benar (dokumen besar diberi tahu ukurannya).
+Konsumen memberi `href` ke berkas di situs dan ukuran yang benar. Berkas di atas 10 MB diberi `note` "Sebaiknya unduh lewat Wi-Fi", karena peserta sering membuka situs di kebun dengan sinyal lemah.
 """, """
 h("div", { style: { display: "grid", gap: 12, maxWidth: 640 } },
   h(G.DocumentCard, { title: "Guidebook GreenStride 2026", description: "Ketentuan teknis, mekanisme lomba, dan penghargaan.", size: "PDF · 2,2 MB", href: "#" }),
   h(G.DocumentCard, { title: "Virtual Running", description: "Rencana acara, tahapan, dan kriteria penilaian.", size: "PDF · 7,5 MB", href: "#" }),
-  h(G.DocumentCard, { title: "User Journey 99 Virtual Race", description: "Panduan bergambar dari daftar akun sampai peringkat.", size: "PDF · 42 MB", href: "#" }))
+  h(G.DocumentCard, { title: "User Journey 99 Virtual Race", description: "Panduan bergambar dari daftar akun sampai peringkat.", size: "PDF · 42 MB", note: "Sebaiknya unduh lewat Wi-Fi", href: "#" }))
 """)
 
 comp("Navbar", "Navigasi", 300, """
@@ -375,7 +457,7 @@ index = {
     "libraries": [{"name": "react", "version": "18"}, {"name": "react-dom", "version": "18"}],
     "sections": {}, "groups": groups, "assetGroups": asset_groups, "blobs": {},
     "docs": {"readme": "project/README.md", "sections": []},
-    "lastChange": {"by": "Claude", "at": now, "via": "Claude Code", "note": "Header berlatar band dengan logo Planters Club putih di kedua tema. Favicon tanpa latar."},
+    "lastChange": {"by": "Claude", "at": now, "via": "Claude Code", "note": "Ringkasan dan Jadwal dirombak: TeamRoute, RuleGraphic, RaceCalendar rencana 4 minggu, ScheduleItem dengan chip tanggal, ActivityCheck dengan keadaan kosong bergrafik."},
 }
 w("design-system.json", json.dumps(index, indent=2, ensure_ascii=False) + "\n")
 

@@ -1,0 +1,19 @@
+<!-- @dsCard group="Konten" height=620 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>RewardLadder</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h(G.RewardLadder, {
+  steps: [
+    { illustration: "medal", who: "Semua tim finisher", title: "Medali dan e-certificate", body: "Tim mencapai 300 km dan tiap anggota minimal 60 km." },
+    { illustration: "jersey", who: "50 tim terbaik", title: "Finisher jersey dan undangan offline race di Jakarta", body: "Tanggal diumumkan panitia." },
+    { illustration: "trophy", who: "6 tim terbaik", title: "Uang tunai", body: "Juara I, II, III dan Harapan I, II, III." }
+  ],
+  side: { icon: "run", who: "10 peraih MVP · jalur individu", title: "Uang tunai dan undangan ke Jakarta", body: "Anggota tim dengan jarak terjauh, tetap diundang meski timnya di luar 50 besar." }
+}));
+</script>
+</body>
+</html>

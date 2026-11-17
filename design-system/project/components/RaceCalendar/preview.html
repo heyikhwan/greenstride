@@ -1,0 +1,14 @@
+<!-- @dsCard group="Grafik" height=520 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>RaceCalendar</title><style>body{margin:0;background:var(--surface-tint);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32, maxWidth: 900 } },
+  h(G.RaceCalendar, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", days: 28, target: 300 }),
+  h(G.RaceCalendar, { start: "2026-11-23T00:00:00+07:00", end: "2026-12-20T23:59:59+07:00", days: 28, target: 300, now: Date.parse("2026-11-28T10:00:00+07:00") })));
+</script>
+</body>
+</html>

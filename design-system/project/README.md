@@ -4,7 +4,7 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 
 1. **Jawaban dulu.** Setiap layar menjawab satu pertanyaan peserta. Hiasan tidak boleh menunda informasi.
 2. **Satu energi per layar.** Satu elemen tebal (judul miring besar, pita `band`, atau titik `sun`) per layar; sisanya tenang di `surface`.
-3. **Bergerak karena disentuh.** Gerak menjawab kursor, ketukan dan pilihan. Tidak ada yang bergerak sendiri kecuali hitung mundur dan satu titik "sekarang".
+3. **Bergerak karena disentuh atau karena data tampil.** Gerak menjawab kursor, ketukan dan pilihan. Grafik data digambar sekali saat pertama terlihat. Tidak ada yang bergerak sendiri selain itu, kecuali hitung mundur dan satu titik "sekarang".
 4. **Ponsel dulu.** Rancang di lebar 360 px, target sentuh 44 px, gambar ringan.
 
 ## Suara dan penulisan
@@ -37,7 +37,7 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 
 - Halaman berdiri di `surface`. Bagian selang-seling memakai `surface-tint`; kartu, panel FAQ dan kolom input memakai `surface-raised` dengan tepi `line`.
 - Teks utama `ink`; teks pendukung `ink-muted`. Keduanya lolos 4,5:1 di ketiga surface pada tema terang dan gelap.
-- Hijau hutan `band` dipakai untuk empat tempat saja: header, hero, pita bantuan, footer. Header dan hero menyambung jadi satu blok hijau di atas halaman. Di hero, gradasi `band` ke `band-end` meniru pita tagline biru-hijau di key visual. Teks di atasnya `band-ink` dan `band-muted`; kartu di atasnya `band-raised`.
+- Hijau hutan `band` dipakai untuk enam tempat saja: header, hero, kartu "Target tim" di Ringkasan, panel pernyataan 24 km (di atas foto), anak tangga teratas penghargaan, pita bantuan, footer. Header dan hero menyambung jadi satu blok hijau di atas halaman. Di hero, gradasi `band` ke `band-end` meniru pita tagline biru-hijau di key visual. Teks di atasnya `band-ink` dan `band-muted`; kartu di atasnya `band-raised`.
 - Aksi utama di surface: isian `leaf` dengan label `on-leaf`. Aksi utama di atas band: isian `lime` dengan label `on-lime`. Satu tombol utama per layar.
 - `lime` adalah energi daun di key visual: kata sorotan di judul hero, potongan daun pada eyebrow, bar progres. Jangan jadikan teks di atas surface terang.
 - `sun` (kuning dari konten 24 KM) hanya untuk penanda perhatian: status hitung mundur, label "Sekarang" di jadwal, callout `sun-soft`. Maksimal satu titik kuning per layar.
@@ -61,7 +61,7 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 - Jarak antar bagian `space-9` di desktop, `space-8` di ponsel. Judul bagian ke isi `space-7` (desktop) atau `space-6` (ponsel).
 - Header lengket setinggi `header-height` dengan latar `band` dan garis bawah tipis terang; bayangan `shadow-md` muncul setelah halaman digulir.
 - Tombol dan chip `radius-pill`. Kartu, panel FAQ, callout `radius-md`. Kolom input `radius-pill`.
-- **Bentuk daun** adalah tanda tangan sistem: dua sudut berseberangan `radius-leaf`, dua lainnya `radius-sm`. Pakai hanya pada foto hero, kartu hitung mundur, kartu penghargaan utama, dan latar ponsel di AppSteps. Potongan daun kecil miring berwarna `lime` membuka setiap eyebrow.
+- **Bentuk daun** adalah tanda tangan sistem: dua sudut berseberangan `radius-leaf`, dua lainnya `radius-sm`. Pakai hanya pada foto hero, kartu hitung mundur, anak tangga teratas RewardLadder, dan latar ponsel di AppSteps. Potongan daun kecil miring berwarna `lime` membuka setiap eyebrow.
 - Bayangan: `shadow-sm` untuk kartu diam bila perlu, `shadow-md` untuk kartu yang disorot, panel FAQ terbuka dan header setelah digulir. Tidak ada bayangan di atas `band`. `shadow-glow` hanya untuk satu titik "sedang berlangsung".
 
 ## Gerak dan mikro-interaksi
@@ -75,12 +75,18 @@ Durasi `dur-fast` untuk hover dan tekan, `dur-base` untuk buka tutup, `dur-slow`
 - KmSplitter menggeser bar dengan pegas saat jumlah anggota diganti.
 - Hasil pencarian FAQ menandai kata yang cocok dengan `leaf-soft`.
 - Hero masuk sekali saat dimuat (naik 16 px dan memudar masuk, `dur-slow`).
-- Tidak ada: animasi muncul saat menggulir, parallax, karusel, tab yang berganti sendiri. `prefers-reduced-motion` mematikan semua gerak.
+- **Grafik data digambar sekali saat pertama terlihat** (`useDraw`, IntersectionObserver): segmen TeamBar terisi berurutan, garis Route tergambar lalu titik akhirnya muncul, sel kalender yang lewat terisi, anak tangga RewardLadder naik. Paling lama 600 ms, kurva `ease-out`. Hanya grafik data, tidak pernah judul, teks, atau kartu biasa. HTML awal memuat grafik utuh, jadi tanpa JavaScript grafik tetap terbaca.
+- ActivityCheck: penanda pace bergeser dengan pegas saat isian berubah.
+- Tidak ada: animasi teks muncul saat menggulir, hitung naik angka, parallax, karusel, tab yang berganti sendiri. `prefers-reduced-motion` mematikan semua gerak; grafik tampil utuh.
 
 ## Gambar
 
 - Foto pelari asli dari materi acara (`hero-runners.webp`, `photo-langkah-pelari.webp`, `pelari-greenstride.webp`). Foto hero memakai bentuk daun.
 - `key-visual.webp` adalah rujukan gaya. Jangan tampilkan utuh di situs karena memuat tanggal lama.
+- **Gelombang hero**: tiga lapis SVG di tepi bawah hero (`leaf` 55%, `lime`, lalu warna halaman) meniru swoosh key visual dan menyambung hero ke isi. Satu kali per halaman.
+- **Garis rute** (komponen `Route`) dari konten 24 KM: garis berkelok terang dengan titik ujung `lime`. Muncul di panel pernyataan 24 km dan sebagai `TeamRoute` (300 km lima ruas) di kartu Target tim; bar periode Countdown dan jalan KmSplitter memakai bahasa yang sama (garis tebal, titik bulat di ujung).
+- **Panel pernyataan 24 km**: `photo-langkah-pelari.webp` di bawah lapisan `band` 92% di area teks, turun ke 50% di bagian bawah agar langkah pelari terlihat, seperti konten 24 KM. Teks di panel memakai `band-ink` (kontras di atas 4,5:1 di titik foto paling terang). Foto digeser 8% ke atas karena tepi atas berkas asli memuat pita hitam.
+- **Ilustrasi** penghargaan (medali, jersey, piala) digambar dengan gaya set ikon. Ilustrasi, bukan foto resmi; ganti bila panitia menyediakan foto.
 - Tangkapan layar aplikasi tampil di dalam bingkai ponsel AppSteps, tidak pernah lepas di halaman.
 - **Planters Club adalah penyelenggara dan logo utama.** PTPN GreenStride 2026 diselenggarakan Planters Club untuk karyawan PTPN Group, yang berada di bawah Danantara Indonesia. Bila tampil bersama, urutannya mengikuti peran itu: Planters Club (versi horizontal) paling depan dan paling besar, lalu garis pemisah, lalu logo induk Danantara dan PTPN yang lebih kecil.
 - Header: hanya Planters Club horizontal versi putih (`logo-planters-club-horizontal-white.png`), 44 px (36 px di ponsel), langsung di atas `band` tanpa pelat, di tema terang maupun gelap. Tautan header `band-ink`, garis bawah dan tombol Help Desk `lime`. Footer dan gambar bagikan: pelat bentuk daun berisi Planters Club di depan, Danantara dan PTPN di belakang garis, tanpa kalimat keterangan.
@@ -113,9 +119,16 @@ Durasi `dur-fast` untuk hover dan tekan, `dur-base` untuk buka tutup, `dur-slow`
 | Countdown | Status lomba dan sisa waktu di hero |
 | FactTile | Ringkasan aturan inti dalam angka |
 | KmSplitter | Kalkulator porsi km per anggota |
+| TeamBar | 300 km dibagi per anggota, bagian minimal 60 km ditandai |
+| Route | Motif garis rute dari konten 24 KM |
+| TeamRoute | 300 km sebagai rute lima ruas, satu ruas per anggota |
+| RuleGraphic | Rambu batas, token submit, jam 23.59 untuk aturan harian |
+| ActivityCheck | Cek pace dan apakah aktivitas dihitung |
+| RaceCalendar | Rencana 4 minggu: 28 hari, target kumulatif per minggu, hari lewat dan hari ini |
+| RewardLadder, Illustration | Tingkat penghargaan sebagai anak tangga |
 | AppSteps, AppCard | Panduan aplikasi dan tautan unduh resmi |
-| ScheduleItem | Linimasa jadwal |
-| RewardCard | Tingkat penghargaan |
+| ScheduleItem | Linimasa jadwal dengan chip tanggal |
+| RewardCard | Satu penghargaan dalam kartu (di luar halaman utama) |
 | SearchField, Chip, FaqItem | Pusat jawaban |
 | Callout | Info, perhatian, aturan tegas |
 | DocumentCard | Unduhan dokumen PDF |
@@ -123,4 +136,4 @@ Durasi `dur-fast` untuk hover dan tekan, `dur-base` untuk buka tutup, `dur-slow`
 
 ## Pola halaman
 
-Urutan bagian untuk halaman utama: Navbar → Hero (`band`, judul `display-xl`, Countdown, foto daun, Pillar) → Ringkasan (FactTile ×6) → Cara ikut (AppSteps + AppCard ×2) → Pesan 24 km (`display-l` + KmSplitter, di `surface-tint`) → Jadwal (ScheduleItem) → Penghargaan (RewardCard, satu `feature`) → Pusat jawaban (SearchField, Chip topik, FaqItem) → Unduhan (DocumentCard ×3) → Bantuan (pita `band`, tombol `lime` ke Help Desk) → Footer (`band`, logo putih, "Every step counts. Every stride matters.").
+Urutan bagian untuk halaman utama: Navbar → Hero (`band`, judul `display-xl`, Countdown, foto daun, Pillar, gelombang) → Ringkasan (kartu "Target tim" di `band` dengan angka 300 km dan TeamRoute; "Setiap hari" di `surface-tint` sebagai tiga baris RuleGraphic + angka; lalu kotak "Dihitung" (`leaf-soft`) dan "Tidak dihitung" (`danger-soft`) berdampingan, dan ActivityCheck `wide` selebar kontainer di bawahnya) → Cara ikut (AppSteps + AppCard ×2) → Pesan 24 km (panel foto dengan `display-l` dan Route + KmSplitter) → Jadwal (judul, lalu RaceCalendar berdampingan dengan ScheduleItem) → Penghargaan (RewardLadder) → Pusat jawaban (SearchField, Chip topik, FaqItem) → Unduhan (DocumentCard ×3) → Bantuan (pita `band` dengan daftar data yang disiapkan, tombol `lime` ke Help Desk) → Footer (`band`, logo putih, "Every step counts. Every stride matters.").

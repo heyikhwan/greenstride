@@ -1,0 +1,12 @@
+<!-- @dsCard group="Interaktif" height=380 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ActivityCheck</title><style>body{margin:0;background:var(--surface);} .pv{padding:24px;}</style></head>
+<body>
+<div id="root" class="gs pv"></div>
+<script>
+  var G = window.GreenStride, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById("root")).render(h(G.ActivityCheck, { wide: true, paceFast: "5:00", paceSlow: "15:00", dailyMax: 24 }));
+</script>
+</body>
+</html>

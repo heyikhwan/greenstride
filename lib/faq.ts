@@ -51,7 +51,7 @@ export const FAQ: FaqItem[] = [
   },
   {
     id: "offline-race", cat: "umum", q: "Kapan offline race di Jakarta?",
-    a: [`Tanggalnya diumumkan panitia. Offline race diikuti ${E.topTeamsInvited} tim terbaik dan 10 peraih MVP.`],
+    a: [`${E.offlineRaceLabel}. Offline race diikuti ${E.topTeamsInvited} tim terbaik dan 10 peraih MVP.`],
     tags: "jakarta awarding undangan",
   },
 
