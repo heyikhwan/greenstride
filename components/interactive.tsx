@@ -1,9 +1,9 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { createElement, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { createElement, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
 import { Icon, Illustration } from "./ds";
-import { APP_STEPS, EVENT, SCHEDULE } from "@/lib/event";
+import { APP_STEPS, EVENT, SCHEDULE, rupiah } from "@/lib/event";
 import { THEME_KEY } from "@/lib/site";
 
 /* ───────── jam bersama: satu interval untuk semua komponen yang membaca waktu */
@@ -199,7 +199,7 @@ export function KmSplitter() {
   return (
     <div className="gs-split">
       <p className="gs-split__q" id="split-q">
-        Berapa orang di timmu?
+        Simulasi sederhananya, apabila:
       </p>
       <div className="gs-seg" role="group" aria-labelledby="split-q">
         {[5, 4, 3, 2].map((o) => (
@@ -294,12 +294,6 @@ export function TeamRoute() {
           </span>
         ))}
       </div>
-      <p className="gs-teamroute__note">
-        <span className="gs-teamroute__disc" aria-hidden="true">
-          1
-        </span>
-        Satu ruas = satu anggota, minimal {EVENT.memberMinKm} km. Semua anggota boleh berlari di hari yang sama; jarak tim adalah jumlah jarak semuanya.
-      </p>
     </div>
   );
 }
@@ -557,9 +551,9 @@ export function RaceCalendar() {
 
 /* ───────── Tangga penghargaan */
 const LADDER = [
-  { illo: "medal", who: "Semua tim finisher", title: "Medali dan e-certificate", body: `Tim mencapai ${EVENT.teamTargetKm} km dan tiap anggota minimal ${EVENT.memberMinKm} km.` },
+  { illo: "medal", who: "Semua tim finisher", title: "Medali dan e-certificate", body: `Tim mencapai minimal ${EVENT.teamTargetKm} km dan tiap anggota minimal ${EVENT.memberMinKm} km.` },
   { illo: "jersey", who: `${EVENT.topTeamsInvited} tim terbaik`, title: "Finisher jersey dan undangan offline race di Jakarta", body: `Lari bersama tim-tim terbaik PTPN Group, ${EVENT.offlineRaceLabel}.` },
-  { illo: "trophy", who: "6 tim terbaik", title: "Uang tunai", body: "Juara I, II, III dan Harapan I, II, III." },
+  { illo: "trophy", who: `${EVENT.prizes.length} tim terbaik`, title: "Uang tunai", body: null },
 ] as const;
 
 export function RewardLadder() {
@@ -572,7 +566,18 @@ export function RewardLadder() {
             <Illustration name={r.illo} />
             <span className="gs-ladder__who">{r.who}</span>
             <h3 className="gs-ladder__title">{r.title}</h3>
-            <p className="gs-ladder__body">{r.body}</p>
+            {r.body ? (
+              <p className="gs-ladder__body">{r.body}</p>
+            ) : (
+              <dl className="gs-ladder__prizes">
+                {EVENT.prizes.map((p) => (
+                  <div key={p.rank}>
+                    <dt>{p.rank}</dt>
+                    <dd>{rupiah(p.amount)}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
           </li>
         ))}
       </ol>
@@ -581,80 +586,98 @@ export function RewardLadder() {
           <Icon name="run" size={26} />
         </span>
         <div>
-          <span className="gs-ladder__who">10 peraih MVP · jalur individu</span>
-          <h3 className="gs-ladder__title">Uang tunai dan undangan ke Jakarta</h3>
-          <p className="gs-ladder__body">Anggota tim dengan jarak terjauh, tetap diundang meski timnya di luar {EVENT.topTeamsInvited} besar.</p>
+          <span className="gs-ladder__who">{EVENT.mvpCount} orang peraih MVP</span>
+          <h3 className="gs-ladder__title">Total {rupiah(EVENT.mvpPrize * EVENT.mvpCount)} dan undangan ke Jakarta</h3>
+          <p className="gs-ladder__body">Masing-masing {rupiah(EVENT.mvpPrize)} untuk {EVENT.mvpCount} orang.</p>
         </div>
       </div>
     </div>
   );
 }
 
-/* ───────── Langkah aplikasi: daftar + ponsel di desktop, tab nomor + ponsel + keterangan di ponsel */
+/* ───────── Langkah aplikasi
+   Desktop: daftar langkah di kiri; langkah yang dibuka menampilkan rincian layarnya, ponsel menempel di kanan.
+   Ponsel: tab nomor di atas, layar di tengah, keterangan layar dan tombol geser di bawah. */
 export function AppSteps() {
-  const [active, setActive] = useState(0);
-  const go = (i: number, focus = false) => {
-    setActive(i);
-    if (focus) document.getElementById(`step-${i}`)?.focus();
-  };
-  const onKey = (e: KeyboardEvent) => {
-    const fwd = e.key === "ArrowDown" || e.key === "ArrowRight";
-    const back = e.key === "ArrowUp" || e.key === "ArrowLeft";
-    if (!fwd && !back) return;
-    e.preventDefault();
-    go((active + (fwd ? 1 : APP_STEPS.length - 1)) % APP_STEPS.length, true);
-  };
-  const cur = APP_STEPS[active];
-  const last = active === APP_STEPS.length - 1;
+  const [pos, setPos] = useState({ step: 0, shot: 0 });
+  const { step, shot } = pos;
+  const cur = APP_STEPS[step];
+  const shots = cur.shots;
+  const atStart = step === 0 && shot === 0;
+  const atEnd = step === APP_STEPS.length - 1 && shot === shots.length - 1;
+  const lastShot = shot === shots.length - 1;
+  const next = () => setPos(lastShot ? { step: step + 1, shot: 0 } : { step, shot: shot + 1 });
+  const prev = () => setPos(shot > 0 ? { step, shot: shot - 1 } : { step: step - 1, shot: APP_STEPS[step - 1].shots.length - 1 });
   return (
     <div className="gs-steps">
-      <ol className="gs-steps__list" role="tablist" aria-label="Langkah menyiapkan aplikasi" onKeyDown={onKey}>
-        {APP_STEPS.map((st, i) => (
-          <li key={st.title}>
-            <button
-              id={`step-${i}`}
-              type="button"
-              role="tab"
-              className="gs-step"
-              aria-selected={i === active}
-              aria-controls="step-panel"
-              tabIndex={i === active ? 0 : -1}
-              onClick={() => setActive(i)}
-            >
-              <span className="gs-step__num">{i + 1}</span>
-              <span className="gs-step__text">
-                <span className="gs-step__title">{st.title}</span>
-                <span className="gs-step__body">{st.body}</span>
-              </span>
-              <span className="gs-step__bar" aria-hidden="true">
-                <i key={active} />
-              </span>
-            </button>
-          </li>
-        ))}
+      <ol className="gs-steps__list" aria-label="Langkah menyiapkan aplikasi">
+        {APP_STEPS.map((st, i) => {
+          const on = i === step;
+          return (
+            <li key={st.title} className={`gs-steps__item${on ? " is-on" : ""}`}>
+              <button type="button" className="gs-step" aria-expanded={on} aria-controls={`step-shots-${i}`} onClick={() => setPos({ step: i, shot: 0 })}>
+                <span className="gs-step__num">{i + 1}</span>
+                <span className="gs-step__text">
+                  <span className="gs-step__title">{st.title}</span>
+                  {!on && <span className="gs-step__body">{st.body}</span>}
+                </span>
+              </button>
+              <ol className="gs-substeps" id={`step-shots-${i}`} aria-label={`Rincian ${st.title}`} hidden={!on}>
+                {st.shots.map((s, j) => (
+                  <li key={s.image}>
+                    <button type="button" className="gs-substep" aria-current={on && j === shot ? "step" : undefined} onClick={() => setPos({ step: i, shot: j })}>
+                      <span className="gs-substep__num">{j + 1}</span>
+                      <span>{s.text}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </li>
+          );
+        })}
       </ol>
-      <div className="gs-steps__panel" role="tabpanel" id="step-panel" aria-labelledby={`step-${active}`}>
+      <div className="gs-steps__panel">
         <div className="gs-phone">
           <div className="gs-phone__screen">
-            {APP_STEPS.map((st, i) => (
-              <img key={st.image} src={st.image} alt={i === active ? st.alt : ""} className={i === active ? "is-on" : undefined} width={600} height={1298} loading="lazy" />
+            {/* Hanya layar langkah yang terbuka yang dipasang, jadi 24 gambar tidak diunduh sekaligus. */}
+            {shots.map((s, j) => (
+              <img
+                key={s.image}
+                src={s.image}
+                alt={j === shot ? s.alt : ""}
+                aria-hidden={j === shot ? undefined : true}
+                className={j === shot ? "is-on" : undefined}
+                width={720}
+                height={1558}
+                loading="lazy"
+                decoding="async"
+              />
             ))}
           </div>
         </div>
-        <div className="gs-steps__caption">
-          {/* Hanya teks yang dipasang ulang saat langkah berganti; tombol di bawahnya tetap, jadi fokus papan ketik tidak hilang. */}
-          <div className="gs-steps__say" key={active}>
+        <div className="gs-steps__caption" aria-live="polite">
+          <div className="gs-steps__say" key={`${step}-${shot}`}>
             <span className="gs-steps__count">
-              Langkah {active + 1} dari {APP_STEPS.length}
+              Langkah {step + 1} dari {APP_STEPS.length}
             </span>
             <p className="gs-steps__title">{cur.title}</p>
-            <p className="gs-steps__body">{cur.body}</p>
+            <p className="gs-steps__body">{shots[shot].text}</p>
           </div>
-          {!last && (
-            <button type="button" className="gs-btn gs-btn--secondary gs-btn--sm" onClick={() => go(active + 1)}>
-              <span>Langkah {active + 2}</span>
-            </button>
-          )}
+        </div>
+        {/* Tombol tetap terpasang saat layar berganti, jadi fokus papan ketik tidak hilang. */}
+        <div className="gs-pager">
+          <button type="button" className="gs-btn gs-btn--secondary gs-btn--sm gs-pager__prev" onClick={prev} disabled={atStart} aria-label="Layar sebelumnya">
+            <span className="gs-pager__flip">
+              <Icon name="arrow-right" size={18} />
+            </span>
+          </button>
+          <span className="gs-pager__count">
+            Layar {shot + 1} dari {shots.length}
+          </span>
+          <button type="button" className="gs-btn gs-btn--secondary gs-btn--sm" onClick={next} disabled={atEnd}>
+            <span>{lastShot && !atEnd ? `Langkah ${step + 2}` : "Berikutnya"}</span>
+            <Icon name="arrow-right" size={18} className="gs-btn__arrow" />
+          </button>
         </div>
       </div>
     </div>
@@ -787,8 +810,8 @@ export function ThemeToggle() {
 }
 
 const NAV = [
-  { href: "#ringkasan", label: "Ringkasan" },
-  { href: "#cara-ikut", label: "Cara ikut" },
+  { href: "#tentang", label: "Tentang" },
+  { href: "#panduan", label: "Panduan" },
   { href: "#jadwal", label: "Jadwal" },
   { href: "#hadiah", label: "Hadiah" },
   { href: "#faq", label: "FAQ" },

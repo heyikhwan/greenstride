@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <StructuredData />
-      <a className="skip" href="#ringkasan">
+      <a className="skip" href="#tentang">
         Langsung ke isi
       </a>
       <Navbar />
@@ -21,17 +21,17 @@ export default function Home() {
             <div>
               <img className="hero__brand enter" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} />
               <h1 id="hero-h" className="enter enter--2">
-                Kumpulkan <Drawn as="em" className="gs-keyline">300 km</Drawn> bersama timmu
+                Kumpulkan minimal <Drawn as="em" className="gs-keyline">300 km</Drawn> bersama timmu
               </h1>
               <p className="hero__lead enter enter--3">
-                Lomba lari virtual beregu untuk karyawan PTPN Group. Lari atau jalan di mana saja, rekam di Strava, dan
+                Lomba lari virtual beregu untuk karyawan PTPN Group. Lari atau jalan di mana saja, perekaman melalui Strava, dan
                 bawa pulang <strong>medali finisher</strong>.
               </p>
               <div className="hero__actions enter enter--4">
                 <Button variant="lime" size="lg" href="#faq" arrow>
                   Cari jawaban
                 </Button>
-                <Button variant="on-band" size="lg" href="#cara-ikut" icon="phone">
+                <Button variant="on-band" size="lg" href="#panduan" icon="phone">
                   Siapkan aplikasi
                 </Button>
               </div>
@@ -65,13 +65,13 @@ export default function Home() {
           </svg>
         </section>
 
-        {/* ───────── Ringkasan */}
-        <section className="section" id="ringkasan" aria-labelledby="ringkasan-h">
+        {/* ───────── Tentang */}
+        <section className="section" id="tentang" aria-labelledby="tentang-h">
           <div className="wrap">
             <div className="section__head">
               <SectionHeader
-                id="ringkasan-h"
-                eyebrow="Ringkasan aturan"
+                id="tentang-h"
+                eyebrow="Tentang"
                 title={
                   <>
                     Tiga hal yang <Drawn as="em" className="gs-keyline">perlu kamu ingat</Drawn>
@@ -85,16 +85,16 @@ export default function Home() {
                 <div className="rules__team-head">
                   <div>
                     <h3 className="rules__label">
-                      <Icon name="team" size={20} /> Target tim
+                      <Icon name="team" size={20} /> Jarak minimal
                     </h3>
                     <p className="rules__big">
                       {EVENT.teamTargetKm}
                       <small>km</small>
                     </p>
+                    <p className="rules__finisher">sebagai finisher</p>
                   </div>
                   <p className="rules__sub">
-                    dalam <strong>{EVENT.raceDays} hari</strong>, dari tim berisi maksimal <strong>{EVENT.teamMax} orang</strong>. Maksimal {EVENT.teamsPerUnit} tim
-                    per unit.
+                    Kumpulkan dalam <strong>{EVENT.raceDays} hari</strong>, dari tim berisi maksimal <strong>{EVENT.teamMax} orang</strong>.
                   </p>
                 </div>
                 <TeamRoute />
@@ -102,17 +102,19 @@ export default function Home() {
 
               <div className="rules__daily">
                 <h3 className="rules__label">
-                  <Icon name="calendar" size={20} /> Setiap hari
+                  <Icon name="calendar" size={20} /> Batas harian
                 </h3>
                 <Drawn as="ul" className="rules__list">
                   <li>
                     <RuleGraphic name="limit" value={EVENT.dailyMaxKm} />
                     <div>
                       <p className="rules__num">
-                        {EVENT.dailyMaxKm}
+                        0–{EVENT.dailyMaxKm}
                         <small>km</small>
                       </p>
-                      <p className="rules__desc">Batas jarak yang dihitung per orang. Batas, bukan target.</p>
+                      <p className="rules__desc">
+                        Jarak harian per orang yang dihitung.
+                      </p>
                     </div>
                   </li>
                   <li>
@@ -122,7 +124,6 @@ export default function Home() {
                         {EVENT.dailySubmitMax}
                         <small>kali submit</small>
                       </p>
-                      <p className="rules__desc">Misalnya lari pagi dan jalan sore.</p>
                     </div>
                   </li>
                   <li>
@@ -131,7 +132,7 @@ export default function Home() {
                       <p className="rules__num">
                         23.59<small>WIB</small>
                       </p>
-                      <p className="rules__desc">Akhir hari lomba. Batas jarak dan submit dihitung per hari WIB.</p>
+                      <p className="rules__desc">Akhir waktu dengan batas jarak dan submit dihitung per hari WIB.</p>
                     </div>
                   </li>
                 </Drawn>
@@ -204,19 +205,19 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ───────── Cara ikut */}
-        <section className="section section--tint" id="cara-ikut" aria-labelledby="cara-ikut-h">
+        {/* ───────── Panduan */}
+        <section className="section section--tint" id="panduan" aria-labelledby="panduan-h">
           <div className="wrap">
             <div className="section__head">
               <SectionHeader
-                id="cara-ikut-h"
-                eyebrow="Cara ikut"
+                id="panduan-h"
+                eyebrow="Panduan"
                 title={
                   <>
                     Lima langkah sebelum <Drawn as="em" className="gs-keyline">lari pertama</Drawn>
                   </>
                 }
-                lead="Pilih langkah untuk melihat layarnya. Setelah Strava terhubung, setiap lari otomatis tercatat untuk timmu."
+                lead="Pilih langkah, lalu ikuti layarnya satu per satu. Setelah Strava terhubung, setiap lari otomatis tercatat untuk timmu."
               />
             </div>
             <AppSteps />
@@ -240,7 +241,7 @@ export default function Home() {
               </h2>
               <p className="km__text">
                 <strong>{EVENT.dailyMaxKm} km adalah batas harian, bukan target.</strong> Di tim berisi lima orang, rata-rata 2,1 km per orang per hari sudah
-                membawa tim ke {EVENT.teamTargetKm} km. Lari pagi dan sore pun boleh.
+                membawa tim minimal {EVENT.teamTargetKm} km.
               </p>
               <KmRoute />
             </div>
@@ -257,10 +258,10 @@ export default function Home() {
                 eyebrow="Jadwal"
                 title={
                   <>
-                    {EVENT.raceDays} hari untuk <Drawn as="em" className="gs-keyline">300 km</Drawn>
+                    {EVENT.raceDays} hari untuk minimal <Drawn as="em" className="gs-keyline">300 km</Drawn>
                   </>
                 }
-                lead="Semua batas waktu memakai WIB. Tanda kuning menandai tahap yang sedang berjalan."
+                lead="Semua batas waktu memakai WIB."
               />
             </div>
             <div className="split">
@@ -282,7 +283,7 @@ export default function Home() {
                     Setiap langkah <Drawn as="em" className="gs-keyline">dihargai</Drawn>
                   </>
                 }
-                lead="Peringkat ditentukan dari total jarak yang lolos verifikasi. Bila sama, dari pace rata-rata."
+                lead="Peringkat ditentukan dari total jarak yang lolos verifikasi. Bila sama, akan dihitung dari pace rata-rata."
               />
             </div>
             <RewardLadder />
@@ -295,7 +296,7 @@ export default function Home() {
             <div className="section__head">
               <SectionHeader
                 id="faq-h"
-                eyebrow="Pusat jawaban"
+                eyebrow="FAQ"
                 title={
                   <>
                     Ada pertanyaan? <Drawn as="em" className="gs-keyline">Cari di sini</Drawn>
@@ -374,11 +375,11 @@ export default function Home() {
               </div>            </div>
             <nav className="footer__nav" aria-label="Footer">
               <h3>Halaman ini</h3>
-              <a href="#ringkasan">Ringkasan aturan</a>
-              <a href="#cara-ikut">Cara ikut</a>
+              <a href="#tentang">Tentang</a>
+              <a href="#panduan">Panduan</a>
               <a href="#jadwal">Jadwal</a>
-              <a href="#hadiah">Penghargaan</a>
-              <a href="#faq">Pusat jawaban</a>
+              <a href="#hadiah">Hadiah</a>
+              <a href="#faq">FAQ</a>
               <a href="#unduhan">Unduhan</a>
               <a href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
                 Help Desk

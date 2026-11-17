@@ -82,9 +82,6 @@ export default function Faq() {
     <div className="faq-center">
       <aside className="faq-center__side">
         <div className="gs-search">
-          <label className="gs-search__label" htmlFor="faq-q">
-            Cari di {FAQ.length} jawaban
-          </label>
           <div className="gs-search__field">
             <Icon name="search" size={20} className="gs-search__icon" />
             <input
@@ -113,14 +110,6 @@ export default function Faq() {
           </div>
         </div>
 
-        <div className="faq-center__quick" role="group" aria-label="Sering dicari">
-          {QUICK.map((k) => (
-            <button key={k} type="button" className="gs-chip gs-chip--quiet" onClick={() => setQuery(k)}>
-              {k}
-            </button>
-          ))}
-        </div>
-
         <div className="faq-center__topics" role="group" aria-label="Topik">
           {[...FAQ_CATEGORIES, { id: "semua" as const, label: "Semua", icon: "document" }].map((c) => (
             <button
@@ -137,6 +126,14 @@ export default function Faq() {
               <Icon name={c.icon} size={18} />
               <span>{c.label}</span>
               <span className="gs-chip__count">{c.id === "semua" ? FAQ.length : counts[c.id]}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="faq-center__quick" role="group" aria-label="Sering dicari">
+          {QUICK.map((k) => (
+            <button key={k} type="button" className="gs-chip gs-chip--quiet" onClick={() => setQuery(k)}>
+              {k}
             </button>
           ))}
         </div>

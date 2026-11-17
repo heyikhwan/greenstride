@@ -1,4 +1,4 @@
-import { EVENT } from "./event";
+import { EVENT, rupiah } from "./event";
 
 export type FaqCategoryId = "umum" | "tim" | "akun" | "aktivitas" | "submit" | "hadiah" | "kendala";
 
@@ -83,8 +83,7 @@ export const FAQ: FaqItem[] = [
   },
   {
     id: "kurang-dari-lima", cat: "tim", q: "Bolehkah tim kurang dari 5 orang?",
-    a: [`Boleh. Target tetap ${E.teamTargetKm} km dan setiap anggota minimal ${E.memberMinKm} km, jadi porsi tiap orang lebih besar.`],
-    list: ["4 orang: 75 km per orang", "3 orang: 100 km per orang", "2 orang: 150 km per orang"],
+    a: [`Boleh. Jarak minimal tetap ${E.teamTargetKm} km dan setiap anggota minimal ${E.memberMinKm} km.`],
     tags: "4 orang 3 orang",
   },
   {
@@ -94,7 +93,7 @@ export const FAQ: FaqItem[] = [
   },
   {
     id: "data-pendaftaran", cat: "tim", q: "Data apa yang harus dilengkapi?",
-    a: ["Setiap anggota mengisi email pribadi dan NIK SAP, serta menandatangani surat pernyataan bermeterai. Pendaftaran tim lengkap bila data semua anggota lengkap."],
+    a: ["Setiap anggota mengisi email pribadi, NIK SAP dan No. HP serta menandatangani surat pernyataan bermeterai. Pendaftaran dinyatakan terverifikasi apabila data yang diisi lengkap dan benar."],
     tags: "email gmail nik sap formulir meterai",
   },
   {
@@ -106,6 +105,11 @@ export const FAQ: FaqItem[] = [
     id: "ganti-anggota", cat: "tim", q: "Bisakah mengganti anggota atau nama tim?",
     a: ["Bisa sampai pendaftaran ditutup 18 November 2026, diajukan ketua tim dan disetujui panitia. Setelah itu data tim tidak dapat diubah."],
     tags: "ganti anggota rename cedera sakit pengganti",
+  },
+  {
+    id: "cedera-diganti", cat: "tim", q: "Anggota cedera atau sakit. Bisa diganti orang lain?",
+    a: ["Tidak otomatis. Koordinasikan dulu dengan panitia lewat Help Desk agar penggantian bisa ditinjau."],
+    tags: "cedera sakit pengganti ganti anggota",
   },
 
   // Aplikasi
@@ -234,12 +238,17 @@ export const FAQ: FaqItem[] = [
   },
   {
     id: "anggota-kurang-60", cat: "hadiah", q: "Tim sudah 300 km, tapi ada anggota di bawah 60 km. Finisher?",
-    a: [`Belum. Setiap anggota wajib mencapai minimal ${E.memberMinKm} km.`],
+    a: [`Tidak. Setiap anggota wajib mencapai minimal ${E.memberMinKm} km.`],
     tags: "individu minimal",
   },
   {
+    id: "dicicil", cat: "hadiah", q: `Target ${E.memberMinKm} km per orang boleh dicicil beberapa hari?`,
+    a: ["Boleh. Jarak dikumpulkan bertahap sepanjang periode lomba, asalkan setiap aktivitas terekam dan tercatat dengan benar."],
+    tags: "cicil bertahap akumulasi harian",
+  },
+  {
     id: "sudah-300", cat: "hadiah", q: "Tim sudah 300 km. Boleh berhenti?",
-    a: ["Boleh, tim sudah memenuhi syarat finisher. Namun peringkat ditentukan dari total jarak, jadi terus menambah jarak memperbesar peluang masuk tim terbaik."],
+    a: ["Boleh, tim sudah memenuhi syarat finisher. Namun peringkat ditentukan dari total jarak, jadi terus menambah jarak untuk memperbesar peluang masuk tim terbaik."],
     tags: "lanjut setelah target",
   },
   {
@@ -253,8 +262,8 @@ export const FAQ: FaqItem[] = [
     list: [
       "Semua tim finisher: e-certificate dan medali",
       `${E.topTeamsInvited} tim terbaik: finisher jersey dan undangan offline race di Jakarta`,
-      "6 tim terbaik (Juara I – III, Harapan I – III): uang tunai",
-      "10 anggota tim terbaik (MVP): uang tunai",
+      `${E.prizes.length} tim terbaik: uang tunai ${E.prizes.map((p) => `${p.rank} ${rupiah(p.amount)}`).join(", ")}`,
+      `${E.mvpCount} anggota tim terbaik (MVP): uang tunai ${rupiah(E.mvpPrize)} per orang`,
     ],
     tags: "hadiah uang jersey medali sertifikat mvp",
   },
@@ -286,6 +295,19 @@ export const FAQ: FaqItem[] = [
     id: "internet", cat: "kendala", q: "Harus online selama lari?",
     a: ["Tidak. Strava merekam dengan GPS dan mengunggah saat ponsel kembali online. Pastikan terunggah sebelum 23.59 WIB."],
     tags: "sinyal kuota offline kebun",
+  },
+  {
+    id: "sinyal-hilang", cat: "kendala", q: "Sinyal hilang di tengah lari. Aktivitas tetap terekam?",
+    a: [
+      "Ya, bila yang hilang hanya sinyal internet. Strava tetap merekam selama GPS berfungsi.",
+      "Bila GPS yang terganggu, rute atau jarak bisa kurang akurat atau terputus di sebagian jalur.",
+    ],
+    tags: "sinyal hilang putus blank spot gps terputus",
+  },
+  {
+    id: "gps-aktif", cat: "kendala", q: "Apakah GPS harus aktif dari mulai sampai selesai?",
+    a: ["Ya. GPS dan izin lokasi perlu aktif selama aktivitas direkam. Mulai rekam sebelum berlari, lalu akhiri dan simpan setelah selesai."],
+    tags: "lokasi izin location start stop",
   },
   {
     id: "gps", cat: "kendala", q: "GPS saya tidak akurat.",
