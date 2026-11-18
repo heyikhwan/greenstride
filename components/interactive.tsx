@@ -4,7 +4,7 @@
 import { createElement, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import { Icon, Illustration } from "./ds";
 import { APP_STEPS, EVENT, SCHEDULE, rupiah } from "@/lib/event";
-import { THEME_KEY } from "@/lib/site";
+import { THEME_KEY, VISITOR_KEY } from "@/lib/site";
 
 /* ───────── jam bersama: satu interval untuk semua komponen yang membaca waktu */
 let subs: (() => void)[] = [];
@@ -777,6 +777,89 @@ export function BackToTop() {
       </svg>
       <Icon name="arrow-right" size={22} />
     </a>
+  );
+}
+
+/* ───────── jumlah pengunjung (app/api/visits, Upstash Redis)
+   Browser yang belum punya penanda VISITOR_KEY mengirim POST dan dihitung; sesudahnya cukup GET.
+   Server tetap menolak hitungan kedua dari perangkat yang sama di hari yang sama. Bila penghitung
+   belum dikonfigurasi, gagal, atau masih 0, kartu ini tidak tampil. Saat pertama terlihat, angka naik dari 0
+   dan garis lime di bawahnya tergambar (useDraw); dengan prefers-reduced-motion angka langsung tampil utuh. */
+const visitorFormat = new Intl.NumberFormat("id-ID");
+const COUNT_UP_MS = 900;
+
+export function VisitCount() {
+  const [visitors, setVisitors] = useState<number | "loading" | null>("loading");
+  const [ref, draw] = useDraw<HTMLDivElement>();
+  const [shown, setShown] = useState(0);
+  useEffect(() => {
+    if (draw !== "on" || typeof visitors !== "number") return;
+    let frame = 0;
+    const start = performance.now();
+    const step = () => {
+      const p = Math.min(1, (performance.now() - start) / COUNT_UP_MS);
+      setShown(Math.round(visitors * (1 - (1 - p) ** 3)));
+      if (p < 1) frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    // Bila frame animasi tertahan (tab di latar belakang, browser hemat daya), angka akhir tetap tampil.
+    const done = setTimeout(() => {
+      cancelAnimationFrame(frame);
+      setShown(visitors);
+    }, COUNT_UP_MS + 200);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(done);
+    };
+  }, [draw, visitors]);
+  useEffect(() => {
+    const ctrl = new AbortController();
+    let counted = true;
+    try {
+      counted = localStorage.getItem(VISITOR_KEY) === "1";
+    } catch {}
+    const isNew = !counted && !navigator.webdriver;
+    fetch("/api/visits/", { method: isNew ? "POST" : "GET", signal: ctrl.signal, cache: "no-store" })
+      .then((r) => (r.ok ? (r.json() as Promise<{ visitors: number }>) : Promise.reject(r.status)))
+      .then(({ visitors }) => {
+        if (isNew) {
+          try {
+            localStorage.setItem(VISITOR_KEY, "1");
+          } catch {}
+        }
+        setVisitors(visitors > 0 ? visitors : null);
+      })
+      .catch(() => {
+        if (!ctrl.signal.aborted) setVisitors(null);
+      });
+    return () => ctrl.abort();
+  }, []);
+  if (visitors === null) return null;
+  const loading = visitors === "loading";
+  return (
+    <div className="footer__visits" ref={ref} aria-busy={loading}>
+      <span className="footer__visits-disc">
+        <Icon name="team" size={24} />
+      </span>
+      <div className="footer__visits-body">
+        <h3>Pengunjung situs</h3>
+        {loading ? (
+          <p className="footer__visits-value footer__visits-value--wait">Menghitung…</p>
+        ) : (
+          <p className="footer__visits-value">
+            {/* Pembaca layar langsung mendapat angka akhir, bukan angka yang sedang naik. */}
+            <strong className="gs-keyline" data-draw={draw} aria-hidden="true">
+              {visitorFormat.format(draw === "static" ? visitors : shown)}
+            </strong>
+            <span className="footer__visits-sr">{visitorFormat.format(visitors)}</span> orang
+          </p>
+        )}
+        {/* Saat memuat, catatan tetap memakan tempat (tidak terlihat) agar tinggi kartu tidak berubah. */}
+        <p className="footer__visits-note" aria-hidden={loading} data-wait={loading || undefined}>
+          Termasuk kamu. Ajak rekan setimmu membaca juga.
+        </p>
+      </div>
+    </div>
   );
 }
 

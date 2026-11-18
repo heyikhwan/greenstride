@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Situs informasi statis: `next build` menulis HTML ke folder out/.
-  output: "export",
+  // Halaman dan metadata tetap dirender statis saat build; hanya app/api/visits (penghitung pengunjung) berjalan di server Vercel.
   trailingSlash: true,
   images: { unoptimized: true },
 };

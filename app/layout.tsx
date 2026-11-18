@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { SITE, SITE_URL, THEME_KEY } from "@/lib/site";
 import "./tokens.css";
 import "./ds.css";
@@ -59,7 +60,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
-      <body className="gs">{children}</body>
+      <body className="gs">
+        {children}
+        {/* Vercel Web Analytics: data kunjungan lengkap untuk tim, dilihat di dashboard Vercel. */}
+        <Analytics />
+      </body>
     </html>
   );
 }

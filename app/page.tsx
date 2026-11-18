@@ -2,7 +2,7 @@
 import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
-import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
+import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute, VisitCount } from "@/components/interactive";
 import { APPS, DOCUMENTS, EVENT, SOCIALS } from "@/lib/event";
 
 export default function Home() {
@@ -375,18 +375,21 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <nav className="footer__nav" aria-label="Footer">
-              <h3>Halaman ini</h3>
-              <a href="#tentang">Tentang</a>
-              <a href="#panduan">Panduan</a>
-              <a href="#jadwal">Jadwal</a>
-              <a href="#hadiah">Hadiah</a>
-              <a href="#faq">FAQ</a>
-              <a href="#unduhan">Unduhan</a>
-              <a href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
-                Help Desk
-              </a>
-            </nav>
+            <div className="footer__aside">
+              <nav className="footer__nav" aria-label="Footer">
+                <h3>Jelajahi Halaman</h3>
+                <a href="#tentang">Tentang</a>
+                <a href="#panduan">Panduan</a>
+                <a href="#jadwal">Jadwal</a>
+                <a href="#hadiah">Hadiah</a>
+                <a href="#faq">FAQ</a>
+                <a href="#unduhan">Unduhan</a>
+                <a href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
+                  Help Desk
+                </a>
+              </nav>
+              <VisitCount />
+            </div>
           </div>
           <section className="footer__social" aria-labelledby="footer-ig">
             <div className="footer__social-head">

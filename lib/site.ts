@@ -39,3 +39,6 @@ export const SITE = {
 
 /** Kunci localStorage untuk tema pilihan pengunjung ("light" | "dark"); dibaca skrip di layout dan ThemeToggle. */
 export const THEME_KEY = "gs-theme";
+
+/** Kunci localStorage penanda browser ini sudah dihitung sebagai pengunjung; dibaca VisitCount. */
+export const VISITOR_KEY = "gs-visitor";
