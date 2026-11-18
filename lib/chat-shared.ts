@@ -9,10 +9,10 @@ import { FAQ } from "./faq";
  * `bust` untuk peluncur dan sapaan pembuka.
  */
 export const BOT = {
-  name: "Wowo",
+  name: "Rani",
   role: "Asisten GreenStride",
-  profile: "/img/asisten/asisten-profil.webp",
-  bust: "/img/asisten/asisten-dada.webp",
+  profile: "/img/asisten/rani-profil.webp",
+  bust: "/img/asisten/rani-dada.webp",
 } as const;
 
 /** Batas satu pesan dan panjang riwayat yang dikirim ke server. Server menolak di atas ini. */

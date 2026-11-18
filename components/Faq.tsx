@@ -138,6 +138,14 @@ export default function Faq() {
             </button>
           ))}
         </div>
+
+        <div className="faq-center__ask">
+          <ChatAvatar size={36} />
+          <p>Tidak ketemu? Tanya {BOT.name} dengan kalimatmu sendiri.</p>
+          <button type="button" className="gs-btn gs-btn--secondary gs-btn--sm" onClick={() => window.dispatchEvent(new CustomEvent("gs-chat:open", { detail: { q: query } }))}>
+            <span>Tanya {BOT.name}</span>
+          </button>
+        </div>
       </aside>
 
       <div className="faq-center__main">

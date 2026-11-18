@@ -144,19 +144,27 @@ Dimuat dan digulir:
 | Callout | Info, perhatian, aturan tegas |
 | DocumentCard | Unduhan dokumen PDF |
 | Icon | Set ikon garis |
-| Chat, ChatAvatar | Asisten Wowo: peluncur maskot kanan bawah, panel tanya jawab dari isi situs |
+| Chat, ChatAvatar | Asisten Rani: peluncur maskot kanan bawah, panel tanya jawab dari isi situs |
 
-### Asisten Wowo
+### Asisten Rani
 
-- Nama **Wowo**, peran "Asisten GreenStride". Nama dan gambar diatur di `BOT` (`lib/chat-shared.ts`).
-- Maskot: pelari berseragam acara dengan headset, visor berlogo PTPN GreenStride 2026 resmi, lengan berlogo Planters Club resmi, dada bertanda pelari GreenStride. Gambar transparan di `public/img/asisten/`: `asisten-dada.webp` (peluncur, sapaan) dan `asisten-profil.webp` (foto profil di header, pesan, tombol FAQ; sudah dibingkai pas kotak 1 : 1,25). Logo di gambar harus logo resmi; bila logo berubah, bangun ulang gambarnya.
+- Nama **Rani**, peran "Asisten GreenStride". Nama dan gambar diatur di `BOT` (`lib/chat-shared.ts`).
+- Maskot: pelari perempuan berambut kuncir kuda, berseragam acara dengan headset, visor dan dada berlogo PTPN GreenStride 2026 resmi, lengan berlogo Planters Club resmi. Gambar transparan di `public/img/asisten/`: `rani-dada.webp` (peluncur, sapaan) dan `rani-profil.webp` (foto profil di header, pesan, tombol FAQ; sudah dibingkai pas kotak 1 : 1,25). Logo di gambar harus logo resmi; bila logo berubah, bangun ulang gambarnya.
 - Dada maskot berdiri di cakram (`.gs-mascot`): cakram `band` (peluncur) atau `leaf-soft` (sapaan) berbingkai `lime`, kepala keluar dari atas cakram. Foto profil (`ChatAvatar`) memakai gaya yang sama: kepala keluar dari atas cakram `leaf-soft` sehingga visor dan headset tidak terpotong; di atas `band` cakramnya `band-raised` berbingkai `lime`.
 - Jawaban mengikuti "Suara dan penulisan" di atas: dibuka dengan kepastian, satu sampai tiga kalimat, sapaan "kamu", nama menu aplikasi persis. Hanya menjawab soal acara; pertanyaan lain ditolak singkat lalu diarahkan kembali.
 - Sumber jawabannya data yang sama dengan halaman (`lib/event.ts`, `lib/faq.ts`, disusun di `lib/knowledge.ts`), jadi ubah ketentuan di sana.
-- Peluncur: maskot di kanan bawah dengan balon bicara "Tanya Wowo" (`surface-raised`, ekor ke arah maskot) di desktop; di ponsel balon hanya berisi titik ketik. Tombol kembali ke atas berdiri di atasnya. Panel `surface` dengan header `band` dan `shadow-md`; di ponsel menjadi lembar layar penuh.
+- Peluncur: maskot di kanan bawah dengan balon bicara "Tanya Rani" (`surface-raised`, ekor ke arah maskot) di desktop; di ponsel balon hanya berisi titik ketik. Tombol kembali ke atas berdiri di atasnya. Panel `surface` dengan header `band` dan `shadow-md`; di ponsel menjadi lembar layar penuh.
 - Gerak: perkenalan sekali per sesi tab, sekitar 3 detik (maskot muncul dan melompat dua kali, balon mengetik lalu berganti teks, garis aksen `lime` berkedip), agar pengunjung baru paham ini tempat bertanya. Saat disentuh maskot terangkat dan miring sedikit. Tidak ada gerak berulang; semuanya mati di `prefers-reduced-motion`.
-- Pesan Wowo di `surface-raised` bertepi `line`, pesan peserta di `leaf-soft`. Tautan di jawaban hanya ke bagian halaman, id FAQ, dan URL resmi.
-- Keadaan: menunggu (tiga titik berdenyut tiga kali lalu diam), gagal (callout `sun-soft` dengan Kirim ulang), offline (callout `ocean-soft` dengan tautan FAQ dan Help Desk).
+- Pesan Rani di `surface-raised` bertepi `line`, pesan peserta di `leaf-soft`. Tautan di jawaban hanya ke bagian halaman, id FAQ, dan URL resmi.
+- Keadaan: menunggu (tiga titik berdenyut tiga kali lalu diam; setelah 2,5 detik muncul "Sebentar, aku cek dulu." agar tidak terlihat macet), gagal (callout `sun-soft` dengan Kirim ulang), offline (callout `ocean-soft` dengan tautan FAQ dan Help Desk).
+- Alur:
+  - Di perangkat sentuh panel dibuka tanpa memunculkan keyboard (fokus ke judul), supaya sapaan dan chip contoh terlihat. Bila dibuka dari FAQ dengan kata pencarian, fokus langsung ke kolom tanya.
+  - Setelah bertanya, log mengikuti jawaban sampai pertanyaan tiba di atas log, lalu berhenti, jadi jawaban panjang dibaca dari awal. Gulir manual menghentikan pengikutan.
+  - Selama menjawab, tombol kirim menjadi tombol berhenti (kotak, `surface` bertepi `line-strong`). Jawaban yang dihentikan tetap ada dengan catatan "Dihentikan"; bila belum ada teks, pertanyaan kembali ke kolom tanya.
+  - Setelah jawaban, "Pertanyaan lain" menampilkan dua chip: FAQ lain dari kategori FAQ yang ditautkan jawaban, atau contoh awal yang belum ditanyakan.
+  - Bila panel ditutup saat menjawab, balon peluncur berganti "Jawaban siap" bertitik `leaf` sampai panel dibuka lagi.
+  - Pusat jawaban punya pintu masuk tetap: kartu kecil di bawah "Sering dicari" dengan tombol "Tanya Rani" yang membawa kata pencarian saat itu.
+  - Di ponsel, tinggi dan posisi panel mengikuti `visualViewport`, supaya keyboard tidak menutupi header dan kolom tanya.
 
 ## Pola halaman
 
