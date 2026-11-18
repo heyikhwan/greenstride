@@ -856,7 +856,7 @@ export function VisitCount() {
         )}
         {/* Saat memuat, catatan tetap memakan tempat (tidak terlihat) agar tinggi kartu tidak berubah. */}
         <p className="footer__visits-note" aria-hidden={loading} data-wait={loading || undefined}>
-          Termasuk kamu. Ajak rekan setimmu membaca juga.
+          Termasuk kamu, ajak rekan setimmu membaca juga.
         </p>
       </div>
     </div>
