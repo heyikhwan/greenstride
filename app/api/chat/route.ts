@@ -5,10 +5,27 @@ import { DEFAULT_MODEL, INSTRUCTIONS } from "@/lib/chat-prompt";
 import { CHAT_MAX_CHARS, CHAT_MAX_MESSAGES, type ChatMessage } from "@/lib/chat-shared";
 
 export const runtime = "nodejs";
+// Batas atas satu jawaban di Vercel; klien OpenAI menyerah lebih dulu agar fungsi tidak menggantung.
+export const maxDuration = 60;
 
 const NO_STORE = { "Cache-Control": "no-store" };
-const client = process.env.OPENAI_API_KEY ? new OpenAI() : null;
+const client = process.env.OPENAI_API_KEY ? new OpenAI({ timeout: 45_000, maxRetries: 1 }) : null;
 const MODEL = process.env.OPENAI_MODEL || DEFAULT_MODEL;
+/** Riwayat terpanjang yang sah sekitar 15 ribu karakter; di atas ini pasti bukan dari widget. */
+const MAX_BODY_BYTES = 32 * 1024;
+
+const hash = (s: string) => createHash("sha256").update(s).digest("hex").slice(0, 32);
+
+/** Permintaan dari situs lain ditolak. Tanpa header Origin (bukan dari peramban) tetap diteruskan ke pembatas. */
+function crossOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return false;
+  try {
+    return new URL(origin).host !== request.headers.get("host");
+  } catch {
+    return true;
+  }
+}
 
 /** Tanggal hari ini di WIB, format YYYY-MM-DD. */
 const todayWib = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jakarta" }).format(new Date());
@@ -34,22 +51,27 @@ function parseMessages(body: unknown): ChatMessage[] | null {
 
 export async function POST(request: Request) {
   if (!client) return fail("unavailable", 503);
+  if (crossOrigin(request)) return fail("forbidden", 403);
+  if (Number(request.headers.get("content-length") ?? 0) > MAX_BODY_BYTES) return fail("invalid", 413);
 
   let messages: ChatMessage[] | null = null;
   try {
-    messages = parseMessages(await request.json());
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) return fail("invalid", 413);
+    messages = parseMessages(JSON.parse(raw));
   } catch {}
   if (!messages) return fail("invalid", 400);
 
   const ua = request.headers.get("user-agent") ?? "";
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "";
   const day = todayWib();
-  const fingerprint = createHash("sha256").update(`${ip}|${ua}|${day}`).digest("hex").slice(0, 32);
+  const fingerprint = hash(`${ip}|${ua}|${day}`);
   try {
-    const quota = await takeChatQuota(fingerprint, day);
+    const quota = await takeChatQuota({ device: fingerprint, ip: hash(`${ip}|${day}`) }, day);
     if (quota !== "ok") return fail(quota === "device" ? "rate_limited" : "daily_limit", 429);
-  } catch {
-    // Redis gagal: lanjut tanpa pembatas daripada mematikan asisten.
+  } catch (err) {
+    // Redis gagal: lanjut tanpa pembatas daripada mematikan asisten, tapi dicatat agar terlihat di log Vercel.
+    console.error("chat-limit: Redis gagal, pesan diteruskan tanpa pembatas", err);
   }
 
   let stream: Awaited<ReturnType<typeof startStream>>;
