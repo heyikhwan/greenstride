@@ -39,6 +39,9 @@ export const EVENT = {
   appName: "99 Virtual Race",
 } as const;
 
+/** Data yang perlu disiapkan sebelum melapor ke Help Desk (bagian Bantuan dan asisten chat). */
+export const HELPDESK_CHECKLIST = ["Nama lengkap", "Unit kerja", "Nama tim", "Waktu kejadian", "Tangkapan layar aplikasi"] as const;
+
 /** Akun Instagram yang diajak diikuti di footer. */
 export const SOCIALS = [
   { name: "Holding Perkebunan", handle: "holdingperkebunan", href: "https://www.instagram.com/holdingperkebunan/" },

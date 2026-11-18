@@ -3,7 +3,8 @@ import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
 import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute, VisitCount } from "@/components/interactive";
-import { APPS, DOCUMENTS, EVENT, SOCIALS } from "@/lib/event";
+import Chat from "@/components/Chat";
+import { APPS, DOCUMENTS, EVENT, HELPDESK_CHECKLIST, SOCIALS } from "@/lib/event";
 
 export default function Home() {
   return (
@@ -346,7 +347,7 @@ export default function Home() {
             <div className="help__list">
               <h3>Siapkan sebelum melapor</h3>
               <ul>
-                {["Nama lengkap", "Unit kerja", "Nama tim", "Waktu kejadian", "Tangkapan layar aplikasi"].map((t) => (
+                {HELPDESK_CHECKLIST.map((t) => (
                   <li key={t}>
                     <Icon name="check" size={16} strokeWidth={2.5} />
                     {t}
@@ -420,6 +421,7 @@ export default function Home() {
         </div>
       </footer>
       <BackToTop />
+      <Chat />
     </>
   );
 }

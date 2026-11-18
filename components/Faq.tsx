@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { Callout, Icon } from "./ds";
+import { Callout, ChatAvatar, Icon } from "./ds";
+import { BOT } from "@/lib/chat-shared";
 import { FAQ, FAQ_CATEGORIES, type FaqCategoryId } from "@/lib/faq";
 import { EVENT } from "@/lib/event";
 
@@ -201,8 +202,16 @@ export default function Faq() {
               <Icon name="search" size={28} />
             </span>
             <h4>Belum ada jawaban untuk “{query.trim()}”</h4>
-            <p>Coba kata yang lebih pendek, atau tanyakan langsung ke Help Desk.</p>
+            <p>Coba kata yang lebih pendek, tanyakan ke {BOT.name} dengan kalimatmu sendiri, atau hubungi Help Desk.</p>
             <div className="faq-empty__actions">
+              <button
+                type="button"
+                className="gs-btn gs-btn--primary gs-btn--sm"
+                onClick={() => window.dispatchEvent(new CustomEvent("gs-chat:open", { detail: { q: query } }))}
+              >
+                <ChatAvatar size={22} className="gs-avatar--inline" />
+                <span>Tanya {BOT.name}</span>
+              </button>
               <button
                 type="button"
                 className="gs-btn gs-btn--secondary gs-btn--sm"
@@ -214,7 +223,7 @@ export default function Faq() {
               >
                 <span>Lihat semua pertanyaan</span>
               </button>
-              <a className="gs-btn gs-btn--primary gs-btn--sm" href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
+              <a className="gs-btn gs-btn--ghost gs-btn--sm" href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
                 <Icon name="lifebuoy" size={18} />
                 <span>Buka Help Desk</span>
               </a>

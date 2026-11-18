@@ -1,13 +1,9 @@
-import { Redis } from "@upstash/redis";
+import { redis } from "./redis";
 
 /**
  * Penghitung pengunjung unik di Upstash Redis (hanya dipakai di server, lewat app/api/visits).
- * Integrasi Upstash di Vercel mengisi KV_REST_API_URL dan KV_REST_API_TOKEN; nama UPSTASH_* juga diterima.
- * Tanpa env var itu, semua fungsi mengembalikan null dan VisitCount tidak tampil.
+ * Tanpa Redis (lihat lib/redis.ts), semua fungsi mengembalikan null dan VisitCount tidak tampil.
  */
-const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
-const redis = url && token ? new Redis({ url, token }) : null;
 
 const VISITORS_KEY = "visits:unique";
 /** Satu perangkat (hash IP + User-Agent) hanya bisa menambah angka sekali per hari, kuncinya dihapus setelah 2 hari. */

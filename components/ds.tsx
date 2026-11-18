@@ -3,8 +3,9 @@
  * Komponen presentasi GreenStride 2026, port dari design-system/project/components.
  * Kelas gs-* ada di app/ds.css.
  */
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import ICONS from "@/design-system/icon-paths.json";
+import { BOT } from "@/lib/chat-shared";
 
 export type IconName = keyof typeof ICONS;
 
@@ -199,6 +200,20 @@ export function Illustration({ name, size = 88 }: { name: "medal" | "jersey" | "
         </>
       )}
     </svg>
+  );
+}
+
+/**
+ * Foto profil maskot asisten chat: cakram selebar `size`, kepala keluar dari atasnya (tinggi elemen 1,25 × size),
+ * jadi visor dan headset tidak terpotong lingkaran. Hiasan; nama asisten selalu tertulis di sebelahnya.
+ */
+export function ChatAvatar({ size = 40, className }: { size?: number; className?: string }) {
+  return (
+    <span className={cx("gs-mascot gs-avatar", className)} style={{ "--disc": `${size}px` } as CSSProperties} aria-hidden="true">
+      <span className="gs-mascot__fig">
+        <img src={BOT.profile} alt="" width={size} height={Math.round(size * 1.25)} decoding="async" />
+      </span>
+    </span>
   );
 }
 
