@@ -396,7 +396,7 @@ export default function Chat() {
             <div className="gs-chat__bubble">
               <span className="gs-chat__sr">{BOT.name}: </span>
               <p>
-                Halo, aku {BOT.name}. Tanya apa saja soal {EVENT.name}: aturan lari, aplikasi, jadwal, atau hadiah. Aku menjawab dari isi situs ini dan tidak bisa melihat atau mengubah data pendaftaranmu.
+                Halo, aku {BOT.name}. Tanya apa saja soal {EVENT.name}.
               </p>
             </div>
           </div>
