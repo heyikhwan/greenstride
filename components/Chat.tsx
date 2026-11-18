@@ -14,7 +14,7 @@ import { FAQ } from "@/lib/faq";
 
    Perkenalan: sekali per sesi tab, maskot muncul, melompat kecil, dan balonnya "mengetik" agar pengunjung paham ini
    tempat bertanya. data-intro di peluncur: tanpa atribut (belum siap, tersembunyi), "play" (sekitar 3 detik), "done" (diam).
-   Dilewati bila prefers-reduced-motion.
+   Dengan prefers-reduced-motion tampil diam tanpa gerak. Di ponsel balon "Tanya <nama>" hanya muncul selama perkenalan.
 
    Alur: di perangkat sentuh panel dibuka tanpa memunculkan keyboard (fokus ke judul) agar chip contoh terlihat.
    Log mengikuti jawaban sampai pertanyaan tiba di atas log, lalu berhenti agar jawaban panjang dibaca dari awal. Jawaban bisa dihentikan.
@@ -177,18 +177,20 @@ export default function Chat() {
     try {
       seen = sessionStorage.getItem(INTRO_KEY) === "1";
     } catch {}
-    if (seen || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Dengan prefers-reduced-motion, "play" tetap dipakai agar label sempat terlihat, tapi semua animasinya dimatikan CSS.
+    if (seen) {
       el.dataset.intro = "done";
       return;
     }
+    const delay = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : INTRO_DELAY_MS;
     const timers = [
-      setTimeout(() => (el.dataset.intro = "play"), INTRO_DELAY_MS),
+      setTimeout(() => (el.dataset.intro = "play"), delay),
       setTimeout(() => {
         el.dataset.intro = "done";
         try {
           sessionStorage.setItem(INTRO_KEY, "1");
         } catch {}
-      }, INTRO_DELAY_MS + INTRO_MS),
+      }, delay + INTRO_MS),
     ];
     return () => timers.forEach(clearTimeout);
   }, []);

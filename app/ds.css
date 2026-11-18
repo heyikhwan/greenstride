@@ -809,13 +809,14 @@
 @media (max-width: 640px) {
   .gs-chat { --launcher-gap: max(var(--space-4), env(safe-area-inset-bottom, 0px)); --launcher-side: max(var(--space-4), env(safe-area-inset-right, 0px)); }
   .gs-chat__mascot { --disc: 64px; }
-  /* Balon ponsel: hanya titik ketik, menempel di kiri atas kepala. */
-  .gs-chat__say { position: absolute; right: 50px; bottom: 50px; min-height: 32px; margin: 0; padding: 0 var(--space-3); }
-  .gs-chat__say-dots { max-width: 40px; opacity: 1; }
-  .gs-chat__say-text { max-width: 0; }
-  .gs-chat__launcher[data-intro="play"] .gs-chat__say-dots, .gs-chat__launcher[data-intro="play"] .gs-chat__say-text { animation: none; }
-  .gs-chat__launcher[data-unread="true"] .gs-chat__say-dots { max-width: 0; opacity: 0; }
-  .gs-chat__launcher[data-unread="true"] .gs-chat__say-text { max-width: 9em; }
+  /* Balon ponsel: "Tanya <nama>" hanya selama perkenalan (sekitar 3 detik), lalu menghilang agar isi halaman tetap lega.
+     Muncul lagi sebagai "Jawaban siap" bila ada jawaban baru saat panel tertutup. Tanpa titik ketik di ponsel. */
+  .gs-chat__say { position: absolute; right: 64px; bottom: 48px; min-height: 36px; margin: 0; padding: 0 var(--space-3);
+    opacity: 0; visibility: hidden; transform: scale(0.6); pointer-events: none;
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base); }
+  .gs-chat__launcher[data-intro="play"] .gs-chat__say, .gs-chat__launcher[data-unread="true"] .gs-chat__say { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition-delay: 0s; }
+  .gs-chat__say-dots { display: none; }
+  .gs-chat__launcher[data-intro="play"] .gs-chat__say-text { animation: none; }
   .gs-totop { right: calc(max(var(--space-4), env(safe-area-inset-right, 0px)) + 6px); bottom: calc(max(var(--space-4), env(safe-area-inset-bottom, 0px)) + 88px + var(--space-3)); }
   /* --chat-top dan --chat-vh diisi dari visualViewport saat panel terbuka, agar keyboard tidak menutupi header dan kolom tanya. */
   .gs-chat__panel { inset: var(--chat-top, 0px) 0 auto 0; width: 100%; height: var(--chat-vh, 100dvh); border: 0; border-radius: 0; }
