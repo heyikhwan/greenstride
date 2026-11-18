@@ -39,6 +39,9 @@ export const anchorLabel = (href: string) => PAGE_SECTIONS.find((s) => s.href ==
 const ANCHORS = new Set<string>([...PAGE_SECTIONS.map((s) => s.href), ...FAQ.map((f) => `#${f.id}`)]);
 const URLS = new Set<string>([EVENT.helpdeskUrl, ...APPS.flatMap((a) => [a.appStore, a.playStore]), ...DOCUMENTS.map((d) => d.href), ...SOCIALS.map((s) => s.href)]);
 
+/** Judul dokumen untuk alamat berkas di DOCUMENTS (dipakai widget untuk merekomendasikan, bukan mengunduh). */
+export const documentTitle = (href: string) => DOCUMENTS.find((d) => d.href === href)?.title;
+
 export function linkKind(href: string): "anchor" | "external" | "file" | null {
   if (ANCHORS.has(href)) return "anchor";
   if (!URLS.has(href)) return null;

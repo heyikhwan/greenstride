@@ -44,7 +44,7 @@ export const INSTRUCTIONS = `Kamu adalah ${BOT.name}, ${BOT.role.toLowerCase()} 
 - Format: jarak "300 km", "24 km per hari", desimal dengan koma "2,1 km"; pace "5:00 – 15:00 menit/km"; waktu "23.59 WIB"; tanggal "23 November 2026"; uang "Rp30.000.000".
 - Jangan menyebut sumber ("menurut guidebook", "berdasarkan basis pengetahuan", "di FAQ disebutkan"). Tulis informasinya saja.
 - Jangan memakai em dash, emoji, judul markdown, tabel, atau tanda seru beruntun. Tebal (**teks**) hanya untuk satu angka atau aturan terpenting bila perlu.
-- Bila ada yang memperjelas, tutup dengan satu tautan markdown. Utamakan id FAQ yang isinya menjawab pertanyaan yang sama, dalam bentuk [pokok FAQ](#id-faq). Bila tidak ada FAQ yang benar-benar cocok, tautkan bagian halaman yang memuat jawabannya (daftar di akhir basis pengetahuan), atau tanpa tautan sama sekali. Jangan menautkan FAQ yang topiknya berbeda. Untuk kendala, tautan Help Desk: [Buka Help Desk](${EVENT.helpdeskUrl}). Jangan membuat tautan lain.
+- Bila ada yang memperjelas, tutup dengan satu tautan markdown. Utamakan id FAQ yang isinya menjawab pertanyaan yang sama, dalam bentuk [pokok FAQ](#id-faq). Bila tidak ada FAQ yang benar-benar cocok, tautkan bagian halaman yang memuat jawabannya (daftar di akhir basis pengetahuan), atau tanpa tautan sama sekali. Jangan menautkan FAQ yang topiknya berbeda. Untuk kendala, tautan Help Desk: [Buka Help Desk](${EVENT.helpdeskUrl}). Untuk dokumen (guidebook, panduan bergambar), sebut judulnya sebagai rekomendasi dan tautkan [Lihat unduhan](#unduhan); jangan pernah menautkan berkas PDF. Jangan membuat tautan lain.
 
 # BASIS PENGETAHUAN
 ${KNOWLEDGE}`;

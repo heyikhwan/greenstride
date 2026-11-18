@@ -43,8 +43,8 @@ ${APP_STEPS.map((st, i) => `${i + 1}. ${st.title}: ${st.body}\n${st.shots.map((s
 const apps = `## Aplikasi dan tautan unduh resmi
 ${APPS.map((a) => `- ${a.name} (${a.role}). App Store: ${a.appStore} · Google Play: ${a.playStore}`).join("\n")}`;
 
-const docs = `## Dokumen di bagian Unduhan
-${DOCUMENTS.map((d) => `- ${d.title}: ${d.description} (${d.size}). Unduh: ${d.href}`).join("\n")}`;
+const docs = `## Dokumen di bagian Unduhan (rekomendasikan judulnya dan tautkan [Lihat unduhan](#unduhan), jangan tautkan berkasnya)
+${DOCUMENTS.map((d) => `- ${d.title}: ${d.description} (${d.size}).`).join("\n")}`;
 
 const help = `## Bantuan
 - Kendala dilaporkan ke Help Desk GreenStride: ${E.helpdeskUrl}

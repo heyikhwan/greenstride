@@ -3,7 +3,7 @@
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode, type Ref } from "react";
 import { ChatAvatar, Icon } from "./ds";
-import { BOT, CHAT_MAX_CHARS, CHAT_MAX_MESSAGES, anchorLabel, linkKind, type ChatMessage } from "@/lib/chat-shared";
+import { BOT, CHAT_MAX_CHARS, CHAT_MAX_MESSAGES, anchorLabel, documentTitle, linkKind, type ChatMessage } from "@/lib/chat-shared";
 import { EVENT } from "@/lib/event";
 import { FAQ } from "@/lib/faq";
 
@@ -547,9 +547,10 @@ function Inline({ text, onAnchor }: { text: string; onAnchor: () => void }) {
           </a>,
         );
       else if (kind === "file")
+        // Jangan mengunduh dari jawaban: arahkan ke bagian Unduhan, peserta memilih sendiri dokumennya di sana.
         out.push(
-          <a key={at} href={href} download>
-            {label}
+          <a key={at} href="#unduhan" onClick={onAnchor}>
+            Lihat {documentTitle(href) ?? "dokumen"} di Unduhan
           </a>,
         );
       else out.push(label);
