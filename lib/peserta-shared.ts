@@ -12,6 +12,8 @@ export type Team = {
   entity: string;
   entityShort: string;
   origin: string;
+  /** Kolom Asal di formulir (Head Office, Regional 1, KSO, Pabrik Gula, ...), untuk filter lanjutan sesudah entitas. Kosong di snapshot lama. */
+  area?: string;
   unit: string;
   members: Member[];
   /** Ketua sudah (true) atau belum (false) masuk grup WhatsApp panitia; null bila tidak dicatat. */

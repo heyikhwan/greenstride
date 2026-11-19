@@ -307,6 +307,7 @@ export function buildSnapshot(vrSheets: SheetRows[], timRows: Record<string, str
         entity: group,
         entityShort: group,
         origin: [sub, d.origin].filter(Boolean).join(" · "),
+        area: d.origin,
         unit: d.unit,
         leadInGroup: d.leadInGroup,
         checkedAt: d.checkedAt,

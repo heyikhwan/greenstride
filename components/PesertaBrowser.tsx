@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Icon } from "./ds";
 import { EVENT } from "@/lib/event";
 import { STATUS, STATUS_ORDER, num, type EntitySummary, type StatusCode, type Team } from "@/lib/peserta-shared";
@@ -29,6 +29,14 @@ function Hit({ text, words }: { text: string; words: string[] }) {
   return <>{parts.map((p, i) => (i % 2 ? <mark key={i} className="gs-mark">{p}</mark> : p))}</>;
 }
 
+/** Asal tim (Head Office, Regional 1, ...); tim tanpa asal dikelompokkan sebagai "Lainnya". */
+const OTHER = "Lainnya";
+const areaOf = (t: Team) => t.area || OTHER;
+const slugOf = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+/** Head Office dulu, lalu Regional 1, 2, ... berurutan angka, lalu sisanya menurut abjad; Lainnya paling akhir. */
+const areaRank = (a: string) => (a === "Head Office" ? 0 : a === OTHER ? 2 : 1);
+const byArea = (a: string, b: string) => areaRank(a) - areaRank(b) || a.localeCompare(b, "id", { numeric: true });
+
 const ready = (t: Team) => t.members.filter((m) => m.status === "ok").length;
 
 /** Satu ruas per anggota, diwarnai menurut status: bahasa yang sama dengan TeamBar di halaman utama. */
@@ -54,19 +62,24 @@ export function StatusPill({ status }: { status: StatusCode }) {
 export default function PesertaBrowser({ teams, entities }: { teams: Team[]; entities: EntitySummary[] }) {
   const [query, setQuery] = useState("");
   const [entity, setEntity] = useState("semua");
+  const [area, setArea] = useState("semua");
   const [filter, setFilter] = useState<Filter>("semua");
   const [limit, setLimit] = useState(PAGE);
   const [open, setOpen] = useState<Map<string, boolean>>(() => new Map());
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Isian dari alamat halaman: ?q= (kata pencarian), ?entitas= (nama singkat entitas), ?status=belum|terhubung.
+  // Isian dari alamat halaman: ?q= (kata pencarian), ?entitas= (nama singkat entitas), ?asal= (asal dalam entitas), ?status=belum|terhubung.
   // Dibaca saat dibuka, saat tombol kembali/maju, dan saat baris rekap entitas diklik (event "peserta:filter").
   useEffect(() => {
     const byShort = new Map(entities.map((e) => [e.short.toLowerCase(), e.name]));
     const fromUrl = () => {
       const p = new URLSearchParams(location.search);
       setQuery((p.get("q") ?? "").slice(0, 80));
-      setEntity(byShort.get((p.get("entitas") ?? "").toLowerCase()) ?? "semua");
+      const ent = byShort.get((p.get("entitas") ?? "").toLowerCase()) ?? "semua";
+      setEntity(ent);
+      const asal = p.get("asal") ?? "";
+      const match = ent === "semua" || !asal ? undefined : teams.find((t) => t.entity === ent && slugOf(areaOf(t)) === asal);
+      setArea(match ? areaOf(match) : "semua");
       const st = p.get("status");
       setFilter(st === "belum" || st === "terhubung" ? st : "semua");
       setLimit(PAGE);
@@ -75,6 +88,7 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
     const onFilter = (e: Event) => {
       const name = (e as CustomEvent<{ entity: string }>).detail.entity;
       setEntity(entities.some((x) => x.name === name) ? name : "semua");
+      setArea("semua");
       setQuery("");
       setLimit(PAGE);
       setOpen(new Map());
@@ -86,7 +100,7 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
       removeEventListener("popstate", fromUrl);
       removeEventListener("peserta:filter", onFilter);
     };
-  }, [entities]);
+  }, [entities, teams]);
   // Pilihan disimpan di alamat halaman agar ketua atau koordinator unit bisa membagikan tautannya. Tidak menambah riwayat.
   useEffect(() => {
     const t = setTimeout(() => {
@@ -94,11 +108,21 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
       const set = (k: string, v: string | null) => (v ? url.searchParams.set(k, v) : url.searchParams.delete(k));
       set("q", query.trim() || null);
       set("entitas", entity === "semua" ? null : (entities.find((e) => e.name === entity)?.short ?? null));
+      set("asal", area === "semua" ? null : slugOf(area));
       set("status", filter === "semua" ? null : filter);
       history.replaceState(history.state, "", url);
     }, 400);
     return () => clearTimeout(t);
-  }, [query, entity, filter, entities]);
+  }, [query, entity, area, filter, entities]);
+
+  /** Asal di entitas terpilih beserta jumlah timnya. Pilihan asal hanya tampil bila entitasnya punya lebih dari satu asal. */
+  const areas = useMemo(() => {
+    if (entity === "semua") return [];
+    const m = new Map<string, number>();
+    for (const t of teams) if (t.entity === entity) m.set(areaOf(t), (m.get(areaOf(t)) ?? 0) + 1);
+    return [...m].sort(([a], [b]) => byArea(a, b));
+  }, [teams, entity]);
+  const inScope = useCallback((t: Team) => (entity === "semua" || t.entity === entity) && (area === "semua" || areaOf(t) === area), [entity, area]);
 
   const index = useMemo(
     () =>
@@ -149,11 +173,11 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
   const base = useMemo(
     () =>
       index.filter(({ team }) => {
-        if (entity !== "semua" && team.entity !== entity) return false;
+        if (!inScope(team)) return false;
         const all = ready(team) === team.members.length;
         return filter === "semua" || (filter === "terhubung" ? all : !all);
       }),
-    [index, entity, filter],
+    [index, inScope, filter],
   );
 
   const results = useMemo(() => {
@@ -175,10 +199,10 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
   }, [base, words, searching, contactHits]);
 
   const counts = useMemo(() => {
-    const all = index.filter(({ team }) => entity === "semua" || team.entity === entity);
+    const all = index.filter(({ team }) => inScope(team));
     const terhubung = all.filter(({ team }) => ready(team) === team.members.length).length;
     return { semua: all.length, terhubung, belum: all.length - terhubung };
-  }, [index, entity]);
+  }, [index, inScope]);
 
   const shown = results.slice(0, limit);
   // Kartu yang dibuka atau ditutup sendiri oleh pengunjung; selain itu ikut aturan buka otomatis.
@@ -252,6 +276,7 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
               value={entity}
               onChange={(e) => {
                 setEntity(e.target.value);
+                setArea("semua");
                 reset();
               }}
             >
@@ -265,6 +290,33 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
             <Icon name="chevron-down" size={18} />
           </div>
         </div>
+
+        {areas.length > 1 && (
+          <div className="pfind__field">
+            <label className="gs-search__label" htmlFor="peserta-asal">
+              Asal di {entities.find((e) => e.name === entity)?.short ?? entity}
+            </label>
+            <div className="pfind__select-wrap">
+              <select
+                id="peserta-asal"
+                className="pfind__select"
+                value={area}
+                onChange={(e) => {
+                  setArea(e.target.value);
+                  reset();
+                }}
+              >
+                <option value="semua">Semua asal</option>
+                {areas.map(([a, n]) => (
+                  <option key={a} value={a}>
+                    {a} ({n} tim)
+                  </option>
+                ))}
+              </select>
+              <Icon name="chevron-down" size={18} />
+            </div>
+          </div>
+        )}
 
         <div className="pfind__filters" role="group" aria-label="Status akun anggota tim">
           {filters.map((f) => (
@@ -293,7 +345,7 @@ export default function PesertaBrowser({ teams, entities }: { teams: Team[]; ent
         </div>
 
         {results.length > 0 ? (
-          <div className="pfind__list" key={`${searching ? "cari" : "daftar"}-${entity}-${filter}`}>
+          <div className="pfind__list" key={`${searching ? "cari" : "daftar"}-${entity}-${area}-${filter}`}>
             {shown.map((t, i) => {
               const o = isOpen(t.id);
               const ok = ready(t);
