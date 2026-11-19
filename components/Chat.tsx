@@ -336,7 +336,7 @@ export default function Chat() {
         </span>
         <span className="gs-mascot gs-chat__mascot" aria-hidden="true">
           <span className="gs-mascot__fig">
-            <img src={BOT.bust} alt="" width={88} height={88} decoding="async" />
+            <img src={BOT.bust} srcSet={BOT.bustSrcSet} sizes="88px" alt="" width={88} height={88} decoding="async" />
           </span>
           <span className="gs-chat__sparks">
             <i />
@@ -392,7 +392,7 @@ export default function Chat() {
           <div className="gs-chat__hello">
             <span className="gs-mascot gs-chat__hello-fig" aria-hidden="true">
               <span className="gs-mascot__fig">
-                <img src={BOT.bust} alt="" width={78} height={78} decoding="async" />
+                <img src={BOT.bust} srcSet={BOT.bustSrcSet} sizes="78px" alt="" width={78} height={78} decoding="async" />
               </span>
             </span>
             <div className="gs-chat__bubble">

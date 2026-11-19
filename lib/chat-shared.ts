@@ -13,6 +13,8 @@ export const BOT = {
   role: "Asisten GreenStride",
   profile: "/img/asisten/rani-profil.webp",
   bust: "/img/asisten/rani-dada.webp",
+  /** Versi 180px untuk layar biasa; maskot tampil paling lebar 88px. */
+  bustSrcSet: "/img/asisten/rani-dada-180.webp 180w, /img/asisten/rani-dada.webp 320w",
 } as const;
 
 /** Batas satu pesan dan panjang riwayat yang dikirim ke server. Server menolak di atas ini. */

@@ -20,7 +20,15 @@ export default function Home() {
         <section className="hero gs-on-band" aria-labelledby="hero-h">
           <div className="wrap hero__inner">
             <div>
-              <img className="hero__brand enter" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} />
+              <img
+                className="hero__brand enter"
+                src="/img/logo-greenstride-white-320.webp"
+                srcSet="/img/logo-greenstride-white-320.webp 320w, /img/logo-greenstride-white-608.webp 608w"
+                sizes="(max-width: 640px) 160px, 210px"
+                alt="PTPN GreenStride 2026"
+                width={608}
+                height={206}
+              />
               <h1 id="hero-h">
                 Kumpulkan minimal <Drawn as="em" className="gs-keyline">300 km</Drawn> bersama tim terbaikmu
               </h1>
@@ -47,6 +55,8 @@ export default function Home() {
               <img
                 className="hero__photo"
                 src="/img/hero-runners.webp"
+                srcSet="/img/hero-runners-480.webp 480w, /img/hero-runners-680.webp 680w, /img/hero-runners.webp 800w"
+                sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1080px) min(560px, calc(100vw - 48px)), 523px"
                 alt="Dua pelari menyusuri jalan di antara kebun teh dan sawit dengan kota di kejauhan"
                 width={800}
                 height={950}
@@ -365,7 +375,16 @@ export default function Home() {
         <div className="wrap">
           <div className="footer__inner">
             <div>
-              <img className="footer__brand" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} loading="lazy" />
+              <img
+                className="footer__brand"
+                src="/img/logo-greenstride-white-320.webp"
+                srcSet="/img/logo-greenstride-white-320.webp 320w, /img/logo-greenstride-white-608.webp 608w"
+                sizes="200px"
+                alt="PTPN GreenStride 2026"
+                width={608}
+                height={206}
+                loading="lazy"
+              />
               <p className="footer__line">Every step counts. Every stride matters.</p>
               <div className="footer__logos">
                 <img className="footer__logo-brand" src="/img/logo-planters-club-horizontal.png" alt="Planters Club" width={157} height={56} loading="lazy" />
