@@ -6,7 +6,7 @@ export const EVENT = {
   name: "PTPN GreenStride 2026",
   tagline: "Run for a healthier you, a stronger Nusantara Entreplanters",
 
-  // Periode lomba dan submit (WIB = UTC+7)
+  // Periode event dan submit (WIB = UTC+7)
   raceStart: "2026-11-23T00:00:00+07:00",
   raceEnd: "2026-12-20T23:59:59+07:00",
   raceRangeLabel: "23 November – 20 Desember 2026",
@@ -55,7 +55,7 @@ export const rupiah = (n: number) => `Rp${String(n).replace(/\B(?=(\d{3})+(?!\d)
 export const APPS = [
   {
     name: "99 Virtual Race",
-    role: "Aplikasi resmi lomba: eBIB, submit, dan peringkat",
+    role: "Aplikasi resmi event: eBIB, submit, dan peringkat",
     icon: "/img/icon-99-virtual-race.png",
     appStore: "https://apps.apple.com/id/app/99-virtual-race/id6686407581",
     playStore: "https://play.google.com/store/apps/details?id=id.app99virtualrace.mobile",
@@ -194,7 +194,7 @@ export type DocumentEntry = { title: string; description: string; href: string; 
 export const DOCUMENTS: DocumentEntry[] = [
   {
     title: "Guidebook GreenStride 2026",
-    description: "Mekanisme dan tahapan lomba, cara perhitungan poin, dan penghargaan.",
+    description: "Mekanisme dan tahapan event, cara perhitungan poin, dan penghargaan.",
     href: "/dokumen/virtual-running-greenstride-2026.pdf",
     size: "PDF · 7,5 MB",
   },

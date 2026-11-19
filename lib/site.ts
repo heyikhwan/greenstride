@@ -18,7 +18,7 @@ export const SITE = {
   organizer: "Planters Club",
   title: "PTPN GreenStride 2026 · Run for a Healthier You, A Stronger Nusantara Entreplanters",
   description:
-    "Kompetisi lari virtual beregu bagi karyawan PTPN Group. Temukan ketentuan lomba, panduan aplikasi, penghargaan, dan jawaban lengkap untuk peserta GreenStride 2026.",
+    "Kompetisi lari virtual beregu bagi karyawan PTPN Group. Temukan ketentuan event, panduan aplikasi, penghargaan, dan jawaban lengkap untuk peserta GreenStride 2026.",
   shareDescription:
     "Kompetisi lari virtual beregu bagi karyawan PTPN Group. Bergerak bersama tim, capai target bersama, dan jadilah finisher GreenStride 2026.",
   keywords: [

@@ -25,8 +25,9 @@ export type ChatMessage = { role: "user" | "assistant"; content: string };
 
 /** Bagian halaman yang boleh ditautkan asisten, dengan isinya. `link` adalah label tautan yang selalu dipakai widget untuk bagian itu. */
 export const PAGE_SECTIONS = [
-  { href: "#tentang", label: "Tentang", link: "Lihat aturan lomba", about: "jarak minimal tim, batas harian, aktivitas yang dihitung dan tidak, cek pace" },
+  { href: "#tentang", label: "Tentang", link: "Lihat aturan event", about: "jarak minimal tim, batas harian, aktivitas yang dihitung dan tidak, cek pace" },
   { href: "#panduan", label: "Panduan", link: "Lihat panduan aplikasi", about: "lima langkah menyiapkan 99 Virtual Race dan Strava, tautan unduh aplikasi" },
+  { href: "/peserta/", label: "Status peserta", link: "Cek status peserta", about: "halaman terpisah: cari nama atau tim, lihat apakah akun 99 Virtual Race tiap anggota sudah terhubung (akun terhubung, belum daftar aplikasi, data perlu diperbaiki, sedang diproses), rekap per entitas" },
   { href: "#batas-harian", label: "Batas 24 km", link: "Lihat batas 24 km", about: "24 km batas harian bukan target, kalkulator porsi km per anggota" },
   { href: "#jadwal", label: "Jadwal", link: "Lihat jadwal", about: "kalender 28 hari dan linimasa tahapan acara" },
   { href: "#hadiah", label: "Penghargaan", link: "Lihat penghargaan", about: "medali, jersey, uang tunai, MVP" },

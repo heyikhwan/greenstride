@@ -1,8 +1,9 @@
 import { createHash } from "node:crypto";
 import OpenAI from "openai";
 import { takeChatQuota } from "@/lib/chat-limit";
-import { DEFAULT_MODEL, INSTRUCTIONS } from "@/lib/chat-prompt";
+import { DEFAULT_MODEL, INSTRUCTIONS, pesertaContext } from "@/lib/chat-prompt";
 import { CHAT_MAX_CHARS, CHAT_MAX_MESSAGES, type ChatMessage } from "@/lib/chat-shared";
+import { pesertaForChat } from "@/lib/peserta";
 
 export const runtime = "nodejs";
 // Batas atas satu jawaban di Vercel; klien OpenAI menyerah lebih dulu agar fungsi tidak menggantung.
@@ -76,7 +77,7 @@ export async function POST(request: Request) {
 
   let stream: Awaited<ReturnType<typeof startStream>>;
   try {
-    stream = await startStream(messages, fingerprint);
+    stream = await startStream(messages, fingerprint, pesertaContext(await pesertaForChat(messages.filter((m) => m.role === "user").map((m) => m.content))));
   } catch {
     return fail("upstream", 502);
   }
@@ -103,11 +104,11 @@ export async function POST(request: Request) {
   return new Response(body, { headers: { ...NO_STORE, "Content-Type": "text/plain; charset=utf-8", "X-Content-Type-Options": "nosniff" } });
 }
 
-function startStream(messages: ChatMessage[], fingerprint: string) {
+function startStream(messages: ChatMessage[], fingerprint: string, context: string) {
   return client!.responses.create({
     model: MODEL,
     instructions: INSTRUCTIONS,
-    input: messages.map((m) => ({ role: m.role, content: m.content })),
+    input: [{ role: "developer" as const, content: context }, ...messages.map((m) => ({ role: m.role, content: m.content }))],
     stream: true,
     store: false,
     max_output_tokens: 1200,

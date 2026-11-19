@@ -37,7 +37,7 @@ export default function StructuredData() {
         "@type": "SportsEvent",
         "@id": `${SITE_URL}/#event`,
         name: SITE.name,
-        description: `Lomba lari virtual beregu untuk karyawan PTPN Group. Satu tim maksimal ${EVENT.teamMax} orang mengumpulkan ${EVENT.teamTargetKm} km dari lari atau jalan di luar ruangan yang terekam di Strava.`,
+        description: `Tantangan lari virtual beregu untuk karyawan PTPN Group. Satu tim maksimal ${EVENT.teamMax} orang mengumpulkan ${EVENT.teamTargetKm} km dari lari atau jalan di luar ruangan yang terekam di Strava.`,
         sport: "Running",
         startDate: EVENT.raceStart,
         endDate: EVENT.raceEnd,

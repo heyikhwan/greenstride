@@ -91,7 +91,7 @@
 .gs-countdown__day { display: flex; align-items: baseline; gap: var(--space-2); font: italic 800 22px/1 var(--font-display); font-stretch: 112%; color: var(--band-ink); }
 .gs-countdown__day strong { font-size: 60px; line-height: 0.9; color: var(--lime); font-variant-numeric: tabular-nums; }
 .gs-countdown__day span { font-size: 18px; color: var(--band-muted); }
-/* Bar periode lomba: motif garis rute, titik lime di posisi hari ini. */
+/* Bar periode event: motif garis rute, titik lime di posisi hari ini. */
 .gs-countdown__track { position: relative; height: 10px; margin-block: var(--space-2); border-radius: var(--radius-pill); background: var(--band); }
 .gs-countdown__fill { position: absolute; inset: 0 auto 0 0; min-width: 10px; border-radius: inherit; background: var(--lime); animation: gs-fill 900ms var(--ease-out) 300ms both; }
 @keyframes gs-fill { from { width: 10px; } }

@@ -1,12 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 import Faq from "@/components/Faq";
+import Footer from "@/components/Footer";
+import { PesertaSection } from "@/components/PesertaSection";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
-import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute, VisitCount } from "@/components/interactive";
+import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute } from "@/components/interactive";
 import Chat from "@/components/ChatLazy";
-import { APPS, DOCUMENTS, EVENT, HELPDESK_CHECKLIST, SOCIALS } from "@/lib/event";
+import { APPS, DOCUMENTS, EVENT, HELPDESK_CHECKLIST } from "@/lib/event";
+import { getPeserta } from "@/lib/peserta";
+import type { PesertaSummary } from "@/lib/peserta-shared";
 
-export default function Home() {
+// Jumlah peserta di bagian Peserta dibaca dari Google Sheet panitia; halaman dibuat ulang paling cepat tiap 5 menit.
+export const revalidate = 300;
+
+async function pesertaSummary(): Promise<PesertaSummary | null> {
+  const { data } = await getPeserta();
+  if (!data) return null;
+  return { teams: data.totals.teams, people: data.totals.people };
+}
+
+export default async function Home() {
+  const peserta = await pesertaSummary();
   return (
     <>
       <StructuredData />
@@ -196,7 +210,7 @@ export default function Home() {
                         </li>
                         <li>
                           <Icon name="ban" size={20} />
-                          Aktivitas di luar periode lomba
+                          Aktivitas di luar periode event
                         </li>
                         <li>
                           <Icon name="alert" size={20} />
@@ -240,6 +254,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* ───────── Peserta: sesudah Panduan, sama dengan urutan navbar */}
+        <PesertaSection summary={peserta} />
 
         {/* ───────── 24 km */}
         <section className="section" id="batas-harian" aria-labelledby="km-h">
@@ -370,75 +387,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ───────── Footer */}
-      <footer className="footer gs-on-band">
-        <div className="wrap">
-          <div className="footer__inner">
-            <div>
-              <img
-                className="footer__brand"
-                src="/img/logo-greenstride-white-320.webp"
-                srcSet="/img/logo-greenstride-white-320.webp 320w, /img/logo-greenstride-white-608.webp 608w"
-                sizes="200px"
-                alt="PTPN GreenStride 2026"
-                width={608}
-                height={206}
-                loading="lazy"
-              />
-              <p className="footer__line">Every step counts. Every stride matters.</p>
-              <div className="footer__logos">
-                <img className="footer__logo-brand" src="/img/logo-planters-club-horizontal.png" alt="Planters Club" width={157} height={56} loading="lazy" />
-                <span className="footer__logo-parents">
-                  <img src="/img/logo-danantara.png" alt="Danantara Indonesia" width={99} height={26} loading="lazy" />
-                  <img src="/img/logo-ptpn-holding.png" alt="Perkebunan Nusantara" width={75} height={36} loading="lazy" />
-                  <img src="/img/logo-lifeatptpn.png" alt="Life at PTPN" width={101} height={75} loading="lazy" />
-                </span>
-              </div>
-            </div>
-            <div className="footer__aside">
-              <nav className="footer__nav" aria-label="Footer">
-                <h3>Jelajahi Halaman</h3>
-                <a href="#tentang">Tentang</a>
-                <a href="#panduan">Panduan</a>
-                <a href="#jadwal">Jadwal</a>
-                <a href="#hadiah">Hadiah</a>
-                <a href="#faq">FAQ</a>
-                <a href="#unduhan">Unduhan</a>
-                <a href={EVENT.helpdeskUrl} target="_blank" rel="noopener noreferrer">
-                  Help Desk
-                </a>
-              </nav>
-              <VisitCount />
-            </div>
-          </div>
-          <section className="footer__social" aria-labelledby="footer-ig">
-            <div className="footer__social-head">
-              <h3 id="footer-ig">Ikuti di Instagram</h3>
-              <p>Kabar terbaru dari PTPN dan Planters Club.</p>
-            </div>
-            <ul>
-              {SOCIALS.map((s) => (
-                <li key={s.handle}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer">
-                    <span className="footer__social-disc">
-                      <Icon name="instagram" size={20} />
-                    </span>
-                    <span className="footer__social-text">
-                      <strong>@{s.handle}</strong>
-                      <small>{s.name}</small>
-                    </span>
-                    <Icon name="arrow-right" size={18} className="footer__social-go" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-          <div className="footer__legal">
-            <span>© 2026 Planters Club · PTPN Group</span>
-            <span>{EVENT.tagline}</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
       <BackToTop />
       <Chat />
     </>

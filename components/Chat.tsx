@@ -43,6 +43,9 @@ const PROBLEM_TEXT: Record<Problem, string> = {
   invalid: "Pesan itu tidak bisa kukirim. Coba tulis ulang pertanyaanmu lebih singkat.",
 };
 
+/** Anchor (#bagian, #id-faq) hanya ada di beranda; dari halaman lain (misalnya /peserta/) tautannya diarahkan ke beranda. */
+const toPage = (href: string) => (href.startsWith("#") && location.pathname !== "/" ? `/${href}` : href);
+
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
 /** Dua pertanyaan lanjutan: FAQ lain dari kategori FAQ pertama yang ditautkan jawaban, atau contoh awal bila tidak ada. */
@@ -436,7 +439,7 @@ export default function Chat() {
                       <span>Kirim ulang</span>
                     </button>
                   ) : (
-                    <a className="gs-btn gs-btn--secondary gs-btn--sm" href="#faq" onClick={onAnchor}>
+                    <a className="gs-btn gs-btn--secondary gs-btn--sm" href={toPage("#faq")} onClick={onAnchor}>
                       <span>Buka FAQ</span>
                     </a>
                   )}
@@ -538,7 +541,7 @@ function Inline({ text, onAnchor }: { text: string; onAnchor: () => void }) {
       const kind = linkKind(href);
       if (kind === "anchor")
         out.push(
-          <a key={at} href={href} onClick={onAnchor}>
+          <a key={at} href={toPage(href)} onClick={onAnchor}>
             {anchorLabel(href) ?? label}
           </a>,
         );
@@ -551,7 +554,7 @@ function Inline({ text, onAnchor }: { text: string; onAnchor: () => void }) {
       else if (kind === "file")
         // Jangan mengunduh dari jawaban: arahkan ke bagian Unduhan, peserta memilih sendiri dokumennya di sana.
         out.push(
-          <a key={at} href="#unduhan" onClick={onAnchor}>
+          <a key={at} href={toPage("#unduhan")} onClick={onAnchor}>
             Lihat {documentTitle(href) ?? "dokumen"} di Unduhan
           </a>,
         );

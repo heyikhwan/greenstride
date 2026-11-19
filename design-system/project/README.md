@@ -1,4 +1,4 @@
-Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba lari virtual beregu karyawan PTPN Group. Pembacanya karyawan dari semua level yang membuka situs dari ponsel, sering di lapangan atau kebun dengan sinyal lemah, untuk satu tujuan: menemukan jawaban yang pasti dengan cepat. Semua keputusan di bawah turun dari key visual acara (hijau hutan, daun, judul miring tebal, pelari) dan konten media sosial "24 KM".
+Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, tantangan lari virtual beregu karyawan PTPN Group. Pembacanya karyawan dari semua level yang membuka situs dari ponsel, sering di lapangan atau kebun dengan sinyal lemah, untuk satu tujuan: menemukan jawaban yang pasti dengan cepat. Semua keputusan di bawah turun dari key visual acara (hijau hutan, daun, judul miring tebal, pelari) dan konten media sosial "24 KM".
 
 ## Prinsip
 
@@ -16,12 +16,13 @@ Sistem desain untuk website informasi peserta **PTPN GreenStride 2026**, lomba l
 - Tombol: kata kerja + benda, maksimal tiga kata: "Cari jawaban", "Unduh aplikasi", "Buka Help Desk", "Unduh guidebook". Jangan "Pelajari lebih lanjut", "Klik di sini", "Mulai".
 - Nama menu aplikasi ditulis persis seperti di layar: My Races, eBib, Submit, Strava Connect, Auto Submission, Who can view, Everyone, Save Activity, Ranking, Group Leaderboard.
 - Tanpa em dash, tanpa emoji, tanpa tanda seru beruntun.
+- Jangan pakai kata "lomba". Sebut "event", "GreenStride", atau "tantangan": "periode event", "aturan event", "Tantangan lari virtual beregu".
 - Tagline resmi dipakai utuh dalam bahasa Inggris: "Run for a healthier you, a stronger Nusantara Entreplanters"; pilar "Move Together", "Live Better", "Grow Stronger"; penutup "Every step counts. Every stride matters."
 
 | Tulis | Jangan tulis |
 | --- | --- |
 | Boleh. Target tim tetap 300 km. | Sesuai guidebook, tim boleh kurang dari 5 orang namun... |
-| Lomba berlangsung 23 November – 20 Desember 2026. | Karena pendaftaran diperpanjang, jadwal mundur menjadi... |
+| Event berlangsung 23 November – 20 Desember 2026. | Karena pendaftaran diperpanjang, jadwal mundur menjadi... |
 | Maksimal 24 km per hari, bukan target. | Peserta WAJIB memperhatikan batas 24KM!!! |
 | Unduh aplikasi | Klik di sini untuk download |
 
@@ -86,7 +87,7 @@ Dimuat dan digulir:
 - **Garis kemajuan baca**: garis `lime` 3 px di tepi bawah header memanjang mengikuti gulir halaman (CSS `animation-timeline: scroll()`; peramban tanpa dukungan tidak menampilkannya).
 - **Garis kata kunci** (`gs-keyline`) tergambar sekali dari kiri saat judul terlihat. Teks judul sudah tampil penuh sejak awal.
 - **Grafik data digambar sekali saat pertama terlihat** (`useDraw`, IntersectionObserver): segmen TeamBar terisi berurutan, garis Route tergambar lalu titik akhirnya muncul, sel kalender yang lewat terisi, anak tangga RewardLadder naik, RuleGraphic (rambu batas tergambar melingkar, token submit naik, jarum jam berputar ke 23.59), garis tahap jadwal yang selesai tumbuh ke bawah. Paling lama 600 ms. HTML awal memuat grafik utuh, jadi tanpa JavaScript grafik tetap terbaca.
-- Satu titik "sekarang" berdenyut dua kali setelah terlihat: sel hari ini di kalender selama lomba, atau chip "Sekarang" di jadwal di luar masa lomba. Tidak pernah keduanya.
+- Satu titik "sekarang" berdenyut dua kali setelah terlihat: sel hari ini di kalender selama event, atau chip "Sekarang" di jadwal di luar masa event. Tidak pernah keduanya.
 
 - Tidak ada: teks yang muncul belakangan saat menggulir, hitung naik angka, parallax, karusel, tab yang berganti sendiri, gerak berulang tanpa henti. `prefers-reduced-motion` mematikan semua gerak; grafik dan garis kata kunci tampil utuh.
 
@@ -127,7 +128,7 @@ Dimuat dan digulir:
 | Button | Semua aksi; varian `primary`, `secondary`, `ghost`, `lime`, `on-band` |
 | SectionHeader | Eyebrow, judul bagian, kalimat pembuka |
 | Pillar | Tiga pilar kampanye di hero |
-| Countdown | Status lomba dan sisa waktu di hero |
+| Countdown | Status event dan sisa waktu di hero |
 | FactTile | Ringkasan aturan inti dalam angka |
 | KmSplitter | Kalkulator porsi km per anggota |
 | TeamBar | 300 km dibagi per anggota, bagian minimal 60 km ditandai |

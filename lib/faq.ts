@@ -16,7 +16,7 @@ export type FaqItem = {
 };
 
 export const FAQ_CATEGORIES: { id: FaqCategoryId; label: string; icon: string }[] = [
-  { id: "umum", label: "Tentang lomba", icon: "flag" },
+  { id: "umum", label: "Tentang event", icon: "flag" },
   { id: "tim", label: "Tim & pendaftaran", icon: "team" },
   { id: "akun", label: "Aplikasi", icon: "phone" },
   { id: "aktivitas", label: "Aturan lari", icon: "run" },
@@ -28,14 +28,14 @@ export const FAQ_CATEGORIES: { id: FaqCategoryId; label: string; icon: string }[
 const E = EVENT;
 
 export const FAQ: FaqItem[] = [
-  // Tentang lomba
+  // Tentang event
   {
     id: "apa-itu-greenstride", cat: "umum", q: "Apa itu PTPN GreenStride 2026?",
-    a: ["Lomba lari virtual beregu untuk karyawan PTPN Group yang diselenggarakan Planters Club. Kamu lari atau jalan di luar ruangan di mana saja, lalu jaraknya dijumlahkan bersama tim."],
+    a: ["Tantangan lari virtual beregu untuk karyawan PTPN Group yang diselenggarakan Planters Club. Kamu lari atau jalan di luar ruangan di mana saja, lalu jaraknya dijumlahkan bersama tim."],
     tags: "virtual run lomba planters club",
   },
   {
-    id: "kapan-lomba", cat: "umum", q: "Kapan lombanya berlangsung?",
+    id: "kapan-lomba", cat: "umum", q: "Kapan event-nya berlangsung?",
     a: [`${E.raceRangeLabel}. Dimulai pukul 00.00 WIB dan ditutup pukul 23.59 WIB, total ${E.raceDays} hari.`],
     tags: "tanggal jadwal mulai selesai periode",
   },
@@ -58,12 +58,12 @@ export const FAQ: FaqItem[] = [
   // Tim & pendaftaran
   {
     id: "siapa-boleh-ikut", cat: "tim", q: "Siapa yang boleh ikut?",
-    a: ["Karyawan PTPN Group yang hubungan kerjanya aktif sampai lomba selesai, termasuk karyawan tetap, PKWT, dan karyawan penugasan."],
+    a: ["Karyawan PTPN Group yang hubungan kerjanya aktif sampai event selesai, termasuk karyawan tetap, PKWT, dan karyawan penugasan."],
     tags: "syarat peserta karyawan",
   },
   {
     id: "pkwt", cat: "tim", q: "Saya karyawan PKWT. Boleh ikut?",
-    a: ["Boleh, selama kontrakmu aktif sampai lomba selesai. SDM unit memverifikasi statusmu."],
+    a: ["Boleh, selama kontrakmu aktif sampai event selesai. SDM unit memverifikasi statusmu."],
     tags: "kontrak giling musiman nik sap",
   },
   {
@@ -115,7 +115,7 @@ export const FAQ: FaqItem[] = [
   // Aplikasi
   {
     id: "aplikasi-apa", cat: "akun", q: "Aplikasi apa yang dipakai?",
-    a: [`Dua aplikasi: Strava untuk merekam lari, dan ${E.appName} sebagai aplikasi resmi lomba untuk eBIB, submit, dan peringkat. Keduanya dihubungkan.`],
+    a: [`Dua aplikasi: Strava untuk merekam lari, dan ${E.appName} sebagai aplikasi resmi event untuk eBIB, submit, dan peringkat. Keduanya dihubungkan.`],
     tags: "vr99 strava unduh download",
   },
   {
@@ -243,7 +243,7 @@ export const FAQ: FaqItem[] = [
   },
   {
     id: "dicicil", cat: "hadiah", q: `Target ${E.memberMinKm} km per orang boleh dicicil beberapa hari?`,
-    a: ["Boleh. Jarak dikumpulkan bertahap sepanjang periode lomba, asalkan setiap aktivitas terekam dan tercatat dengan benar."],
+    a: ["Boleh. Jarak dikumpulkan bertahap sepanjang periode event, asalkan setiap aktivitas terekam dan tercatat dengan benar."],
     tags: "cicil bertahap akumulasi harian",
   },
   {

@@ -29,7 +29,7 @@ export function useNow() {
 const DAY = 864e5;
 const RACE_START = Date.parse(EVENT.raceStart);
 const RACE_END = Date.parse(EVENT.raceEnd);
-/** null saat prerender, 0 sebelum lomba, 1..raceDays selama lomba, raceDays + 1 setelah lomba. */
+/** null saat prerender, 0 sebelum event, 1..raceDays selama event, raceDays + 1 setelah event. */
 function raceDay(now: number) {
   if (!now) return null;
   if (now < RACE_START) return 0;
@@ -78,7 +78,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const fmt = (n: number) => n.toLocaleString("id-ID", { maximumFractionDigits: 1 });
 const idx = (i: number) => ({ "--i": i }) as CSSProperties;
 
-/* ───────── Countdown: hitung mundur sebelum lomba, hari ke-X selama lomba */
+/* ───────── Countdown: hitung mundur sebelum event, hari ke-X selama event */
 export function Countdown() {
   const now = useNow();
   const day = raceDay(now);
@@ -93,14 +93,14 @@ export function Countdown() {
       <div className="gs-countdown" role="timer" aria-live="off">
         <span className="gs-countdown__status">
           <span className="gs-countdown__dot" aria-hidden="true" />
-          {finished ? "Lomba sudah selesai" : "Lomba berlangsung"}
+          {finished ? "Event sudah selesai" : "Event berlangsung"}
         </span>
         {running && (
           <div className="gs-countdown__day">
             Hari ke <strong>{day}</strong> <span>dari {EVENT.raceDays}</span>
           </div>
         )}
-        <div className="gs-countdown__track" role="img" aria-label={finished ? "Periode lomba selesai" : `Hari ke-${day} dari ${EVENT.raceDays}`}>
+        <div className="gs-countdown__track" role="img" aria-label={finished ? "Periode event selesai" : `Hari ke-${day} dari ${EVENT.raceDays}`}>
           <span className="gs-countdown__fill" style={{ width: `${finished ? 100 : ((day as number) / EVENT.raceDays) * 100}%` }} />
         </div>
         <div className="gs-countdown__range">
@@ -127,7 +127,7 @@ export function Countdown() {
     <div className="gs-countdown" role="timer" aria-live="off">
       <span className="gs-countdown__status">
         <span className="gs-countdown__dot" aria-hidden="true" />
-        {day === 0 ? "Menuju Start" : "Periode lomba"}
+        {day === 0 ? "Menuju Start" : "Periode event"}
       </span>
       <div className="gs-countdown__units" aria-hidden={day !== 0}>
         {units.map(([v, cap], i) => (
@@ -298,7 +298,7 @@ export function TeamRoute() {
   );
 }
 
-/* ───────── Cek aktivitas: pace dari jarak dan moving time, dibanding aturan lomba */
+/* ───────── Cek aktivitas: pace dari jarak dan moving time, dibanding aturan event */
 const toSec = (p: string) => {
   const [m, s] = p.split(":").map(Number);
   return m * 60 + s;
@@ -484,7 +484,7 @@ export function RaceCalendar() {
   let status_line = `Dimulai Senin ${CAL_DAYS[0].date} ${MONTHS[CAL_DAYS[0].month]}, ditutup Minggu ${CAL_DAYS[last].date} ${MONTHS[CAL_DAYS[last].month]}.`;
   if (day === 0) status_line = `Mulai dalam ${Math.ceil((RACE_START - now) / DAY)} hari. ${status_line}`;
   if (running) status_line = `Hari ke-${day} dari ${EVENT.raceDays}, sisa ${EVENT.raceDays - (day as number)} hari setelah hari ini.`;
-  if (day === EVENT.raceDays + 1) status_line = "Lomba selesai. Panitia melakukan verifikasi final.";
+  if (day === EVENT.raceDays + 1) status_line = "Event selesai. Panitia melakukan verifikasi final.";
   return (
     <figure className="gs-cal" ref={ref} data-draw={draw}>
       <div className="gs-cal__top">
@@ -911,19 +911,24 @@ export function ThemeToggle() {
   );
 }
 
+/** Bagian halaman utama ("#...") dan halaman lain ("/.../"). */
 const NAV = [
   { href: "#tentang", label: "Tentang" },
   { href: "#panduan", label: "Panduan" },
+  { href: "/peserta/", label: "Peserta" },
   { href: "#jadwal", label: "Jadwal" },
   { href: "#hadiah", label: "Hadiah" },
   { href: "#faq", label: "FAQ" },
   { href: "#unduhan", label: "Unduhan" },
 ];
 
-export function Navbar() {
+/** page: halaman yang sedang dibuka. Di luar halaman utama, tautan bagian diawali "/" agar kembali ke halaman utama. */
+export function Navbar({ page = "/" }: { page?: "/" | "/peserta/" }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [current, setCurrent] = useState("");
+  const home = page === "/";
+  const links = NAV.map((n) => ({ ...n, to: n.href.startsWith("#") && !home ? `/${n.href}` : n.href }));
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -934,19 +939,21 @@ export function Navbar() {
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
-    NAV.forEach((n) => {
-      const el = document.querySelector(n.href);
-      if (el) io.observe(el);
-    });
+    if (home)
+      NAV.forEach((n) => {
+        const el = n.href.startsWith("#") ? document.querySelector(n.href) : null;
+        if (el) io.observe(el);
+      });
     return () => {
       window.removeEventListener("scroll", onScroll);
       io.disconnect();
     };
-  }, []);
+  }, [home]);
+  const isCurrent = (href: string) => (href === page ? "page" : home && current === href ? "true" : undefined);
   return (
     <header className={`gs-nav gs-on-band${scrolled ? " gs-nav--scrolled" : ""}`}>
       <div className="gs-nav__bar">
-        <a className="gs-nav__logos" href="#top" aria-label="Planters Club, PTPN GreenStride 2026, ke atas">
+        <a className="gs-nav__logos" href={home ? "#top" : "/"} aria-label={home ? "Planters Club, PTPN GreenStride 2026, ke atas" : "Planters Club, PTPN GreenStride 2026, ke halaman utama"}>
           <span className="gs-nav__logo">
             <img
               src="/img/logo-planters-club-horizontal-white-248.webp"
@@ -959,8 +966,8 @@ export function Navbar() {
           </span>
         </a>
         <nav className="gs-nav__links" aria-label="Utama">
-          {NAV.map((n) => (
-            <a key={n.href} href={n.href} aria-current={current === n.href ? "true" : undefined}>
+          {links.map((n) => (
+            <a key={n.href} href={n.to} aria-current={isCurrent(n.href)}>
               {n.label}
             </a>
           ))}
@@ -975,8 +982,8 @@ export function Navbar() {
         </button>
       </div>
       <div className="gs-nav__sheet" id="nav-sheet" data-open={open ? "true" : "false"}>
-        {NAV.map((n) => (
-          <a key={n.href} href={n.href} onClick={() => setOpen(false)}>
+        {links.map((n) => (
+          <a key={n.href} href={n.to} aria-current={isCurrent(n.href)} onClick={() => setOpen(false)}>
             {n.label}
           </a>
         ))}
