@@ -79,6 +79,17 @@ export default function Faq() {
       ? "Semua pertanyaan"
       : FAQ_CATEGORIES.find((c) => c.id === cat)?.label;
 
+  // Ajakan bertanya ke Rani: di kolom samping saat dua kolom, di bawah daftar pertanyaan saat satu kolom (CSS memilih salah satu).
+  const ask = (where: "side" | "end") => (
+    <div className={`faq-center__ask faq-center__ask--${where}`}>
+      <ChatAvatar size={36} />
+      <p>Tidak ketemu? Tanya {BOT.name} dengan kalimatmu sendiri.</p>
+      <button type="button" className="gs-btn gs-btn--secondary gs-btn--sm" onClick={() => window.dispatchEvent(new CustomEvent("gs-chat:open", { detail: { q: query } }))}>
+        <span>Tanya {BOT.name}</span>
+      </button>
+    </div>
+  );
+
   return (
     <div className="faq-center">
       <aside className="faq-center__side">
@@ -139,13 +150,7 @@ export default function Faq() {
           ))}
         </div>
 
-        <div className="faq-center__ask">
-          <ChatAvatar size={36} />
-          <p>Tidak ketemu? Tanya {BOT.name} dengan kalimatmu sendiri.</p>
-          <button type="button" className="gs-btn gs-btn--secondary gs-btn--sm" onClick={() => window.dispatchEvent(new CustomEvent("gs-chat:open", { detail: { q: query } }))}>
-            <span>Tanya {BOT.name}</span>
-          </button>
-        </div>
+        {ask("side")}
       </aside>
 
       <div className="faq-center__main">
@@ -203,6 +208,9 @@ export default function Faq() {
           );
         })}
         </div>
+
+        {/* Saat hasil kosong, kotak kosong di bawah sudah memuat tombol Tanya Rani. */}
+        {results.length > 0 && ask("end")}
 
         {results.length === 0 && (
           <div className="faq-empty">

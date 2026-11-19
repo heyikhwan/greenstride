@@ -3,7 +3,7 @@ import Faq from "@/components/Faq";
 import StructuredData from "@/components/StructuredData";
 import { AppCard, Button, DocumentCard, Icon, Pillar, RuleGraphic, SectionHeader } from "@/components/ds";
 import { ActivityCheck, AppSteps, BackToTop, Countdown, Drawn, KmRoute, KmSplitter, Navbar, RaceCalendar, RewardLadder, Schedule, TeamRoute, VisitCount } from "@/components/interactive";
-import Chat from "@/components/Chat";
+import Chat from "@/components/ChatLazy";
 import { APPS, DOCUMENTS, EVENT, HELPDESK_CHECKLIST, SOCIALS } from "@/lib/event";
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
           <div className="wrap hero__inner">
             <div>
               <img className="hero__brand enter" src="/img/logo-greenstride-white.png" alt="PTPN GreenStride 2026" width={608} height={206} />
-              <h1 id="hero-h" className="enter enter--2">
+              <h1 id="hero-h">
                 Kumpulkan minimal <Drawn as="em" className="gs-keyline">300 km</Drawn> bersama tim terbaikmu
               </h1>
               <p className="hero__lead enter enter--3">
@@ -43,7 +43,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="hero__visual enter enter--3">
+            <div className="hero__visual">
               <img
                 className="hero__photo"
                 src="/img/hero-runners.webp"

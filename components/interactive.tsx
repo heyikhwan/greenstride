@@ -948,7 +948,7 @@ export function Navbar() {
       <div className="gs-nav__bar">
         <a className="gs-nav__logos" href="#top" aria-label="Planters Club, PTPN GreenStride 2026, ke atas">
           <span className="gs-nav__logo">
-            <img src="/img/logo-planters-club-horizontal-white.png" alt="Planters Club" width={124} height={44} />
+            <img src="/img/logo-planters-club-horizontal-white.webp" alt="Planters Club" width={124} height={44} />
           </span>
         </a>
         <nav className="gs-nav__links" aria-label="Utama">

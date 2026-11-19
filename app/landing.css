@@ -120,6 +120,7 @@ a { color: var(--leaf); }
 .faq-center__ask { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: var(--space-2) var(--space-3); padding: var(--space-4); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); }
 .faq-center__ask p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink); }
 .faq-center__ask .gs-btn { grid-column: 1 / -1; justify-self: start; min-height: 44px; }
+.faq-center__ask--end { display: none; }
 .faq-center__topics { display: grid; gap: var(--space-2); }
 .faq-center__topics .gs-chip { justify-content: flex-start; border-radius: var(--radius-md); min-height: 48px; }
 .faq-center__topics .gs-chip > span:nth-child(2) { flex: 1; text-align: left; }
@@ -210,6 +211,9 @@ a { color: var(--leaf); }
   .hero__count { left: var(--space-4); }
   .faq-center { grid-template-columns: 1fr; }
   .faq-center__side { position: static; }
+  /* Satu kolom: pengunjung membaca daftar dulu, baru diajak bertanya ke Rani di bawahnya. */
+  .faq-center__ask--side { display: none; }
+  .faq-center__ask--end { display: grid; margin-top: var(--space-5); }
   .faq-center__topics { display: flex; gap: var(--space-2); overflow-x: auto; padding-bottom: var(--space-2); margin-inline: calc(-1 * var(--space-5)); padding-inline: var(--space-5); scrollbar-width: none; }
   .faq-center__topics .gs-chip { flex: none; border-radius: var(--radius-pill); min-height: 44px; }
   .docs { grid-template-columns: 1fr; }
