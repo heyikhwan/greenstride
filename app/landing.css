@@ -214,14 +214,15 @@ a { color: var(--leaf); }
 
 /* ───────── Status peserta. Warna status dipakai bersama oleh pil, ruas tim, bar ringkasan, dan legenda.
    Status selalu ditulis; warna hanya penguat. ok = leaf (sudah beres), app = sun (perlu tindakan peserta),
-   fix = ocean (perlu Help Desk), wait = netral (menunggu). */
+   fix = ocean (perlu Help Desk), wait = garis tanpa isi (belum diproses). Semua netral di palet ini berona hijau,
+   jadi wait tidak diberi isi: isian hijau pucat terbaca sama dengan ok. Pil wait bergaris putus, ruas wait berupa slot kosong. */
 .pstatus { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px 5px 9px; border-radius: var(--radius-pill); font: 600 13px/1.2 var(--font-text); color: var(--ink); white-space: nowrap; }
 .pstatus--ok { background: var(--leaf-soft); }
 .pstatus--ok .gs-icon { color: var(--leaf); }
 .pstatus--app { background: var(--sun-soft); }
 .pstatus--fix { background: var(--ocean-soft); }
 .pstatus--fix .gs-icon { color: var(--ocean); }
-.pstatus--wait { background: var(--surface-tint); }
+.pstatus--wait { background: transparent; outline: 1.5px dashed var(--line-strong); outline-offset: -1.5px; color: var(--ink-muted); }
 .pstatus--wait .gs-icon { color: var(--ink-muted); }
 
 /* Bar bertumpuk: ruas sebanding jumlah orang, celah 2 px sebagai pemisah. Ruas sun diberi tepi agar terbaca di surface terang. */
@@ -230,14 +231,14 @@ a { color: var(--leaf); }
 .pmeter__seg--ok, .pteam__seg--ok { background: var(--leaf); }
 .pmeter__seg--app, .pteam__seg--app { background: var(--sun); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 35%, transparent); }
 .pmeter__seg--fix, .pteam__seg--fix { background: var(--ocean); }
-.pmeter__seg--wait, .pteam__seg--wait { background: var(--line-strong); }
+.pmeter__seg--wait, .pteam__seg--wait { background: var(--surface-raised); box-shadow: inset 0 0 0 1.5px var(--ink-muted); }
 /* Di atas band: siap memakai lime seperti bar progres lain, menunggu memakai band-muted pudar. */
 .gs-on-band .pmeter { background: var(--band-raised); }
 .gs-on-band .pmeter__seg--ok { background: var(--lime); }
 .gs-on-band .pmeter__seg--app { box-shadow: none; }
 /* fix di atas band: ocean dicampur band-ink agar tetap biru seperti di kartu tim, tapi terbaca di atas hijau tua. */
 .gs-on-band .pmeter__seg--fix { background: color-mix(in srgb, var(--ocean) 50%, var(--band-ink)); }
-.gs-on-band .pmeter__seg--wait { background: color-mix(in srgb, var(--band-muted) 45%, transparent); }
+.gs-on-band .pmeter__seg--wait { background: transparent; box-shadow: inset 0 0 0 1.5px var(--band-muted); }
 
 /* Penutup Panduan di halaman utama */
 /* Bagian Peserta di halaman utama: satu panel agar tidak ada kolom kosong. Kiri judul, kanan angka lalu pencarian, dipisah garis tipis. */

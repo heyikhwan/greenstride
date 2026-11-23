@@ -12,7 +12,7 @@ export type Team = {
   entity: string;
   entityShort: string;
   origin: string;
-  /** Kolom Asal di formulir (Head Office, Regional 1, KSO, Pabrik Gula, ...), untuk filter lanjutan sesudah entitas. Kosong di snapshot lama. */
+  /** Asal dari kolom Entitas di sheet 99VR (Head Office, Regional 1, KSO, Pabrik Gula, Anak Perusahaan), untuk filter lanjutan sesudah entitas. Kosong di snapshot lama. */
   area?: string;
   unit: string;
   members: Member[];
