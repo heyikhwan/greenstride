@@ -226,8 +226,12 @@ export const FAQ: FaqItem[] = [
   },
   {
     id: "curang", cat: "submit", q: "Apa akibatnya jika curang?",
-    a: ["Kepesertaan dibatalkan tanpa pemberitahuan. Contohnya merekam sambil berkendara, menitipkan perangkat ke orang lain, atau memalsukan data."],
-    tags: "joki kendaraan motor diskualifikasi",
+    a: [
+      "Peserta didiskualifikasi: seluruh jaraknya dibatalkan, tidak berhak atas medali, sertifikat, dan hadiah, serta tidak boleh ikut GreenStride 2027 dan 2028. Contohnya sengaja merekam sambil berkendara, menitipkan ponsel ke orang lain (joki), atau mengedit file GPS.",
+      "Bila ketua tim ikut mengatur, atau dua anggota atau lebih berbuat curang, seluruh tim didiskualifikasi.",
+    ],
+    note: "Gangguan teknis tanpa unsur sengaja, misalnya GPS melompat, hanya dikoreksi jaraknya. Rinciannya ada di dokumen Ketentuan Pelanggaran dan Sanksi di bagian Unduhan.",
+    tags: "joki kendaraan motor diskualifikasi sanksi pelanggaran lapor",
   },
 
   // Target & hadiah

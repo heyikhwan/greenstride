@@ -22,6 +22,28 @@ const rules = `## Aturan di halaman
 - Peringkat ditentukan dari total jarak yang lolos verifikasi. Bila sama, dihitung dari pace rata-rata.
 - Di bagian Tentang ada alat "cek aktivitas": isi jarak dan waktu, halaman menghitung pace dan apakah aktivitas dihitung.`;
 
+// Ringkasan dokumen Ketentuan Pelanggaran dan Sanksi (public/dokumen/ketentuan-pelanggaran-sanksi-greenstride-2026.pdf). Perbarui bila PDF-nya diganti.
+const sanctions = `## Ketentuan pelanggaran dan sanksi (berlaku sejak 20 November 2026)
+- Jarak yang dihitung hanya dari lari atau jalan kaki yang dilakukan sendiri oleh peserta terdaftar, direkam dengan akun Strava miliknya sendiri dan tersinkron ke 99 Virtual Race, terjadi ${E.raceRangeLabel}, dan dicatat sesuai ketentuan pencatatan.
+- Kategori pelanggaran:
+  - Ringan (tanpa unsur sengaja): gangguan teknis seperti GPS melompat, rekaman terputus, atau belum tersinkron. Juga salah pilih tipe aktivitas, misalnya bersepeda tercatat sebagai lari, bila baru pertama kali.
+  - Sedang: pelanggaran ringan yang berulang (2 kali atau lebih) setelah diingatkan, atau tidak menanggapi permintaan klarifikasi panitia sampai batas waktu.
+  - Berat (kecurangan): sengaja memakai kendaraan (motor, mobil, sepeda) untuk menambah jarak; mengedit atau memanipulasi file GPS; merekam aktivitas untuk peserta lain (joki); menyerahkan bukti palsu atau menghalangi pemeriksaan; mengulangi kecurangan setelah dikenai sanksi; kecurangan yang diorganisir dalam tim.
+- Sanksi:
+  - S0 koreksi jarak: aktivitas atau bagian jarak yang tidak sah dikeluarkan dari akumulasi tim. Bukan sanksi disiplin. Untuk pelanggaran ringan.
+  - S1 teguran tertulis: koreksi jarak dan teguran tertulis kepada peserta, tembusan ketua tim. Pelanggaran berikutnya langsung diproses sebagai kategori berat. Untuk pelanggaran sedang.
+  - S2 diskualifikasi peserta: seluruh jarak peserta selama GreenStride 2026 dibatalkan, tidak berhak atas medali, sertifikat finisher, dan hadiah, namanya dikeluarkan dari leaderboard. Tim tetap bisa melanjutkan dengan anggota lain.
+  - S3 diskualifikasi tim: seluruh anggota tim gugur, tim tidak masuk peringkat dan tidak berhak atas medali, sertifikat finisher, dan hadiah tim. Hadiah yang sudah diterima wajib dikembalikan.
+  - S4 larangan ikut GreenStride 2027 dan 2028, baik sebagai peserta maupun ketua tim. Selalu dijatuhkan bersama S2.
+  - Pelanggaran berat: S2 dan S4 untuk pelakunya.
+- Tim didiskualifikasi (S3) bila ketua tim melakukan, menyuruh, atau mengoordinasikan kecurangan; dua anggota atau lebih melakukan kecurangan berat; tim mengetahui kecurangan anggota tetapi membiarkan atau tidak melaporkannya; atau tim bersama-sama menghalangi pemeriksaan. Anggota yang tidak terlibat tidak dikenai sanksi pribadi dan boleh ikut GreenStride 2027.
+- Contoh: GPS melompat sehingga tercatat 14,6 km padahal rute riil 9,1 km, pertama kali: dihitung 9,1 km. Joki (membawa ponsel peserta lain sehingga jarak tercatat di akun orang itu) dan keduanya tahu: keduanya S2 dan S4, tim S3.
+- Prosedur pemeriksaan: temuan dari pemantauan panitia (pace tidak wajar, lonjakan GPS, rute janggal) atau laporan; verifikasi awal data Strava dan 99 Virtual Race (1 hari kalender); klarifikasi, peserta dihubungi dan boleh menjelaskan serta menyerahkan bukti (2 hari); pleno panitia menetapkan kategori dan sanksi (2 hari); keputusan beserta alasannya disampaikan ke peserta dan ketua tim, leaderboard diperbarui (1 hari); keberatan satu kali dengan bukti baru (2 hari); putusan akhir pleno bersifat final (2 hari).
+- Melaporkan dugaan kecurangan: peserta atau ketua tim melapor melalui plantersclub.id dengan kronologi singkat, tanggal aktivitas, dan bukti (tautan Strava atau tangkapan layar). Identitas pelapor dirahasiakan. Laporan beritikad buruk atau berisi bukti palsu diperlakukan sebagai pelanggaran berat.
+- Setiap pembatalan jarak diikuti hitung ulang akumulasi, status finis, dan peringkat tim. Tim yang turun di bawah ${E.teamTargetKm} km akibat koreksi boleh melengkapi kekurangannya selama periode event masih berjalan.
+- Sanksi S2, S3, dan S4 diumumkan kepada seluruh ketua tim tanpa menyebut identitas pelapor.
+- Aktivitas sebelum 20 November 2026 diperiksa dengan ketentuan pencatatan yang berlaku saat itu.`;
+
 const event = `## Acara
 - Nama: ${E.name}. Tantangan lari dan jalan kaki virtual beregu untuk karyawan PTPN Group, diselenggarakan Planters Club.
 - Tagline: ${E.tagline}. Pilar: Move Together, Live Better, Grow Stronger. Penutup: Every step counts. Every stride matters.
@@ -80,4 +102,4 @@ ${FAQ_CATEGORIES.map(
 const sections = `## Bagian halaman yang boleh ditautkan
 ${PAGE_SECTIONS.map((s) => `- [${s.link}](${s.href}): ${s.about}`).join("\n")}`;
 
-export const KNOWLEDGE = [event, rules, schedule, prizes, steps, apps, docs, help, status, faq, sections].join("\n\n");
+export const KNOWLEDGE = [event, rules, sanctions, schedule, prizes, steps, apps, docs, help, status, faq, sections].join("\n\n");

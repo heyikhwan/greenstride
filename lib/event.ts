@@ -204,4 +204,10 @@ export const DOCUMENTS: DocumentEntry[] = [
     href: "/dokumen/user-journey-99-virtual-race.pdf",
     size: "PDF · 42 MB",
   },
+  {
+    title: "Ketentuan Pelanggaran dan Sanksi",
+    description: "Aktivitas yang sah, kategori pelanggaran, jenis sanksi, prosedur pemeriksaan, dan cara melapor.",
+    href: "/dokumen/ketentuan-pelanggaran-sanksi-greenstride-2026.pdf",
+    size: "PDF · 257 KB",
+  },
 ];
